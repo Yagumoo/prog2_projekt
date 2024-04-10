@@ -1,5 +1,5 @@
 package Server_E_Shop;
-//Hello Leute
+//Hello Leuteajj
 public class Kunde extends Person {
     int plz;
     String ort;
