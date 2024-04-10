@@ -1,5 +1,7 @@
  E-Shop_Prog2
  E-Shop Projekt für Prog2 mit Java
+Intelli H4cks: 
+- psvm
 
 Mitglieder: Maxi, Simon, Marvin
 
@@ -27,6 +29,7 @@ Aufgaben:
   - 
 - Speicher für Artikel
   - Jede Ein & Auslagerung wird als Ereignis mit Datum(Jahrestagsnummer) Mit Artikel(Nummer), sowie Mitarbeiter(Einlagern) und Kunde(gekauft)
+
 - Mitarbeiterklasse
   - Nummer (eindeutig)
   - Name (eindeutig)
