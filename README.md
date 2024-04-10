@@ -30,12 +30,12 @@ Aufgaben:
 - Speicher für Artikel
   - Jede Ein & Auslagerung wird als Ereignis mit Datum(Jahrestagsnummer) Mit Artikel(Nummer), sowie Mitarbeiter(Einlagern) und Kunde(gekauft)
 
-- Mitarbeiterklasse
+- Mitarbeiterklasse --------------------------------------------------(Maxi angefangen)
   - Nummer (eindeutig)
   - Name (eindeutig)
   - Einloggen mit Mitarbeiter Infos
 
-- Kundenklasse 
+- Kundenklasse -------------------------------------------------------(Maxi angefangen)
   - Nummer
   - Name
   - Adresse(PLZ, Stadt, Ort, Straße)
