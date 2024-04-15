@@ -23,23 +23,41 @@ Bsp:
 Aufgaben:
 - E-Shop Funktionen:
 - Artikelklasse
-  - Artikelnummer
-  - Bezeichnung
-  - Bestand
-  - 
+- Personklasse & Kindenklasse
+- Warenkorbklasse
+- Bestand (Artikelliste)
+- Kundenverwaltung
+- Mitarbeiterverwaltung
+- Shopping Service
+- GUI Funktionen(Shop Client)
+- 
 - Speicher für Artikel
   - Jede Ein & Auslagerung wird als Ereignis mit Datum(Jahrestagsnummer) Mit Artikel(Nummer), sowie Mitarbeiter(Einlagern) und Kunde(gekauft)
 
-- Mitarbeiterklasse --------------------------------------------------(Maxi angefangen)
-  - Nummer (eindeutig)
-  - Name (eindeutig)
-  - Einloggen mit Mitarbeiter Infos
+-Exceptions
+ - Doppelte nicht möglich
+ - Mathe regelen /0 = NO GO
+ - Abfangen von Fehleingaben zb. Preis int statt String usw
+ - 
 
-- Kundenklasse -------------------------------------------------------(Maxi angefangen)
-  - Nummer
-  - Name
+- Artikelklasse
+   - Artikelnummer (Eindeutig)
+   - Artikelbezeichnung
+   - Bestand
+
+- Personenklasse-------------------------------------------------------(Maxi angefangen)
+   - Name
+   - ID (Eindeutig)
+   - Username (Eindeutig)
+   - Passwort
+   - E-mail (Eindeutig)
+
+ - Mitarbeiterklasse extends Person
+    - E-mail erstellen für Mitarbeiter
+
+- Kundenklasse extends Person-------------------------------------------------------(Maxi angefangen)
   - Adresse(PLZ, Stadt, Ort, Straße)
-  -Passwort einloggen mit Nutzername/E-mail
+  - E-mail für sich selber
 
 - Warenkorb(Speicher für Kunde)
   - Mehrer Artikel
@@ -74,11 +92,20 @@ Aufgaben:
 -
 -
 - GUI:
-- Muss erst in Kommandozeile funktionieren
--
--
--
--
+- Einloggen Möglichkeit
+-Mitarbeiter Funktionen
+ - Mitarbeiter einfügen/Registrieren
+ - Neue Artikel einfügen
+ - Bestand existierender verändern
+ - (Mitarbeiter kann Ereignisliste sehen)
+
+   
+-Kunden Funktionen
+ - Mehrere Artikel in Warenkorb legen
+ - Artikel anzahl im Warenkorb verändern
+ - Kann alle Artikel entfernen
+ - Kann Artikel kaufen(Werden aus dem Korb entfernt & im Bestand verändert)
+ - Bekommt Rechnung
 -
 -
 -
