@@ -3,7 +3,7 @@ package Klassen_E_Shop;
 public class MitarbeiterFunktion {
 
     /*
-    *private String emailMitarbeiter;
+    *private String emailMitarbeiter; bla
 
     public Mitarbeiter(int id, String name, String username, String passwort, String email, String emailMitarbeiter) {
         super(id, name, username, passwort, email);
