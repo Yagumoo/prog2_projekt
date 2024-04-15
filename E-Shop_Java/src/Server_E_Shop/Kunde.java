@@ -5,11 +5,14 @@ public class Kunde extends Person {
     String ort;
     String strasse;
     int strassenNummer;
-    public Kunde(int id, String name, String username, String password, String ort, int plz, String strasse, int strassenNummer) {
-        super(id, name, username, password);
+
+    public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
+        super(vorname, nachname, email, username, password, id);
         this.ort = ort;
         this.plz = plz;
         this.strasse = strasse;
         this.strassenNummer = strassenNummer;
     }
+
+
 }

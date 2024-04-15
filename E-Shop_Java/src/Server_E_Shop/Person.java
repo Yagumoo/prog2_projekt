@@ -1,15 +1,23 @@
 package Server_E_Shop;
 
 public class Person {
-  String name;
+  String vorname;
+  String nachname;
+  String email;
   int id;
   String username;
   String password;
 
-  public Person(int id, String name, String username, String password ){
-      this.name = name;
+  public Person(String vorname, String nachname, String email, String username, String password, int id){
+      this.vorname = vorname;
+      this.nachname = nachname;
+      this.email = email;
       this.id = id;
       this.username = username;
       this.password = password;
+  }
+
+  public void printAll(){
+      System.out.println();
   }
 }
