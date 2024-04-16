@@ -23,13 +23,13 @@ Bsp:
 Aufgaben:
 - E-Shop Funktionen:
 - Artikelklasse
-- Personklasse & Kindenklasse
+- Personklasse & Kundenklasse
 - Warenkorbklasse
 - Bestand (Artikelliste)
-- Kundenverwaltung
+- Kundenverwaltung------------------------------------------------(Maxi angefangen 40%)
 - Mitarbeiterverwaltung
 - Shopping Service
-- GUI Funktionen(Shop Client)
+- GUI/CUI Funktionen(Shop Client)---------------------------------(Maxi angefangen 10%)
 - 
 - Speicher für Artikel
   - Jede Ein & Auslagerung wird als Ereignis mit Datum(Jahrestagsnummer) Mit Artikel(Nummer), sowie Mitarbeiter(Einlagern) und Kunde(gekauft)
