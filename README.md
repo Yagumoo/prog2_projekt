@@ -44,6 +44,7 @@ Aufgaben:
    - Artikelnummer (Eindeutig)
    - Artikelbezeichnung
    - Bestand
+   - Preis
 
 - Personenklasse-------------------------------------------------------(Maxi angefangen)
    - Name
@@ -71,29 +72,40 @@ Aufgaben:
   - Rechnung(Kunde, Datum, gekaufte Artikel inkl Stückzahl, Preis und Gesammt Preis Wie Kassenbon)
 
 - Server:
+- KundenFunktionKlasse 
+   - Login Daten speichern
+      - Login mit Username oder Email + Passwort
+   - Registieren
+      - Mit gültiger E-mail anmelden
+      - Passwort erstellen
+      - Username erstellen
+      - ID(Erhöht sich automatisch)
+      - Alles speichern, um sich nochmal ein zu loggen
+   - Kundendaten aufrufen lassen
+   - KundenDaten speichern(E-mail, Username, name, addresse, ID)
+      - Speichert Daten in einer ArrayList
+     
+- MitarbeiterFunktionKlasse
+   - Bereits Registrierter Mitarbeiter kann weitere Mitarbeiter Registieren
+   - Einfügen von: Vorname, Nachname, Username, E-mail(FirmenMail), Passwort, ID(Automatisch hochzählen)
+   - Daten Speichern, damit sich der neue Mitarbeiter selber anmelden kann (Username/E-mail + Passwort)
+      - Speichert Daten in einer ArrayList
+   - Mitarbeiter kann neue Artikel hinzufügen (Ruft ArtikelFunktionKlasse auf)
+      - Kann bei bestehenden Artikeln den Bestand erhöhen 
+      - Kann Artikel löschen
+        
+- ArtikelFunktionKlasse Wird von MitarbeiterFunktion, Warenkorb aufgerufen
+- Erstellt mithilfe vom Konstruktor aus ArtikelKlasse einen artikel und speichert diesen in einer ArrayList
+   - Artikelnummer, Bezeichnung, Preis, bestand
+   - Artikel Liste Aufrufen
 -
 -
 -
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
--
+
 - GUI:
-- Einloggen Möglichkeit
+
 -Mitarbeiter Funktionen
+- Nur Mitarbeiter kann weitern Mitarbeiter Registrieren 
  - Mitarbeiter einfügen/Registrieren
  - Neue Artikel einfügen
  - Bestand existierender verändern
@@ -101,6 +113,7 @@ Aufgaben:
 
    
 -Kunden Funktionen
+ - Registrieren & Einloggen
  - Mehrere Artikel in Warenkorb legen
  - Artikel anzahl im Warenkorb verändern
  - Kann alle Artikel entfernen
