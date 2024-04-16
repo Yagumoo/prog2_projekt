@@ -14,5 +14,48 @@ public class Kunde extends Person {
         this.strassenNummer = strassenNummer;
     }
 
+    // Getter und Setter für PLZ
+    public int getPlz() {
+        return plz;
+    }
+
+    public void setPlz(int plz) {
+        this.plz = plz;
+    }
+
+    // Getter und Setter für Ort
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    // Getter und Setter für Straße
+    public String getStrasse() {
+        return strasse;
+    }
+
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+
+    // Getter und Setter für Straßennummer
+    public int getStrassenNummer() {
+        return strassenNummer;
+    }
+
+    public void setStrassenNummer(int strassenNummer) {
+        this.strassenNummer = strassenNummer;
+    }
+
+    @Override
+    public void printDetails() {
+
+        super.printDetails();
+        System.out.println("Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer);
+    }
+
 
 }

@@ -13,8 +13,7 @@ public class Artikel{
     }
 
     public void printDetails() {
-        System.out.println("Artikelnummer: " + artikelnummer);
-        System.out.println("Bezeichnung: " + bezeichnung);
-        System.out.println("Bestand: " + bestand);
+        System.out.println();
+        System.out.println("Artikelnummer: " + artikelnummer + " |Bezeichnung: " + bezeichnung + " |Bestand: " + bestand);
     }
 }
