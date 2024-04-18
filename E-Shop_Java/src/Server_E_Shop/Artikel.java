@@ -15,14 +15,9 @@ public class Artikel{
     }
 
     public void printDetails() {
-<<<<<<< Updated upstream
+
         System.out.println();
-        System.out.println("Artikelnummer: " + artikelnummer + " |Bezeichnung: " + bezeichnung + " |Bestand: " + bestand);
-=======
-        System.out.println("Artikelnummer: " + artikelnummer);
-        System.out.println("Bezeichnung: " + artikelbezeichnung);
-        System.out.println("Bestand: " + artikelbestand);
->>>>>>> Stashed changes
+        System.out.println("Artikelnummer: " + artikelnummer + " |Bezeichnung: " + artikelbezeichnung + " |Bestand: " + artikelbestand);
     }
 
 
