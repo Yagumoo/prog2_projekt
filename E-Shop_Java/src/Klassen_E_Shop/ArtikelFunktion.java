@@ -12,6 +12,11 @@ public class ArtikelFunktion{
         Artikel artikel = new Artikel(artikelnummer, bezeichnung, bestand);
         artikelListe.add(artikel);
     }
+
+
+
+
+
     /*
     * private ArrayList<Artikel> artikelListe;
 

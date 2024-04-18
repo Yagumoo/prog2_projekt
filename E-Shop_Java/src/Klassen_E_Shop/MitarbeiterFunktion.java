@@ -1,6 +1,10 @@
 package Klassen_E_Shop;
 
+import Server_E_Shop.Artikel;
+
 public class MitarbeiterFunktion {
+
+
 
     /*
     *private String emailMitarbeiter; bla
@@ -20,5 +24,16 @@ public class MitarbeiterFunktion {
         artikelListe.artikelEntfernen(artikel);
     }
     */
+    public MitarbeiterFunktion(){
+
+
+
+    }
+
+
+
+
+
+
 
 }

@@ -19,6 +19,7 @@ public class Main{
         kunde.printDetails();
         leer.printDetails();
 
+
          */
 
         KundenFunktionen kundenFunktionen = new KundenFunktionen();
