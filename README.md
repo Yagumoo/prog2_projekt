@@ -20,6 +20,9 @@ Bsp:
   Ist für Java Doc
 */
 
+Veränderungen
+-Marvon hat Variablennamen verändert ----> bzeichnung zu artikelBezeichnung
+
 Aufgaben:
 - E-Shop Funktionen:
 - Artikelklasse
