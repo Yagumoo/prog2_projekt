@@ -97,10 +97,3 @@ public class KundenFunktionen {
 
 
 }
-
-
-
-
-
-
-
