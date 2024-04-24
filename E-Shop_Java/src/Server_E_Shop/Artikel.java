@@ -6,13 +6,14 @@ public class Artikel{
     public String artikelbezeichnung;
     public int artikelbestand;
 
-    public Artikel(int artikelnummer, String artikelbezeichnung, int artikekbestand ){
+    public Artikel(int artikelnummer, String artikelbezeichnung, int artikekbestand ) {
         this.artikelnummer = artikelnummer;
         this.artikelbezeichnung = artikelbezeichnung;
         this.artikelbestand = artikelbestand;
-    }
 
-    public void printDetails() {
+    }
+    
+        public void printDetails() {
         System.out.println();
         System.out.println("Artikelnummer: " + artikelnummer + " |Bezeichnung: " + artikelbezeichnung + " |Bestand: " + artikelbestand);
     }
