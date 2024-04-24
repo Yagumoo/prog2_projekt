@@ -1,4 +1,4 @@
-package Server_E_Shop;
+package eshop.enitities;
 
 public class Mitarbeiter {
 }
