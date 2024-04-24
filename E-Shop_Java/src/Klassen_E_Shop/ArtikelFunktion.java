@@ -1,16 +1,21 @@
 package Klassen_E_Shop;
 import java.util.ArrayList;
+import java.util.List;
 import Server_E_Shop.Artikel;
 
 public class ArtikelFunktion{
 
     
 
-    public ArrayList artikelListe = new ArrayList();
+    public List artikelListe = new ArrayList();
 
     public void addArtikel(int artikelnummer, String bezeichnung, int bestand ){
         Artikel artikel = new Artikel(artikelnummer, bezeichnung, bestand);
         artikelListe.add(artikel);
+    }
+
+    public  void artikelAusgeben(){
+        
     }
     /*
     * private ArrayList<Artikel> artikelListe;
