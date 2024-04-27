@@ -14,7 +14,7 @@ public class Artikel{
 
     }
 
-    public int artikelNummer() {
+    public int getArtikelnummer() {
 
         return artikelnummer;
     }
@@ -30,6 +30,7 @@ public class Artikel{
     }
 
     public void setArtikelbezeichnung(String artikelbezeichnung) {
+
         this.artikelbezeichnung = artikelbezeichnung;
     }
 

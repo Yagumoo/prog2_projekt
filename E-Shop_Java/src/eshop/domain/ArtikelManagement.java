@@ -19,7 +19,19 @@ public class ArtikelManagement {
         artikelListe.add(artikel);
     }
 
+    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
+        for (Artikel artikel : artikelListe) {
+            if (artikel.getArtikelnummer() == artikelnummer) {
+                artikel.setArtikelbestand(neuerBestand);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public List<Artikel> gibAlleArtikel() {
+
         return artikelListe;
     }
 }
