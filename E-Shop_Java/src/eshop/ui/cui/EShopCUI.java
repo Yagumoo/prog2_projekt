@@ -132,8 +132,6 @@ public class EShopCUI {
         System.out.println("Bitte neuen Artikelbestand einfügen:");
         int neuerBestand = scan.nextInt();
 
-        eShop.aendereArtikelBestand(artikelnummer, neuerBestand);
-
         boolean erfolgreichGeaendert = eShop.aendereArtikelBestand(artikelnummer, neuerBestand);
 
         if (erfolgreichGeaendert){
@@ -152,9 +150,9 @@ public class EShopCUI {
         do {
             //eShopCUI.start();
             eShopCUI.KundeOderMitarbeiter();
-            System.out.println("Möchten Sie das Programm beenden? Ja/Nein");
+            System.out.println("Möchten Sie das Programm beenden? y/n");
             String input = scanner.next();
-            if(input.equalsIgnoreCase("ja")){
+            if(input.equalsIgnoreCase("y")){
                 break;
             }
         } while (true);

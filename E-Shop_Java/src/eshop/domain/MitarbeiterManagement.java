@@ -7,5 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MitarbeiterManagement {
-
+    //Mitarbeiter erstellen
+    //KundenListeaufrufen
 }
