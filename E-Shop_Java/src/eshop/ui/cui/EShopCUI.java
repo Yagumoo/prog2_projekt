@@ -2,7 +2,9 @@ package eshop.ui.cui;
 
 import eshop.domain.E_Shop;
 import eshop.enitities.Artikel;
+import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
+import eshop.enitities.Person;
 
 import java.util.*;
 import java.util.List;
@@ -31,7 +33,7 @@ public class EShopCUI {
     private void MitarbeiterSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Beenden ");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Kunden Liste \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -51,6 +53,18 @@ public class EShopCUI {
                 bestandAeundern(scan);
                 break;
             case 5:
+                System.out.println("Registrierte Kunden ausgeben:");
+                ListeVonKunden();
+                break;
+            case  6:
+                System.out.println("Angestellte Mitarbeiter ausgeben:");
+                ListeVonMitarbeiter();
+                break;
+            case 7:
+                System.out.println("Bitte registrieren Sie den neuen Angestellten:");
+                mitarbeiterRegistrieren(scan);
+                break;
+            case 8:
                 System.out.println("Sie sind gefeuert");
                 break;
         }
@@ -95,9 +109,31 @@ public class EShopCUI {
         artikelAusgeben(artikel);
     }
 
+    private  void ListeVonMitarbeiter(){
+        List<Person> mitarbeiter = eShop.gibAlleMitarbeiter();
+        mitarbeiterAusgeben(mitarbeiter);
+    }
+
+    private  void ListeVonKunden(){
+        List<Kunde> kunde = eShop.gibAlleKunden();
+        kundenAusgeben(kunde);
+    }
+
     public void artikelAusgeben(List<Artikel> artikelListe) {
         for (Artikel artikel : artikelListe) {
             System.out.println(artikel.toString());
+        }
+    }
+
+    public void mitarbeiterAusgeben(List<Person> mitarbeiterListe) {
+        for (Person mitarbeiter : mitarbeiterListe) {
+            System.out.println(mitarbeiter.printDetails());
+        }
+    }
+
+    public void kundenAusgeben(List<Kunde> kundeListe) {
+        for (Kunde kunde : kundeListe) {
+            System.out.println(kunde.printDetails());
         }
     }
 
@@ -126,6 +162,36 @@ public class EShopCUI {
         System.out.println("Artikel wurde hinzugefügt");
     }
 
+    private void mitarbeiterRegistrieren(Scanner scan){
+        System.out.println("Bitte Vornamen einfügen:");
+        String vorname = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte Nachnamen einfügen:");
+        String nachname = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte eMail erstellen:");
+        String email = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte username erstellen:");
+        String username = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte Passwort erstellen:");
+        String passwort = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte ID einfügen:");
+        int id = scan.nextInt();
+        scan.nextLine();
+
+
+        eShop.addMitarbeiter(vorname, nachname, email, username, passwort, id);
+        System.out.println("Neuer Mitarbeiter wurde registrert");
+    }
+
     private void bestandAeundern(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
         int artikelnummer = scan.nextInt();
@@ -147,6 +213,7 @@ public class EShopCUI {
     public static void main(String[] args) {
         EShopCUI eShopCUI = new EShopCUI();
         Scanner scanner = new Scanner(System.in);
+
         do {
             //eShopCUI.start();
             eShopCUI.KundeOderMitarbeiter();

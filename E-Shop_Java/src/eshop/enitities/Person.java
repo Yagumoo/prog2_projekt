@@ -83,9 +83,7 @@ public class Person {
       this.password = password;
     }
 
-    public void printDetails() {
-        System.out.println("Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id);
+    public String printDetails() {
+        return "Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id + " |";
     }
-
-
 }

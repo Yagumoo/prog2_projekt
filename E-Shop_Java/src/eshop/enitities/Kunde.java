@@ -1,4 +1,6 @@
 package eshop.enitities;
+
+
 //Hello Leute
 public class Kunde extends Person {
     private int plz;
@@ -56,12 +58,8 @@ public class Kunde extends Person {
         this.strassenNummer = strassenNummer;
     }
 
-    @Override
-    public void printDetails() {
-
-        super.printDetails();
-        System.out.println("Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer);
+    //@Override
+    public String printDetails() {
+        return super.printDetails() + "Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
     }
-
-
 }
