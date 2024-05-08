@@ -18,11 +18,39 @@ public class EShopCUI {
         if(input.equalsIgnoreCase("k")){
             System.out.println("Willkommen Kunde");
             System.out.println("___________________________");
-            KundenSeite();
+            System.out.println("Haben Sie bereits ein Konto? (Y/N)");
+            printArrow(); String input2 = scan.next();
+            if(input2.equalsIgnoreCase("N")){
+                System.out.println("Bitte Registrieren Sie sich");
+                kundeRegistrieren(scan);
+            }else{
+                System.out.println("Bitte geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
+                printArrow(); String usernameOrEmail = scan.next();
+                System.out.println("Bitte geben Sie ihr Passwort ein: ");
+                printArrow(); String password = scan.next();
+
+                if(eShop.loginKunde(usernameOrEmail, password)){
+                    KundenSeite();
+                }else{
+                    System.out.println("Ungültiges Passwort oder Benutzername! Bitte erneut versuchen!");
+                }
+            }
+
         } else if(input.equalsIgnoreCase("M")){
             System.out.println("Willkommen Arbeiter!");
             System.out.println("___________________________");
-            MitarbeiterSeite();
+
+            System.out.println("Bitter geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
+            printArrow(); String usernameOrEmail = scan.next();
+            System.out.println("Bitte geben Sie ihr Passwort ein: ");
+            printArrow(); String password = scan.next();
+
+            if(eShop.loginMitarbeiter(usernameOrEmail, password)){
+                MitarbeiterSeite();
+            }else{
+                System.out.println("Ungültiges Passwort oder Benutzername! Bitte erneut versuchen!");
+            }
+
         } else{
             System.out.println("Falsche Eingabe");
         }
@@ -192,6 +220,52 @@ public class EShopCUI {
         System.out.println("Neuer Mitarbeiter wurde registrert");
     }
 
+    private void kundeRegistrieren(Scanner scan){
+        System.out.println("Bitte Vornamen einfügen:");
+        printArrow(); String vorname = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte Nachnamen einfügen:");
+        printArrow(); String nachname = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte eMail erstellen:");
+        printArrow(); String email = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte username erstellen:");
+        printArrow(); String username = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte Passwort erstellen:");
+        printArrow(); String passwort = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte ID einfügen:");
+        printArrow(); int id = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("Bitte Ort einfügen:");
+        printArrow(); String ort = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte PLZ einfügen:");
+        printArrow(); int plz = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("Bitte Strassennamen einfügen:");
+        printArrow(); String strasse = scan.next();
+        scan.nextLine();
+
+        System.out.println("Bitte Strassennummer einfügen:");
+        printArrow(); int strassenNummer = scan.nextInt();
+        scan.nextLine();
+
+
+        eShop.addKunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
+        System.out.println("Sie haben sich als Kunden registriert");
+    }
+
     private void bestandAeundern(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
         int artikelnummer = scan.nextInt();
@@ -207,6 +281,10 @@ public class EShopCUI {
         }
 
     }
+    private void printArrow() {
+        System.out.print("--> ");
+    }
+
 
 
 

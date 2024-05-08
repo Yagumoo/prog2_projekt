@@ -3,6 +3,7 @@ package eshop.domain;
 
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
+import eshop.enitities.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class KundenManagement {
 
     public KundenManagement() {
         addKunde("Hannah", "Lotus", "Hannah@gmail.com", "H4n", "1234", 1, "Hamburg", 27754, "Feldweg", 69);
-        addKunde("Dima", "Lotik", "Dim@gmail.com", "D1m", "1234", 2, "Hamburg", 27754, "Feldweg", 69);
+        addKunde("Dima", "Lotik", "Dima@gmail.com", "D1m", "1234", 2, "Hamburg", 27754, "Feldweg", 69);
         addKunde("Hans", "Lotus", "Hans@gmail.com", "H4n5", "1234", 60, "Hamburg", 27554, "Feldstr", 123);
 
     }
@@ -21,6 +22,20 @@ public class KundenManagement {
     public void addKunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
         Kunde kunde = new Kunde(vorname, nachname, email, username, password, id, ort, plz, strasse, strassenNummer);
         kundenListe.add(kunde);
+    }
+
+    public boolean loginkunde(String usernameOrEmail, String password) {
+        // Überprüfung der Mitarbeiter-Anmeldeinformationen
+        for (Kunde kunde : kundenListe) {
+            if (kunde.getUsername().equalsIgnoreCase(usernameOrEmail) || kunde.getEmail().equalsIgnoreCase(usernameOrEmail)) {
+                if (kunde.checkPasswort(password)) {
+                    // Mitarbeiter erfolgreich angemeldet
+                    return true;
+                }
+            }
+        }
+        // Ungültige Anmeldeinformationen
+        return false;
     }
 
     public List<Kunde> gibAlleKunden() {

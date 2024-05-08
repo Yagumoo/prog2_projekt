@@ -13,7 +13,7 @@ public class MitarbeiterManagement {
     private List<Person> mitarbeiterListe = new ArrayList<>();
 
     public MitarbeiterManagement() {
-       addMitarbeiter("Johnny", "Sims", "Hohn@gmail.com", "Sins", "12345", 1);
+       addMitarbeiter("Johnny", "Sims", "sins.honny@gmail.com", "Sins", "12345", 1);
 
     }
 
@@ -22,7 +22,27 @@ public class MitarbeiterManagement {
         mitarbeiterListe.add(mitarbeiter);
     }
 
+    public boolean loginMitarbeiter(String usernameOrEmail, String password) {
+        // Überprüfung der Mitarbeiter-Anmeldeinformationen
+        for (Person mitarbeiter : mitarbeiterListe) {
+            if (mitarbeiter.getUsername().equalsIgnoreCase(usernameOrEmail) || mitarbeiter.getEmail().equalsIgnoreCase(usernameOrEmail)) {
+                if (mitarbeiter.checkPasswort(password)) {
+                    // Mitarbeiter erfolgreich angemeldet
+                    return true;
+                }
+            }
+        }
+        // Ungültige Anmeldeinformationen
+        return false;
+    }
 
+
+
+
+
+    //public Person getMitarbeiter(int id) {
+    //     return mitarbeiterListe.get(id);
+    // }
     public List<Person> gibAlleMitarbeiter() {
 
         return mitarbeiterListe;

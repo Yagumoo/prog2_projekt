@@ -35,6 +35,18 @@ public class E_Shop {
         mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password, id);
     }
 
+    public void addKunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
+        kundenManagement.addKunde(vorname, nachname, email, username, password, id, ort, plz, strasse, strassenNummer);
+    }
+
+    public boolean loginMitarbeiter(String usernameOrEmail, String password){
+        return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
+    }
+
+    public boolean loginKunde(String usernameOrEmail, String password){
+        return kundenManagement.loginkunde(usernameOrEmail, password);
+    }
+
     public  boolean aendereArtikelBestand(int artikelnummer, int neuerBestand){
         return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
     }

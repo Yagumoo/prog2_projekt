@@ -83,6 +83,10 @@ public class Person {
       this.password = password;
     }
 
+    public boolean checkPasswort(String password) {
+      return this.password.equals(password);
+    }
+
     public String printDetails() {
         return "Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id + " |";
     }
