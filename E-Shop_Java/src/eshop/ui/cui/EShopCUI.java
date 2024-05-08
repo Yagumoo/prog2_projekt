@@ -10,7 +10,9 @@ import java.util.*;
 import java.util.List;
 
 public class EShopCUI {
-
+    /**
+     *
+     */
     private  void KundeOderMitarbeiter(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'?");
@@ -215,9 +217,13 @@ public class EShopCUI {
         int id = scan.nextInt();
         scan.nextLine();
 
+        try {
+            eShop.addMitarbeiter(vorname, nachname, email, username, passwort, id);
+            System.out.println("Neuer Mitarbeiter wurde registrert");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
-        eShop.addMitarbeiter(vorname, nachname, email, username, passwort, id);
-        System.out.println("Neuer Mitarbeiter wurde registrert");
     }
 
     private void kundeRegistrieren(Scanner scan){

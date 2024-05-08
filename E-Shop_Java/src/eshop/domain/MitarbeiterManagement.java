@@ -1,5 +1,6 @@
 package eshop.domain;
 
+import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.domain.ArtikelManagement;
 import eshop.enitities.Person;
@@ -13,13 +14,22 @@ public class MitarbeiterManagement {
     private List<Person> mitarbeiterListe = new ArrayList<>();
 
     public MitarbeiterManagement() {
-       addMitarbeiter("Johnny", "Sims", "sins.honny@gmail.com", "Sins", "12345", 1);
+        try {
+            addMitarbeiter("Johnny", "Sims", "sins.honny@gmail.com", "Sins", "12345", 1);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
     }
 
-    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) {
-        Person mitarbeiter = new Person(vorname, nachname, email, username, password, id);
-        mitarbeiterListe.add(mitarbeiter);
+    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) throws DoppelteIdException {
+        if(sucheMitarbeiter(id)){
+            throw new DoppelteIdException(id);
+        }else{
+            Person mitarbeiter = new Person(vorname, nachname, email, username, password, id);
+            mitarbeiterListe.add(mitarbeiter);
+        }
     }
 
     public boolean loginMitarbeiter(String usernameOrEmail, String password) {
@@ -36,13 +46,16 @@ public class MitarbeiterManagement {
         return false;
     }
 
+    public  boolean sucheMitarbeiter(int id){
+        for (Person mitarbeiter : mitarbeiterListe) {
+            if (mitarbeiter.getId() == id) {
+                return true;
+            }
+        }
+        // Ungültige Anmeldeinformationen
+        return false;
+    }
 
-
-
-
-    //public Person getMitarbeiter(int id) {
-    //     return mitarbeiterListe.get(id);
-    // }
     public List<Person> gibAlleMitarbeiter() {
 
         return mitarbeiterListe;

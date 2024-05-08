@@ -1,5 +1,6 @@
 package eshop.domain;
 
+import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
@@ -31,7 +32,7 @@ public class E_Shop {
         artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
     }
 
-    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) {
+    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) throws DoppelteIdException {
         mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password, id);
     }
 
