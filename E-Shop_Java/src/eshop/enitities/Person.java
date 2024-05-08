@@ -88,6 +88,6 @@ public class Person {
     }
 
     public String printDetails() {
-        return "Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id + " |";
+        return "Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id;
     }
 }

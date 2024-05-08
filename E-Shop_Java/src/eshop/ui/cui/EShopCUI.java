@@ -1,11 +1,14 @@
 package eshop.ui.cui;
 
+import eshop.domain.ArtikelManagement;
 import eshop.domain.E_Shop;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.*;
 import java.util.List;
 
@@ -135,8 +138,10 @@ public class EShopCUI {
     }
 
     private void ListeVonArtikel() {
-        List<Artikel> artikel = eShop.gibAlleArtikel();
-        artikelAusgeben(artikel);
+        Map<Integer, Artikel> artikel = eShop.gibAlleArtikel();
+        artikel.forEach((arikelnummer, artikelbezeichnung)-> {
+            System.out.println(artikelbezeichnung);
+        });
     }
 
     private  void ListeVonMitarbeiter(){
@@ -149,11 +154,7 @@ public class EShopCUI {
         kundenAusgeben(kunde);
     }
 
-    public void artikelAusgeben(List<Artikel> artikelListe) {
-        for (Artikel artikel : artikelListe) {
-            System.out.println(artikel.toString());
-        }
-    }
+
 
     public void mitarbeiterAusgeben(List<Person> mitarbeiterListe) {
         for (Person mitarbeiter : mitarbeiterListe) {

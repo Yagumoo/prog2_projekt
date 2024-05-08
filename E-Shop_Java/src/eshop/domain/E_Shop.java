@@ -7,6 +7,8 @@ import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class E_Shop {
 
@@ -15,7 +17,7 @@ public class E_Shop {
     private KundenManagement kundenManagement = new KundenManagement();
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
-    public List<Artikel> gibAlleArtikel() {
+    public Map<Integer, Artikel> gibAlleArtikel() {
 
         return artikelManagement.gibAlleArtikel();
     }

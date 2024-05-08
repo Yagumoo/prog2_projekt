@@ -5,6 +5,8 @@ import eshop.enitities.Artikel;
 import eshop.domain.ArtikelManagement;
 import eshop.enitities.Person;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 

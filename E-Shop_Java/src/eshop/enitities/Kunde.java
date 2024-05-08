@@ -60,6 +60,6 @@ public class Kunde extends Person {
 
     //@Override
     public String printDetails() {
-        return super.printDetails() + "Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
+        return super.printDetails() + "|Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
     }
 }

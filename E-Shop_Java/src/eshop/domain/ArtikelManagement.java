@@ -2,11 +2,13 @@ package eshop.domain;
 import java.util.ArrayList;
 import java.util.List;
 import eshop.enitities.Artikel;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ArtikelManagement {
 
 
-    private List<Artikel> artikelListe = new ArrayList<>();
+    private Map<Integer, Artikel> artikelListe = new HashMap<>();
 
     public ArtikelManagement() {
         addArtikel(5, "Energy", 20, 2.49);
@@ -16,22 +18,20 @@ public class ArtikelManagement {
 
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) {
         Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
-        artikelListe.add(artikel);
+        artikelListe.put(artikelnummer, artikel);
     }
 
     public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
-        for (Artikel artikel : artikelListe) {
-            if (artikel.getArtikelnummer() == artikelnummer) {
-                artikel.setArtikelbestand(neuerBestand);
-                return true;
-            }
+        Artikel artikel = artikelListe.get(artikelnummer);
+        if (artikel != null) {
+            artikel.setArtikelbestand(neuerBestand);
+            return true;
         }
         return false;
     }
 
 
-    public List<Artikel> gibAlleArtikel() {
-
+    public Map<Integer, Artikel> gibAlleArtikel() {
         return artikelListe;
     }
 }
