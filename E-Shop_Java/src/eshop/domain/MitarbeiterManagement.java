@@ -13,7 +13,7 @@ import java.util.List;
 public class MitarbeiterManagement {
     //Mitarbeiter erstellen
     //KundenListeaufrufen
-    private List<Person> mitarbeiterListe = new ArrayList<>();
+    private Map<Integer, Person> mitarbeiterListe = new HashMap<>();
 
     public MitarbeiterManagement() {
         try {
@@ -30,13 +30,14 @@ public class MitarbeiterManagement {
             throw new DoppelteIdException(id);
         }else{
             Person mitarbeiter = new Person(vorname, nachname, email, username, password, id);
-            mitarbeiterListe.add(mitarbeiter);
+            mitarbeiterListe.put(id, mitarbeiter);
         }
     }
 
     public boolean loginMitarbeiter(String usernameOrEmail, String password) {
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
-        for (Person mitarbeiter : mitarbeiterListe) {
+        for (Map.Entry<Integer, Person> entry : mitarbeiterListe.entrySet()) {
+            Person mitarbeiter = entry.getValue();
             if (mitarbeiter.getUsername().equalsIgnoreCase(usernameOrEmail) || mitarbeiter.getEmail().equalsIgnoreCase(usernameOrEmail)) {
                 if (mitarbeiter.checkPasswort(password)) {
                     // Mitarbeiter erfolgreich angemeldet
@@ -49,16 +50,10 @@ public class MitarbeiterManagement {
     }
 
     public  boolean sucheMitarbeiter(int id){
-        for (Person mitarbeiter : mitarbeiterListe) {
-            if (mitarbeiter.getId() == id) {
-                return true;
-            }
-        }
-        // Ungültige Anmeldeinformationen
-        return false;
+        return  mitarbeiterListe.containsKey(id);
     }
 
-    public List<Person> gibAlleMitarbeiter() {
+    public Map<Integer, Person> gibAlleMitarbeiter() {
 
         return mitarbeiterListe;
     }

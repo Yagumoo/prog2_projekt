@@ -5,6 +5,7 @@ import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
+import eshop.enitities.Warenkorb;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ public class E_Shop {
     private ArtikelManagement artikelManagement = new ArtikelManagement();
     private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
     private KundenManagement kundenManagement = new KundenManagement();
+    private WarenkorbManagement warenkorbManagement = new WarenkorbManagement();
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -22,11 +24,11 @@ public class E_Shop {
         return artikelManagement.gibAlleArtikel();
     }
 
-    public  List<Person> gibAlleMitarbeiter() {
+    public  Map<Integer, Person> gibAlleMitarbeiter() {
         return mitarbeiterManagement.gibAlleMitarbeiter();
     }
 
-    public  List<Kunde> gibAlleKunden() {
+    public  Map<Integer, Kunde> gibAlleKunden() {
         return kundenManagement.gibAlleKunden();
     }
 
@@ -50,9 +52,22 @@ public class E_Shop {
         return kundenManagement.loginkunde(usernameOrEmail, password);
     }
 
+    public Kunde getEingeloggterKunde() {
+        return kundenManagement.gibKundePerId(1); // oder die entsprechende Logik, um den eingeloggten Kunden zu identifizieren
+    }
+
+    public void setEingeloggterKunde(Kunde kunde) {
+        kundenManagement.setEingeloggterKunde(kunde);
+    }
+
+
+
     public  boolean aendereArtikelBestand(int artikelnummer, int neuerBestand){
         return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
     }
+
+    //Warenkorb
+
 }
 
 

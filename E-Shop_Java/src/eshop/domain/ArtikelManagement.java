@@ -32,8 +32,24 @@ public class ArtikelManagement {
 
 
     public Map<Integer, Artikel> gibAlleArtikel() {
+
         return artikelListe;
     }
+
+    public Artikel gibArtikelPerId(int artikelnummer){
+        return artikelListe.get(artikelnummer);
+    }
+
+    public boolean sucheArtikel(int artikelnummer){
+        return artikelListe.containsKey(artikelnummer);
+    }
+
+    public void warenkorbleeren(Map<Artikel, Integer> warenkorb) {
+    // Clear the Warenkorb
+    for (Map.Entry<Artikel, Integer> entry : warenkorb.entrySet()) {
+        entry.setValue(0);
+    }
+}
 }
 
 

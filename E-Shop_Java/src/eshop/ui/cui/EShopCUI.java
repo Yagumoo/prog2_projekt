@@ -4,6 +4,7 @@ import eshop.domain.ArtikelManagement;
 import eshop.domain.E_Shop;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
+import eshop.enitities.Warenkorb;
 import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
@@ -106,7 +107,7 @@ public class EShopCUI {
     private void KundenSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel in Warenkorb einfügen \n3: Artikel suchen \n4: Warenkorb öffnen \n5: Beenden");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel in Warenkorb einfügen");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -116,16 +117,52 @@ public class EShopCUI {
                 ListeVonArtikel();
                 break;
             case 2:
-                System.out.println("Bitte Artikel zum einfügen auswählen:");
+                System.out.println("Warenkorb oeffnen:");
+                do{
+                    Warenkorb();
+                    System.out.println("Noch was? (y/n)");
+                    printArrow(); String input = scan.next();
+                    if(input.equalsIgnoreCase("n")){
+                        break;
+                    }
+                }while(true);
+
+                break;
+        }
+    }
+
+    private void Warenkorb(){
+        System.out.println("Was willst du machen?");
+        System.out.println();
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel in Warenkorb einfügen \n3: Menge von Artikel aendern \n4: Warenkorb leeren \n5: Artikel kaufen \n6: Beenden");
+        Scanner scan = new Scanner(System.in);
+        int eingabe = scan.nextInt();
+
+        switch(eingabe) {
+            case 1:
+                System.out.println("Alle Artikel:");
+                ListeVonArtikel();
+                System.out.println("________________________________________________________________");
+                //listeVonArtikelImWarenkorb();
+                break;
+            case 2:
+                System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
+                //artikelInWarenkorb(scan);
                 break;
             case 3:
-                System.out.println("Artikelbezeichnung eingeben:");
+                System.out.println("Von welchem Artikel moechten Sie die Menge aendern?:");
+                //mengeVonArtikelInWarenkorbAendern(scan);
                 break;
             case 4:
-                System.out.println("Willkommen im Warenkorb");
+                System.out.println("Moechten Sie den Warenkorb wirklich leeren?");
+                //warenkorbLeeren(scan);
                 break;
             case 5:
-                System.out.println("Was möchten Sie nun tun?");
+                System.out.println("Moechten Sie alle Artikel im Warenkorb kaufen?");
+                //warenkorbKaufen();
+                break;
+            case 6:
+                System.out.println("Beenden (y/n)");
                 break;
         }
     }
@@ -145,28 +182,19 @@ public class EShopCUI {
     }
 
     private  void ListeVonMitarbeiter(){
-        List<Person> mitarbeiter = eShop.gibAlleMitarbeiter();
-        mitarbeiterAusgeben(mitarbeiter);
+        Map<Integer, Person> mitarbeiter = eShop.gibAlleMitarbeiter();
+        mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
+            System.out.println(mitarbeiterDaten.printDetails());
+        });
     }
 
     private  void ListeVonKunden(){
-        List<Kunde> kunde = eShop.gibAlleKunden();
-        kundenAusgeben(kunde);
+        Map<Integer, Kunde> kunden = eShop.gibAlleKunden();
+        kunden.forEach((kundeId, kundeDaten)-> {
+            System.out.println(kundeDaten.printDetails());
+        });
     }
 
-
-
-    public void mitarbeiterAusgeben(List<Person> mitarbeiterListe) {
-        for (Person mitarbeiter : mitarbeiterListe) {
-            System.out.println(mitarbeiter.printDetails());
-        }
-    }
-
-    public void kundenAusgeben(List<Kunde> kundeListe) {
-        for (Kunde kunde : kundeListe) {
-            System.out.println(kunde.printDetails());
-        }
-    }
 
     private void artikelHinzufugen(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
@@ -294,7 +322,6 @@ public class EShopCUI {
 
 
 
-
     public static void main(String[] args) {
         EShopCUI eShopCUI = new EShopCUI();
         Scanner scanner = new Scanner(System.in);
@@ -303,7 +330,7 @@ public class EShopCUI {
             //eShopCUI.start();
             eShopCUI.KundeOderMitarbeiter();
             System.out.println("Möchten Sie das Programm beenden? y/n");
-            String input = scanner.next();
+            System.out.print("--> "); String input = scanner.next();
             if(input.equalsIgnoreCase("y")){
                 break;
             }

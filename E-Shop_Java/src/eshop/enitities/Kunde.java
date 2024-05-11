@@ -1,8 +1,13 @@
 package eshop.enitities;
 
+import eshop.enitities.Warenkorb;
+
+import java.util.Map;
+import java.util.HashMap;
 
 //Hello Leute
 public class Kunde extends Person {
+
     private int plz;
     private String ort;
     private String strasse;
@@ -14,6 +19,7 @@ public class Kunde extends Person {
         this.plz = plz;
         this.strasse = strasse;
         this.strassenNummer = strassenNummer;
+
     }
 
     // Getter und Setter für PLZ
@@ -60,6 +66,6 @@ public class Kunde extends Person {
 
     //@Override
     public String printDetails() {
-        return super.printDetails() + "|Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
+        return super.printDetails() + " |Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
     }
 }
