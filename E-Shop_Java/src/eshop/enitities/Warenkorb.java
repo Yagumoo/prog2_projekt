@@ -11,7 +11,7 @@ public class Warenkorb {
         this.warenkorbMap = new HashMap<>();
     }
 
-    public void addItemToWarenkorb(Artikel artikel, int menge) {
+    public void artikelHinzufuegen(Artikel artikel, int menge) {
         if (warenkorbMap.containsKey(artikel)) {
             warenkorbMap.put(artikel, warenkorbMap.get(artikel) + menge);
         } else {
@@ -19,12 +19,16 @@ public class Warenkorb {
         }
     }
 
-    public void removeItemFromWarenkorb(Artikel artikel) {
+    public void artikelEntfernen(Artikel artikel) {
         warenkorbMap.remove(artikel);
     }
 
-    public void updateItemQuantityInWarenkorb(Artikel artikel, int newQuantity) {
+    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) {
         warenkorbMap.put(artikel, newQuantity);
+    }
+
+    public  void artikelImWarenkorbKaufen(){
+
     }
 
     public Map<Artikel, Integer> getWarenkorbMap() {
