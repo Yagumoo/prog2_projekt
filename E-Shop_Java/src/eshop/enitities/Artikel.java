@@ -53,6 +53,11 @@ public class Artikel{
         this.artikelbestand = artikelBestand;
     }
 
+    public void bestandAendern(int neuerBestand) {
+        this.artikelbestand = neuerBestand;
+    }
+
+
     @Override
     public String toString() {
         return "Artikel: Artikelnummer: " + artikelnummer + " |Bezeichnung: " + artikelbezeichnung + " |Bestand: " + artikelbestand + " |Preis: " + artikelPreis + "";

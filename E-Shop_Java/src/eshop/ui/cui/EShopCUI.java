@@ -2,6 +2,7 @@ package eshop.ui.cui;
 
 import eshop.domain.ArtikelManagement;
 import eshop.domain.E_Shop;
+import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Warenkorb;
@@ -141,25 +142,25 @@ public class EShopCUI {
         switch(eingabe) {
             case 1:
                 System.out.println("Alle Artikel:");
-                ListeVonArtikel();
+                //ListeVonArtikel();
                 System.out.println("________________________________________________________________");
-                //listeVonArtikelImWarenkorb();
+                ListeVonWarenkorb();
                 break;
             case 2:
                 System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
-                //artikelInWarenkorb(scan);
+                artikelInWarenkorb(scan);
                 break;
             case 3:
                 System.out.println("Von welchem Artikel moechten Sie die Menge aendern?:");
                 //mengeVonArtikelInWarenkorbAendern(scan);
                 break;
             case 4:
-                System.out.println("Moechten Sie den Warenkorb wirklich leeren?");
-                //warenkorbLeeren(scan);
+                System.out.println("Moechten Sie den Warenkorb wirklich leeren? (Y/N)");
+                warenkorbLeeren(scan);
                 break;
             case 5:
                 System.out.println("Moechten Sie alle Artikel im Warenkorb kaufen?");
-                //warenkorbKaufen();
+                warenkorbKaufen();
                 break;
             case 6:
                 System.out.println("Beenden (y/n)");
@@ -177,7 +178,7 @@ public class EShopCUI {
     private void ListeVonArtikel() {
         Map<Integer, Artikel> artikel = eShop.gibAlleArtikel();
         artikel.forEach((arikelnummer, artikelbezeichnung)-> {
-            System.out.println(artikelbezeichnung);
+            System.out.println("Gesamt Preis: "+ artikelbezeichnung);
         });
     }
 
@@ -195,6 +196,11 @@ public class EShopCUI {
         });
     }
 
+    private void ListeVonWarenkorb(){
+        System.out.println(eShop.printWarenkorbRechnung());
+        System.out.println("Gesamt Preis: "+ eShop.gesamtPreis());
+
+    }
 
     private void artikelHinzufugen(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
@@ -217,8 +223,12 @@ public class EShopCUI {
         double artikelPreis = scan.nextDouble();
         scan.nextLine();
 
-        eShop.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
-        System.out.println("Artikel wurde hinzugefügt");
+        try{
+            eShop.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+            System.out.println("Artikel wurde hinzugefügt");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void mitarbeiterRegistrieren(Scanner scan){
@@ -297,8 +307,12 @@ public class EShopCUI {
         scan.nextLine();
 
 
-        eShop.addKunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
-        System.out.println("Sie haben sich als Kunden registriert");
+        try{
+            eShop.addKunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
+            System.out.println("Sie haben sich als Kunden registriert");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void bestandAeundern(Scanner scan){
@@ -320,6 +334,57 @@ public class EShopCUI {
         System.out.print("--> ");
     }
 
+    private void artikelInWarenkorb(Scanner scan){
+        scan = new Scanner(System.in);
+
+        System.out.println("Bitte geben Sie die Artikelnummer ein:");
+        int artikelnummer = scan.nextInt();
+        scan.nextLine();
+
+        System.out.println("Bitte geben Sie die Menge ein:");
+        int menge = scan.nextInt();
+
+        // Suche Artikel mit der angegebenen Artikelnummer
+        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+        if (artikel == null) {
+            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
+            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+        }
+
+        // Fügen Artikel dem Warenkorb hinzu
+        eShop.artikelInWarenkorbHinzufuegen1(artikel, menge);
+
+        System.out.println("Artikel erfolgreich hinzugefügt.");
+    }
+
+    private void warenkorbKaufen(){
+        Scanner scanner = new Scanner(System.in);
+
+        // Kauf bestätigen
+        System.out.println("Möchten Sie den Warenkorb kaufen? (Y/N)");
+        String antwort = scanner.nextLine();
+
+        if (antwort.equalsIgnoreCase("Y")) {
+            // Artikel im Warenkorb kaufen
+            System.out.print("Gesamt Preis: "); ListeVonWarenkorb();
+            eShop.warenkorbKaufen();
+            System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
+
+
+            // Warenkorb leeren
+            eShop.warenkorbLeeren();
+        } else {
+            System.out.println("Der Kauf wurde abgebrochen.");
+        }
+    }
+
+    private  void warenkorbLeeren(Scanner scan){
+        scan = new Scanner(System.in);
+        String scaner = scan.next();
+        if(scaner.equalsIgnoreCase("Y")){
+            eShop.warenkorbLeeren();
+        }
+    }
 
 
     public static void main(String[] args) {
