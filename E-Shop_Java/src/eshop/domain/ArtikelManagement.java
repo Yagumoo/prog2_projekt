@@ -56,11 +56,13 @@ public class ArtikelManagement {
     }
 
     public void warenkorbleeren(Map<Artikel, Integer> warenkorb) {
-    // Clear the Warenkorb
-    for (Map.Entry<Artikel, Integer> entry : warenkorb.entrySet()) {
-        entry.setValue(0);
+        // Clear the Warenkorb
+        for (Map.Entry<Artikel, Integer> entry : warenkorb.entrySet()) {
+            entry.setValue(0);
+        }
     }
-}
+
+
 }
 
 

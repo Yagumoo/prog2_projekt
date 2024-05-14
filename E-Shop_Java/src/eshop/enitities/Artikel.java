@@ -58,10 +58,8 @@ public class Artikel{
     }
 
 
-    @Override
+   @Override
     public String toString() {
         return "Artikel: Artikelnummer: " + artikelnummer + " |Bezeichnung: " + artikelbezeichnung + " |Bestand: " + artikelbestand + " |Preis: " + artikelPreis + "";
     }
-
-
 }

@@ -29,10 +29,6 @@ public class E_Shop {
         return kundenManagement.gibAlleKunden();
     }
 
-    public Map<Artikel, Integer> gibAlleWarenkorbArtikel(){
-        return warenkorb.getWarenkorbMap();
-    }
-
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
         artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
     }
@@ -89,6 +85,14 @@ public class E_Shop {
 
     public void warenkorbKaufen(){
         warenkorb.warenkorbKaufen();
+    }
+
+    public void bestandImWarenkorbAendern(Artikel artikel, int menge){
+        warenkorb.bestandImWarenkorbAendern(artikel, menge);
+    }
+
+    public void artikelImWarenkorbEntfernen(Artikel artikel){
+        warenkorb.artikelEntfernen(artikel);
     }
 
 }

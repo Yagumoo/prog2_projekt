@@ -18,7 +18,8 @@ public class EShopCUI {
     /**
      *
      */
-    private  void KundeOderMitarbeiter(){
+
+    private void KundeOderMitarbeiter(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'?");
         String input = scan.next();
@@ -29,6 +30,7 @@ public class EShopCUI {
             printArrow(); String input2 = scan.next();
             if(input2.equalsIgnoreCase("N")){
                 System.out.println("Bitte Registrieren Sie sich");
+
                 kundeRegistrieren(scan);
             }else{
                 System.out.println("Bitte geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
@@ -37,7 +39,15 @@ public class EShopCUI {
                 printArrow(); String password = scan.next();
 
                 if(eShop.loginKunde(usernameOrEmail, password)){
-                    KundenSeite();
+                    do{
+                        KundenSeite();
+                        System.out.println("Noch was? (y/n)");
+                        printArrow(); input = scan.next();
+                        if(input.equalsIgnoreCase("n")){
+                                break;
+                        }
+                    } while (true);
+
                 }else{
                     System.out.println("Ungültiges Passwort oder Benutzername! Bitte erneut versuchen!");
                 }
@@ -53,7 +63,16 @@ public class EShopCUI {
             printArrow(); String password = scan.next();
 
             if(eShop.loginMitarbeiter(usernameOrEmail, password)){
-                MitarbeiterSeite();
+
+                do{
+                    MitarbeiterSeite();
+                    System.out.println("Noch was? (y/n)");
+                    printArrow(); input = scan.next();
+                    if(input.equalsIgnoreCase("n")){
+                        break;
+                    }
+                } while (true);
+
             }else{
                 System.out.println("Ungültiges Passwort oder Benutzername! Bitte erneut versuchen!");
             }
@@ -68,7 +87,7 @@ public class EShopCUI {
     private void MitarbeiterSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Kunden Liste \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Beenden");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Kunden Liste ausgeben \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -108,7 +127,7 @@ public class EShopCUI {
     private void KundenSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel in Warenkorb einfügen");
+        System.out.println("1: Artikel ausgeben lassen \n2: Warenkorb oeffnen");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -119,23 +138,16 @@ public class EShopCUI {
                 break;
             case 2:
                 System.out.println("Warenkorb oeffnen:");
-                do{
                     Warenkorb();
-                    System.out.println("Noch was? (y/n)");
-                    printArrow(); String input = scan.next();
-                    if(input.equalsIgnoreCase("n")){
-                        break;
-                    }
-                }while(true);
-
                 break;
         }
     }
 
     private void Warenkorb(){
+
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel in Warenkorb einfügen \n3: Menge von Artikel aendern \n4: Warenkorb leeren \n5: Artikel kaufen \n6: Beenden");
+        System.out.println("1: Artikel im Warenkorb ausgeben lassen \n2: Artikel in Warenkorb einfügen \n3: Menge von einem Artikel im Warenkorb aendern \n4: Warenkorb leeren \n5: Alle Artikel aus dem Warenkorb kaufen \n6: Bestimmten Artikel aus dem Warenkorb entfernen \n7: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -152,7 +164,7 @@ public class EShopCUI {
                 break;
             case 3:
                 System.out.println("Von welchem Artikel moechten Sie die Menge aendern?:");
-                //mengeVonArtikelInWarenkorbAendern(scan);
+                bestandImWarenkorbAendern(scan);
                 break;
             case 4:
                 System.out.println("Moechten Sie den Warenkorb wirklich leeren? (Y/N)");
@@ -163,6 +175,10 @@ public class EShopCUI {
                 warenkorbKaufen();
                 break;
             case 6:
+                artikelAusWarenkorbEntfernen(scan);
+                System.out.println("Waehlen Sie den Artikel, denn Sie entfernen moechten");
+                break;
+            case 7:
                 System.out.println("Beenden (y/n)");
                 break;
         }
@@ -386,6 +402,42 @@ public class EShopCUI {
         }
     }
 
+    //Funktioniert semi
+    private void artikelAusWarenkorbEntfernen(Scanner scan){
+        System.out.println("Bitte geben Sie die Artikelnummer ein:");
+        printArrow();
+        int artikelnummer = scan.nextInt();
+        scan.nextLine();
+
+        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+
+        if (artikel != null) {
+            eShop.artikelImWarenkorbEntfernen(artikel);
+        } else {
+            System.out.println("Artikel nicht gefunden.");
+        }
+    }
+
+    //Geht noch nicht
+    public void bestandImWarenkorbAendern(Scanner scan) {
+        System.out.println("Bitte Artikelnummer einfügen:");
+        int artikelnummer = scan.nextInt();
+        scan.nextLine(); // Um das Eingabezeichen für die nächste Eingabe zu verbrauchen
+
+        System.out.println("Bitte neuen Artikelbestand einfügen:");
+        int neuerBestand = scan.nextInt();
+        scan.nextLine(); // Um das Eingabezeichen für die nächste Eingabe zu verbrauchen
+
+        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+
+        if (artikel != null) {
+            eShop.bestandImWarenkorbAendern(artikel, neuerBestand);
+            System.out.println("Artikel wurde erfolgreich geändert");
+        } else {
+            System.out.println("Artikel konnte nicht gefunden werden");
+        }
+    }
+
 
     public static void main(String[] args) {
         EShopCUI eShopCUI = new EShopCUI();
@@ -402,7 +454,4 @@ public class EShopCUI {
         } while (true);
         scanner.close();
     }
-
 }
-
-
