@@ -25,7 +25,7 @@ public class ArtikelManagement {
 
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
         if(sucheArtikel(artikelnummer)){
-
+            throw new DoppelteIdException(artikelnummer);
         }else{
             Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
             artikelListe.put(artikelnummer, artikel);
@@ -54,14 +54,6 @@ public class ArtikelManagement {
     public boolean sucheArtikel(int artikelnummer){
         return artikelListe.containsKey(artikelnummer);
     }
-
-    public void warenkorbleeren(Map<Artikel, Integer> warenkorb) {
-        // Clear the Warenkorb
-        for (Map.Entry<Artikel, Integer> entry : warenkorb.entrySet()) {
-            entry.setValue(0);
-        }
-    }
-
 
 }
 

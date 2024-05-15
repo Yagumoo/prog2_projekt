@@ -64,8 +64,8 @@ public class Kunde extends Person {
         this.strassenNummer = strassenNummer;
     }
 
-    //@Override
-    public String printDetails() {
-        return super.printDetails() + " |Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
+    @Override
+    public String toString() {
+        return super.toString() + " |Addresse: " + ort + " " + plz + " " + strasse + " " + strassenNummer;
     }
 }

@@ -8,12 +8,12 @@ public class Ereignis {
     }
 
     private Date datum;
-    private String artikel; // Artikel
+    private Artikel artikel; // Artikel
     private int anzahl;
-    private String beteiligtePerson; // Person
+    private Person beteiligtePerson; // Person
     private EreignisTyp typ;
 
-    public Ereignis(Date datum, String artikel, int anzahl, String beteiligtePerson){
+    public Ereignis(Date datum, Artikel artikel, int anzahl, Person beteiligtePerson){
         this.datum = datum;
         this.artikel = artikel;
         this. anzahl = anzahl;
@@ -28,11 +28,11 @@ public class Ereignis {
         this.datum = datum;
     }
 
-    public String getArtikel() {
+    public Artikel getArtikel() {
         return artikel;
     }
 
-    public void setArtikel(String artikel) {
+    public void setArtikel(Artikel artikel) {
         this.artikel = artikel;
     }
 
@@ -44,11 +44,11 @@ public class Ereignis {
         this.anzahl = anzahl;
     }
 
-    public String getBeteiligtePerson() {
+    public Person getBeteiligtePerson() {
         return beteiligtePerson;
     }
 
-    public void setBeteiligtePerson(String beteiligtePerson) {
+    public void setBeteiligtePerson(Person beteiligtePerson) {
         this.beteiligtePerson = beteiligtePerson;
     }
 

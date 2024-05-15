@@ -150,7 +150,10 @@ public class EShopCUI {
 
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel im Warenkorb ausgeben lassen \n2: Artikel in Warenkorb einfügen \n3: Menge von einem Artikel im Warenkorb aendern \n4: Warenkorb leeren \n5: Alle Artikel aus dem Warenkorb kaufen \n6: Bestimmten Artikel aus dem Warenkorb entfernen \n7: Beenden");
+        System.out.println("1: Artikel im Warenkorb ausgeben lassen \n2: Artikel in Warenkorb einfügen \n" +
+                            "3: Menge von einem Artikel im Warenkorb aendern \n4: Warenkorb leeren \n" +
+                            "5: Alle Artikel aus dem Warenkorb kaufen \n6: Bestimmten Artikel aus dem Warenkorb entfernen \n" +
+                            "7: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -179,7 +182,7 @@ public class EShopCUI {
                 break;
             case 6:
                 artikelAusWarenkorbEntfernen(scan);
-                System.out.println("Waehlen Sie den Artikel, denn Sie entfernen moechten");
+                System.out.println("Waehlen Sie den Artikel den Sie entfernen moechten");
                 break;
             case 7:
                 System.out.println("Beenden (y/n)");
@@ -204,14 +207,14 @@ public class EShopCUI {
     private  void ListeVonMitarbeiter(){
         Map<Integer, Person> mitarbeiter = eShop.gibAlleMitarbeiter();
         mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
-            System.out.println(mitarbeiterDaten.printDetails());
+            System.out.println(mitarbeiterDaten.toString());
         });
     }
 
     private  void ListeVonKunden(){
         Map<Integer, Kunde> kunden = eShop.gibAlleKunden();
         kunden.forEach((kundeId, kundeDaten)-> {
-            System.out.println(kundeDaten.printDetails());
+            System.out.println(kundeDaten.toString());
         });
     }
 

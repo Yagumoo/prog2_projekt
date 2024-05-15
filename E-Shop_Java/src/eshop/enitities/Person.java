@@ -87,7 +87,8 @@ public abstract class Person {
       return this.password.equals(password);
     }
 
-    public String printDetails() {
+    @Override
+    public String toString() {
         return "Name: " + vorname + " " + nachname + " |Username: " + username + " " + "|ID: " + id;
     }
 }

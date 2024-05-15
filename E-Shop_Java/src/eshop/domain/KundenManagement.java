@@ -37,7 +37,6 @@ public class KundenManagement {
 
     }
 
-
     public Kunde loginkunde(String usernameOrEmail, String password) {
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
         for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {

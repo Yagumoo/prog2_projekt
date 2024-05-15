@@ -10,13 +10,6 @@ import java.util.List;
 
 public class WarenkorbManagement {
 
-    public WarenkorbManagement() {
-
-    }
-    /*
-    public warenkorbKaufen(){
-
-    }
-    */
+    public WarenkorbManagement() {}
 
 }
