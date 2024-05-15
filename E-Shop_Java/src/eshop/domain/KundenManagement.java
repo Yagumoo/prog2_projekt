@@ -38,19 +38,19 @@ public class KundenManagement {
     }
 
 
-    public boolean loginkunde(String usernameOrEmail, String password) {
+    public Kunde loginkunde(String usernameOrEmail, String password) {
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
         for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {
             Kunde kunde = entry.getValue();
             if (kunde.getUsername().equalsIgnoreCase(usernameOrEmail) || kunde.getEmail().equalsIgnoreCase(usernameOrEmail)) {
                 if (kunde.checkPasswort(password)) {
                     // Mitarbeiter erfolgreich angemeldet
-                    return true;
+                    return kunde;
                 }
             }
         }
         // Ungültige Anmeldeinformationen
-        return false;
+        return null;
     }
 
     public  void setEingeloggterKunde(Kunde kunde) {

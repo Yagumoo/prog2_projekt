@@ -14,6 +14,7 @@ public class E_Shop {
     private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
     private KundenManagement kundenManagement = new KundenManagement();
     private Warenkorb warenkorb = new Warenkorb();
+    // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -45,7 +46,7 @@ public class E_Shop {
         return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
     }
 
-    public boolean loginKunde(String usernameOrEmail, String password){
+    public Kunde loginKunde(String usernameOrEmail, String password){
         return kundenManagement.loginkunde(usernameOrEmail, password);
     }
 
@@ -66,8 +67,10 @@ public class E_Shop {
     }
 
     //Warenkorb
-
+//    public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen1(Artikel artikel, int menge){
+        // 1. Artikelbestand im ArtikelManagement prüfen
+        // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen
         warenkorb.artikelHinzufuegen(artikel, menge);
     }
 

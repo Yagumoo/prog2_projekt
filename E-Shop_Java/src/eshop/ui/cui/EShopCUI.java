@@ -19,6 +19,8 @@ public class EShopCUI {
      *
      */
 
+    private Person eingeloggtePerson = null;
+
     private void KundeOderMitarbeiter(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'?");
@@ -38,7 +40,8 @@ public class EShopCUI {
                 System.out.println("Bitte geben Sie ihr Passwort ein: ");
                 printArrow(); String password = scan.next();
 
-                if(eShop.loginKunde(usernameOrEmail, password)){
+                eingeloggtePerson = eShop.loginKunde(usernameOrEmail, password);
+                if(eingeloggtePerson != null){
                     do{
                         KundenSeite();
                         System.out.println("Noch was? (y/n)");

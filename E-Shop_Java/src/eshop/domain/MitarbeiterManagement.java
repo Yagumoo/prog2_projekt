@@ -3,6 +3,7 @@ package eshop.domain;
 import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.domain.ArtikelManagement;
+import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
 import java.util.Map;
@@ -29,7 +30,7 @@ public class MitarbeiterManagement {
         if(sucheMitarbeiter(id)){
             throw new DoppelteIdException(id);
         }else{
-            Person mitarbeiter = new Person(vorname, nachname, email, username, password, id);
+            Person mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, password, id);
             mitarbeiterListe.put(id, mitarbeiter);
         }
     }

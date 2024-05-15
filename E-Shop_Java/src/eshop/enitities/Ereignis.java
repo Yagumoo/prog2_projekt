@@ -2,10 +2,16 @@ package eshop.enitities;
 import java.util.Date;
 
 public class Ereignis {
+
+    public enum EreignisTyp {
+        NEU, KAUF, ERHOEHUNG, REDUZIERUNG
+    }
+
     private Date datum;
-    private String artikel;
+    private String artikel; // Artikel
     private int anzahl;
-    private String beteiligtePerson;
+    private String beteiligtePerson; // Person
+    private EreignisTyp typ;
 
     public Ereignis(Date datum, String artikel, int anzahl, String beteiligtePerson){
         this.datum = datum;

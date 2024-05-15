@@ -1,6 +1,6 @@
 package eshop.enitities;
 
-public class Person {
+public abstract class Person {
   private String vorname;
   private String nachname;
   private String email;
