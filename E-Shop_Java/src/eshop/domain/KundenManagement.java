@@ -44,6 +44,7 @@ public class KundenManagement {
             if (kunde.getUsername().equalsIgnoreCase(usernameOrEmail) || kunde.getEmail().equalsIgnoreCase(usernameOrEmail)) {
                 if (kunde.checkPasswort(password)) {
                     // Mitarbeiter erfolgreich angemeldet
+                    setEingeloggterKunde(kunde);
                     return kunde;
                 }
             }

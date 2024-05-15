@@ -17,6 +17,10 @@ public class E_Shop {
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
+    public E_Shop() {
+
+    }
+
     public Map<Integer, Artikel> gibAlleArtikel() {
 
         return artikelManagement.gibAlleArtikel();
@@ -71,31 +75,45 @@ public class E_Shop {
     public void artikelInWarenkorbHinzufuegen1(Artikel artikel, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
         // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen
-        warenkorb.artikelHinzufuegen(artikel, menge);
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.artikelHinzufuegen(artikel, menge);
     }
 
     public String printWarenkorbRechnung(){
-        return warenkorb.gibtRechnung();
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        return wk.gibtRechnung();
     }
 
     public double gesamtPreis(){
-        return warenkorb.gesamtPreis();
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        return wk.gesamtPreis();
     }
 
     public void warenkorbLeeren(){
-        warenkorb.warenkorbLeeren();
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.warenkorbLeeren();
     }
 
     public void warenkorbKaufen(){
-        warenkorb.warenkorbKaufen();
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.warenkorbKaufen();
     }
 
     public void bestandImWarenkorbAendern(Artikel artikel, int menge){
-        warenkorb.bestandImWarenkorbAendern(artikel, menge);
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.bestandImWarenkorbAendern(artikel, menge);
     }
 
     public void artikelImWarenkorbEntfernen(Artikel artikel){
-        warenkorb.artikelEntfernen(artikel);
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.artikelEntfernen(artikel);
     }
 
 }
