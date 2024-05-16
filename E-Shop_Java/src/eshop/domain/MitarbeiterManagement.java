@@ -39,7 +39,7 @@ public class MitarbeiterManagement {
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
         for (Map.Entry<Integer, Person> entry : mitarbeiterListe.entrySet()) {
             Person mitarbeiter = entry.getValue();
-            if (mitarbeiter.getUsername().equalsIgnoreCase(usernameOrEmail) || mitarbeiter.getEmail().equalsIgnoreCase(usernameOrEmail)) {
+            if (mitarbeiter.getUsername().equals(usernameOrEmail) || mitarbeiter.getEmail().equals(usernameOrEmail)) {
                 if (mitarbeiter.checkPasswort(password)) {
                     // Mitarbeiter erfolgreich angemeldet
                     return true;

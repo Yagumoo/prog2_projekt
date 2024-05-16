@@ -41,7 +41,7 @@ public class KundenManagement {
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
         for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {
             Kunde kunde = entry.getValue();
-            if (kunde.getUsername().equalsIgnoreCase(usernameOrEmail) || kunde.getEmail().equalsIgnoreCase(usernameOrEmail)) {
+            if (kunde.getUsername().equals(usernameOrEmail) || kunde.getEmail().equals(usernameOrEmail)) {
                 if (kunde.checkPasswort(password)) {
                     // Mitarbeiter erfolgreich angemeldet
                     setEingeloggterKunde(kunde);

@@ -226,24 +226,29 @@ public class EShopCUI {
 
     private void artikelHinzufugen(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
+        printArrow();
         int artikelnummer = scan.nextInt();
-        scan.nextLine();
+
 
         System.out.println("Bitte Artikelbezeichnung einfügen:");
+        printArrow();
         String artikelbezeichnung = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte Artikelbestand einfügen:");
+        printArrow();
         int artikelbestand = scan.nextInt();
-        scan.nextLine();
+
 
         System.out.println("Bitte Artikelpreis einfügen:");
         while(!scan.hasNextDouble()){
             System.out.println("Ungultige Eingabe. Bitte nochmal versuchen");
+            printArrow();
             scan.next();
         }
+        printArrow();
         double artikelPreis = scan.nextDouble();
-        scan.nextLine();
+
 
         try{
             eShop.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
@@ -255,28 +260,33 @@ public class EShopCUI {
 
     private void mitarbeiterRegistrieren(Scanner scan){
         System.out.println("Bitte Vornamen einfügen:");
+        printArrow();
         String vorname = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte Nachnamen einfügen:");
+        printArrow();
         String nachname = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte eMail erstellen:");
+        printArrow();
         String email = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte username erstellen:");
+        printArrow();
         String username = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte Passwort erstellen:");
+        printArrow();
         String passwort = scan.next();
-        scan.nextLine();
+
 
         System.out.println("Bitte ID einfügen:");
+        printArrow();
         int id = scan.nextInt();
-        scan.nextLine();
 
         try {
             eShop.addMitarbeiter(vorname, nachname, email, username, passwort, id);
@@ -289,44 +299,54 @@ public class EShopCUI {
 
     private void kundeRegistrieren(Scanner scan){
         System.out.println("Bitte Vornamen einfügen:");
-        printArrow(); String vorname = scan.next();
-        scan.nextLine();
+        printArrow();
+        String vorname = scan.next();
+
 
         System.out.println("Bitte Nachnamen einfügen:");
-        printArrow(); String nachname = scan.next();
-        scan.nextLine();
+        printArrow();
+        String nachname = scan.next();
+
 
         System.out.println("Bitte eMail erstellen:");
-        printArrow(); String email = scan.next();
-        scan.nextLine();
+        printArrow();
+        String email = scan.next();
+
 
         System.out.println("Bitte username erstellen:");
-        printArrow(); String username = scan.next();
-        scan.nextLine();
+        printArrow();
+        String username = scan.next();
+
 
         System.out.println("Bitte Passwort erstellen:");
-        printArrow(); String passwort = scan.next();
-        scan.nextLine();
+        printArrow();
+        String passwort = scan.next();
+
 
         System.out.println("Bitte ID einfügen:");
-        printArrow(); int id = scan.nextInt();
-        scan.nextLine();
+        printArrow();
+        int id = scan.nextInt();
+
 
         System.out.println("Bitte Ort einfügen:");
-        printArrow(); String ort = scan.next();
-        scan.nextLine();
+        printArrow();
+        String ort = scan.next();
+
 
         System.out.println("Bitte PLZ einfügen:");
-        printArrow(); int plz = scan.nextInt();
-        scan.nextLine();
+        printArrow();
+        int plz = scan.nextInt();
+
 
         System.out.println("Bitte Strassennamen einfügen:");
-        printArrow(); String strasse = scan.next();
-        scan.nextLine();
+        printArrow();
+        String strasse = scan.next();
+
 
         System.out.println("Bitte Strassennummer einfügen:");
-        printArrow(); int strassenNummer = scan.nextInt();
-        scan.nextLine();
+        printArrow();
+        int strassenNummer = scan.nextInt();
+
 
 
         try{
@@ -339,8 +359,10 @@ public class EShopCUI {
 
     private void bestandAeundern(Scanner scan){
         System.out.println("Bitte Artikelnummer einfügen:");
+        printArrow();
         int artikelnummer = scan.nextInt();
         System.out.println("Bitte neuen Artikelbestand einfügen:");
+        printArrow();
         int neuerBestand = scan.nextInt();
 
         boolean erfolgreichGeaendert = eShop.aendereArtikelBestand(artikelnummer, neuerBestand);
@@ -360,10 +382,12 @@ public class EShopCUI {
         scan = new Scanner(System.in);
 
         System.out.println("Bitte geben Sie die Artikelnummer ein:");
+        printArrow();
         int artikelnummer = scan.nextInt();
-        scan.nextLine();
+
 
         System.out.println("Bitte geben Sie die Menge ein:");
+        printArrow();
         int menge = scan.nextInt();
 
         // Suche Artikel mit der angegebenen Artikelnummer
@@ -384,6 +408,7 @@ public class EShopCUI {
 
         // Kauf bestätigen
         System.out.println("Möchten Sie den Warenkorb kaufen? (Y/N)");
+        printArrow();
         String antwort = scanner.nextLine();
 
         if (antwort.equalsIgnoreCase("Y")) {
@@ -413,7 +438,7 @@ public class EShopCUI {
         System.out.println("Bitte geben Sie die Artikelnummer ein:");
         printArrow();
         int artikelnummer = scan.nextInt();
-        scan.nextLine();
+
 
         Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
@@ -428,11 +453,11 @@ public class EShopCUI {
     public void bestandImWarenkorbAendern(Scanner scan) {
         System.out.println("Bitte Artikelnummer einfügen:");
         int artikelnummer = scan.nextInt();
-        scan.nextLine(); // Um das Eingabezeichen für die nächste Eingabe zu verbrauchen
+
 
         System.out.println("Bitte neuen Artikelbestand einfügen:");
         int neuerBestand = scan.nextInt();
-        scan.nextLine(); // Um das Eingabezeichen für die nächste Eingabe zu verbrauchen
+
 
         Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
