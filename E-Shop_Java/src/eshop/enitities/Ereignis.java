@@ -1,5 +1,8 @@
 package eshop.enitities;
+import eshop.domain.EreignisManagement;
+
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Ereignis {
 
@@ -8,16 +11,17 @@ public class Ereignis {
     }
 
     private Date datum;
-    private Artikel artikel; // Artikel
+    private String artikelbezeichnung; // Artikel
     private int anzahl;
-    private Person beteiligtePerson; // Person
+    private Person kundeOderMitarbeiter;
     private EreignisTyp typ;
 
-    public Ereignis(Date datum, Artikel artikel, int anzahl, Person beteiligtePerson){
+    public Ereignis(Date datum, String artikelbezeichnung, int anzahl, Person kundeOderMitarbeiter, EreignisTyp typ){
         this.datum = datum;
-        this.artikel = artikel;
+        this.artikelbezeichnung = artikelbezeichnung;
         this. anzahl = anzahl;
-        this. beteiligtePerson = beteiligtePerson;
+        this.kundeOderMitarbeiter = kundeOderMitarbeiter;
+        this.typ = typ;
     }
 
     public Date getDatum() {
@@ -28,12 +32,12 @@ public class Ereignis {
         this.datum = datum;
     }
 
-    public Artikel getArtikel() {
-        return artikel;
+    public String getArtikel() {
+        return artikelbezeichnung;
     }
 
     public void setArtikel(Artikel artikel) {
-        this.artikel = artikel;
+        this.artikelbezeichnung = artikelbezeichnung;
     }
 
     public int getAnzahl() {
@@ -44,22 +48,47 @@ public class Ereignis {
         this.anzahl = anzahl;
     }
 
-    public Person getBeteiligtePerson() {
-        return beteiligtePerson;
+    public String simpleDatum() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(datum);
     }
 
-    public void setBeteiligtePerson(Person beteiligtePerson) {
-        this.beteiligtePerson = beteiligtePerson;
-    }
 
     @Override
     public String toString() {
-        return "Datum: " + datum +
-                ", Artikel: " + artikel +
+        return "Datum: " + simpleDatum() +
+                ", Artikel: " + artikelbezeichnung +
                 ", Anzahl: " + anzahl +
-                ", Beteiligte Person: " + beteiligtePerson;
+                ", Person: " + kundeOderMitarbeiter +
+                ", Typ: " + typ;
     }
+
+
+    public Ereignis ereignisSpeicher(Date datum, String artikelbezeichnung, int anzahl, String nachname, int id){
+        Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl,kundeOderMitarbeiter,typ);
+        return ereignis;
+
+    }
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 public void einlagern(Artikel artikel, int anzahl, Person mitarbeiter) {

@@ -3,6 +3,7 @@ package eshop.domain;
 import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.domain.ArtikelManagement;
+import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
@@ -15,6 +16,7 @@ public class MitarbeiterManagement {
     //Mitarbeiter erstellen
     //KundenListeaufrufen
     private Map<Integer, Person> mitarbeiterListe = new HashMap<>();
+    private Person eingeloggterMitarbeiter;
 
     public MitarbeiterManagement() {
         try {
@@ -41,13 +43,21 @@ public class MitarbeiterManagement {
             Person mitarbeiter = entry.getValue();
             if (mitarbeiter.getUsername().equals(usernameOrEmail) || mitarbeiter.getEmail().equals(usernameOrEmail)) {
                 if (mitarbeiter.checkPasswort(password)) {
-                    // Mitarbeiter erfolgreich angemeldet
+                    setEingeloggteMitarbeiter(mitarbeiter);
                     return true;
                 }
             }
         }
         // Ungültige Anmeldeinformationen
         return false;
+    }
+
+    public  void setEingeloggteMitarbeiter(Person mitarbeiter) {
+        this.eingeloggterMitarbeiter = mitarbeiter;
+    }
+
+    public Person getEingeloggterMitarbeiter() {
+        return eingeloggterMitarbeiter;
     }
 
     public  boolean sucheMitarbeiter(int id){

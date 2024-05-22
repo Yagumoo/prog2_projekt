@@ -1,12 +1,11 @@
 package eshop.domain;
 
 import eshop.domain.exceptions.DoppelteIdException;
-import eshop.enitities.Artikel;
-import eshop.enitities.Kunde;
-import eshop.enitities.Person;
-import eshop.enitities.Warenkorb;
+import eshop.enitities.*;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.List;
 
 public class E_Shop {
 
@@ -14,6 +13,7 @@ public class E_Shop {
     private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
     private KundenManagement kundenManagement = new KundenManagement();
     private Warenkorb warenkorb = new Warenkorb();
+    private EreignisManagement ereignisManagement = new EreignisManagement();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
@@ -36,10 +36,17 @@ public class E_Shop {
 
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
         artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+        ereignisManagement.addEreignis(new Ereignis(new Date(), artikelbezeichnung, artikelbestand, mitarbeiter, Ereignis.EreignisTyp.NEU));
+    }
+
+    public List<Ereignis> getEreignisListe(){
+        return ereignisManagement.getEreignisse();
     }
 
     public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) throws DoppelteIdException {
         mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password, id);
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
     }
 
     public void addKunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) throws  DoppelteIdException {
@@ -67,11 +74,18 @@ public class E_Shop {
     }
 
     public  boolean aendereArtikelBestand(int artikelnummer, int neuerBestand){
-        return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+        Artikel a = artikelManagement.gibArtikelPerId(artikelnummer);
+        if(a != null){
+            Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+            ereignisManagement.addEreignis(new Ereignis(new Date(), a.getArtikelbestand(), a.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG));
+            return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+        }else{
+            return false;
+        }
     }
 
     //Warenkorb
-//    public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
+    //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen1(Artikel artikel, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
         // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen

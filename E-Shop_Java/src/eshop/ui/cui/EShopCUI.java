@@ -3,11 +3,7 @@ package eshop.ui.cui;
 import eshop.domain.ArtikelManagement;
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.DoppelteIdException;
-import eshop.enitities.Artikel;
-import eshop.enitities.Kunde;
-import eshop.enitities.Warenkorb;
-import eshop.enitities.Mitarbeiter;
-import eshop.enitities.Person;
+import eshop.enitities.*;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -44,7 +40,7 @@ public class EShopCUI {
                 if(eingeloggtePerson != null){
                     do{
                         KundenSeite();
-                        System.out.println("Noch was? (y/n)");
+                        System.out.println("Zurueck zum Menue? (y/n)");
                         printArrow(); input = scan.next();
                         if(input.equalsIgnoreCase("n")){
                                 break;
@@ -69,7 +65,7 @@ public class EShopCUI {
 
                 do{
                     MitarbeiterSeite();
-                    System.out.println("Noch was? (y/n)");
+                    System.out.println("Zurueck zum Menue? (y/n)");
                     printArrow(); input = scan.next();
                     if(input.equalsIgnoreCase("n")){
                         break;
@@ -90,7 +86,7 @@ public class EShopCUI {
     private void MitarbeiterSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Kunden Liste ausgeben \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Beenden");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikel ändern \n5: Kunden Liste ausgeben \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Ereignisliste Ausgeben lassen \n9: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -98,6 +94,7 @@ public class EShopCUI {
             case 1:
                 System.out.println("Alle Artikel:");
                 ListeVonArtikel();
+
                 break;
             case 2:
                 artikelHinzufugen(scan);
@@ -122,6 +119,9 @@ public class EShopCUI {
                 mitarbeiterRegistrieren(scan);
                 break;
             case 8:
+                EreignisListeAusgeben();
+                break;
+            case 9:
                 System.out.println("Sie sind gefeuert");
                 break;
         }
@@ -130,7 +130,7 @@ public class EShopCUI {
     private void KundenSeite(){
         System.out.println("Was willst du machen?");
         System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Warenkorb oeffnen");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel im Warenkorb ausgeben lassen \n3: Artikel in Warenkorb einfügen \n4: Menge von einem Artikel im Warenkorb aendern \n5: Warenkorb leeren \n6: Alle Artikel aus dem Warenkorb kaufen \n7: Bestimmten Artikel aus dem Warenkorb entfernen \n8: Beenden");
         Scanner scan = new Scanner(System.in);
         int eingabe = scan.nextInt();
 
@@ -140,51 +140,32 @@ public class EShopCUI {
                 ListeVonArtikel();
                 break;
             case 2:
-                System.out.println("Warenkorb oeffnen:");
-                    Warenkorb();
-                break;
-        }
-    }
-
-    private void Warenkorb(){
-
-        System.out.println("Was willst du machen?");
-        System.out.println();
-        System.out.println("1: Artikel im Warenkorb ausgeben lassen \n2: Artikel in Warenkorb einfügen \n" +
-                            "3: Menge von einem Artikel im Warenkorb aendern \n4: Warenkorb leeren \n" +
-                            "5: Alle Artikel aus dem Warenkorb kaufen \n6: Bestimmten Artikel aus dem Warenkorb entfernen \n" +
-                            "7: Beenden");
-        Scanner scan = new Scanner(System.in);
-        int eingabe = scan.nextInt();
-
-        switch(eingabe) {
-            case 1:
                 System.out.println("Alle Artikel:");
                 //ListeVonArtikel();
                 System.out.println("________________________________________________________________");
                 ListeVonWarenkorb();
                 break;
-            case 2:
+            case 3:
                 System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
                 artikelInWarenkorb(scan);
                 break;
-            case 3:
+            case 4:
                 System.out.println("Von welchem Artikel moechten Sie die Menge aendern?:");
                 bestandImWarenkorbAendern(scan);
                 break;
-            case 4:
+            case 5:
                 System.out.println("Moechten Sie den Warenkorb wirklich leeren? (Y/N)");
                 warenkorbLeeren(scan);
                 break;
-            case 5:
+            case 6:
                 System.out.println("Moechten Sie alle Artikel im Warenkorb kaufen?");
                 warenkorbKaufen();
                 break;
-            case 6:
+            case 7:
                 artikelAusWarenkorbEntfernen(scan);
                 System.out.println("Waehlen Sie den Artikel den Sie entfernen moechten");
                 break;
-            case 7:
+            case 8:
                 System.out.println("Beenden (y/n)");
                 break;
         }
@@ -221,6 +202,15 @@ public class EShopCUI {
     private void ListeVonWarenkorb(){
         System.out.println(eShop.printWarenkorbRechnung());
         System.out.println("Gesamt Preis: "+ eShop.gesamtPreis());
+
+    }
+
+    private void EreignisListeAusgeben(){
+
+        for (Ereignis ereignisListe : eShop.getEreignisListe()){
+            System.out.println(ereignisListe);
+        }
+
 
     }
 

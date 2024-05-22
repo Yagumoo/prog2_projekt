@@ -10,10 +10,12 @@ import java.util.List;
 
 public class Warenkorb {
     private Map<Artikel, Integer> warenkorbMap;
+    private Rechnung rechnung;
 
 
     public Warenkorb() {
         this.warenkorbMap = new HashMap<>();
+        this.rechnung = new Rechnung();
     }
 
     public void artikelHinzufuegen(Artikel artikel, int menge) {
@@ -68,6 +70,10 @@ public class Warenkorb {
             rechnung += "Menge: " + menge + " | ";
             rechnung += "Preis: " + artikel.getArtikelPreis() + "\n";
         }
+        return rechnung;
+    }
+
+    public Rechnung getRechnung(){
         return rechnung;
     }
 
