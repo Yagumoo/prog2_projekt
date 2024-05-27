@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class EreignisManagement {
 
     private List<Ereignis> ereignisListe = new ArrayList<>();
@@ -19,7 +21,15 @@ public class EreignisManagement {
         return  ereignisListe;
     }
 
-    public void addEreignis(Ereignis ereignis){
+    public void addEreignis(Person person, Ereignis ereignis){
+        ereignis.setBetroffenePerson(person);
         ereignisListe.add(ereignis);
     }
+
+
+
+
+
+
+
 }

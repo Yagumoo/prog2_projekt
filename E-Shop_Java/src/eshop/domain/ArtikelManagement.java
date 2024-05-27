@@ -5,18 +5,25 @@ import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Ereignis;
 
+import eshop.persistence.filePersistenceManager;
+
 public class ArtikelManagement {
 
-
+    private filePersistenceManager fpm = new filePersistenceManager();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
     ArrayList<Artikel> artikelListe1 = new ArrayList<>(artikelListe.values());
     private EreignisManagement ereignisManagement;
 
     public ArtikelManagement() {
         try{
-            addArtikel(5, "Energy", 20, 2.49);
-            addArtikel(2, "Laptop", 3, 1599.99);
-            addArtikel(1, "Hähnchen", 2000, 5.99);
+            artikelListe = fpm.loadArtikelListe("artikel.txt");
+
+            if(artikelListe.isEmpty()){
+                addArtikel(5, "Energy", 20, 2.49);
+                addArtikel(2, "Laptop", 3, 1599.99);
+                addArtikel(1, "Hähnchen", 2000, 5.99);
+            }
+
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -29,6 +36,12 @@ public class ArtikelManagement {
         }else{
             Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
             artikelListe.put(artikelnummer, artikel);
+
+            try {
+                fpm.saveArtikelListe("artikel.txt", artikelListe);
+            }catch (Exception e){
+                System.err.println("Fehler beim Speichern der Artikel-Liste:" + e.getMessage());
+            }
         }
 
     }
@@ -37,9 +50,16 @@ public class ArtikelManagement {
         Artikel artikel = artikelListe.get(artikelnummer);
         if (artikel != null) {
             artikel.setArtikelbestand(neuerBestand);
+            try{
+                fpm.saveArtikelListe("artikel.txt", artikelListe);
+            }
+            catch (Exception e){
+
+            }
+
+
             return true;
         }
-        ereignisManagement.addEreignis(new Ereignis(new Date(), a.getArtikelbestand(), a.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG));
         return false;
     }
 

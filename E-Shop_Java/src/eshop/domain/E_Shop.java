@@ -22,11 +22,10 @@ public class E_Shop {
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
-
         return artikelManagement.gibAlleArtikel();
     }
 
-    public  Map<Integer, Person> gibAlleMitarbeiter() {
+    public  Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
         return mitarbeiterManagement.gibAlleMitarbeiter();
     }
 
@@ -37,7 +36,8 @@ public class E_Shop {
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
         artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
         Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-        ereignisManagement.addEreignis(new Ereignis(new Date(), artikelbezeichnung, artikelbestand, mitarbeiter, Ereignis.EreignisTyp.NEU));
+        Ereignis neuesEreignis = new Ereignis(new Date(), artikelbezeichnung, artikelbestand, mitarbeiter, Ereignis.EreignisTyp.NEU);
+        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
     }
 
     public List<Ereignis> getEreignisListe(){
@@ -73,15 +73,19 @@ public class E_Shop {
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
 
-    public  boolean aendereArtikelBestand(int artikelnummer, int neuerBestand){
+    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
+        // Überprüfen Sie, ob artikelManagement und mitarbeiterManagement deklariert und initialisiert sind
         Artikel a = artikelManagement.gibArtikelPerId(artikelnummer);
-        if(a != null){
-            Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-            ereignisManagement.addEreignis(new Ereignis(new Date(), a.getArtikelbestand(), a.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG));
-            return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
-        }else{
-            return false;
-        }
+
+        // Überprüfen Sie, ob mitarbeiterManagement deklariert und initialisiert ist
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+
+        // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+        Ereignis neuesEreignis = new Ereignis(new Date(), a.getArtikelbezeichnung(), neuerBestand, mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG);
+        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+
+        // Ändern des Artikelbestands und das Ergebnis der Operation zurückgeben
+        return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
     }
 
     //Warenkorb

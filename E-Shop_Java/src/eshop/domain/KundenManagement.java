@@ -11,16 +11,24 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import eshop.persistence.filePersistenceManager;
+
 public class KundenManagement {
     //Warenkorb öffnen
     private Map<Integer, Kunde> kundenListe = new HashMap<>();
     private Kunde eingeloggterKunde;
+    private filePersistenceManager fpm = new filePersistenceManager();
 
     public KundenManagement() {
         try{
-            addKunde("Hannah", "Lotus", "Hannah@gmail.com", "H4n", "1234", 1, "Hamburg", 27754, "Feldweg", 69);
-            addKunde("Dima", "Lotik", "Dima@gmail.com", "D1m", "1234", 2, "Hamburg", 27754, "Feldweg", 69);
-            addKunde("Hans", "Lotus", "Hans@gmail.com", "H4n5", "1234", 60, "Hamburg", 27554, "Feldstr", 123);
+
+            kundenListe = fpm.loadKundenListe("kunden.txt");
+            if(kundenListe.isEmpty()){
+                addKunde("Hannah", "Lotus", "Hannah@gmail.com", "H4n", "1234",1, "Hamburg", 27754, "Feldweg", 69);
+                addKunde("Dima", "Lotik", "Dima@gmail.com", "D1m", "1234",2, "Hamburg", 27754, "Feldweg", 69);
+                addKunde("Hans", "Lotus", "Hans@gmail.com", "H4n5", "1234",3, "Hamburg", 27554, "Feldstr", 123);
+            }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -28,13 +36,18 @@ public class KundenManagement {
     }
 
     public void addKunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException {
-        if(sucheKunde(id)){
+        Kunde kunde = new Kunde(vorname, nachname, email, username, password, id, ort, plz, strasse, strassenNummer);
+        if (sucheKunde(id)) {
             throw new DoppelteIdException(id);
-        }else{
-            Kunde kunde = new Kunde(vorname, nachname, email, username, password, id, ort, plz, strasse, strassenNummer);
+        } else {
             kundenListe.put(id, kunde);
-        }
 
+            try {
+                fpm.saveKundenListe("kunden.txt", kundenListe);
+            } catch (Exception e) {
+                System.err.println("Fehler beim Speichern der Kunden-Liste: " + e.getMessage());
+            }
+        }
     }
 
     public Kunde loginkunde(String usernameOrEmail, String password) {

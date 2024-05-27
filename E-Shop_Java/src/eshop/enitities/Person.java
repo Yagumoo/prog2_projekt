@@ -7,6 +7,7 @@ public abstract class Person {
   private int id;
   private String username;
   private String password;
+  private int idzeahler = 1;
 
   public Person(String vorname, String nachname, String email, String username, String password, int id) {
       this.vorname = vorname;
@@ -15,7 +16,9 @@ public abstract class Person {
       this.id = id;
       this.username = username;
       this.password = password;
+      this.idzeahler++;
   }
+
 
     // Getter und Setter für Vorname
     public String getVorname() {
@@ -81,6 +84,10 @@ public abstract class Person {
     public void setPassword(String password) {
 
       this.password = password;
+    }
+
+    public int getIdzeahler(){
+     return this.idzeahler;
     }
 
     public boolean checkPasswort(String password) {

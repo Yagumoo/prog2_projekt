@@ -186,7 +186,7 @@ public class EShopCUI {
     }
 
     private  void ListeVonMitarbeiter(){
-        Map<Integer, Person> mitarbeiter = eShop.gibAlleMitarbeiter();
+        Map<Integer, Mitarbeiter> mitarbeiter = eShop.gibAlleMitarbeiter();
         mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
             System.out.println(mitarbeiterDaten.toString());
         });
@@ -277,6 +277,8 @@ public class EShopCUI {
         System.out.println("Bitte ID einfügen:");
         printArrow();
         int id = scan.nextInt();
+
+        //int id = eShop.getIdzeahler();
 
         try {
             eShop.addMitarbeiter(vorname, nachname, email, username, passwort, id);
