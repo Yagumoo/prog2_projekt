@@ -1,0 +1,5 @@
+999,Mensch,600,1.88
+888,Honig,5000,0.9
+666,Brot,666,6.66
+123,Rindfleisch,500,5.99
+444,Spielkarten,30,0.99

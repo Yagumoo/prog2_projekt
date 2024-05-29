@@ -1,12 +1,12 @@
 package eshop.domain;
 
 import eshop.domain.exceptions.DoppelteIdException;
-import eshop.enitities.Artikel;
-import eshop.enitities.Kunde;
-import eshop.enitities.Person;
-import eshop.enitities.Warenkorb;
+import eshop.domain.exceptions.LoginException;
+import eshop.enitities.*;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.List;
 
 public class E_Shop {
 
@@ -14,6 +14,7 @@ public class E_Shop {
     private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
     private KundenManagement kundenManagement = new KundenManagement();
     private Warenkorb warenkorb = new Warenkorb();
+    private EreignisManagement ereignisManagement = new EreignisManagement();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
@@ -22,11 +23,10 @@ public class E_Shop {
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
-
         return artikelManagement.gibAlleArtikel();
     }
 
-    public  Map<Integer, Person> gibAlleMitarbeiter() {
+    public  Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
         return mitarbeiterManagement.gibAlleMitarbeiter();
     }
 
@@ -36,21 +36,29 @@ public class E_Shop {
 
     public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
         artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+        Ereignis neuesEreignis = new Ereignis(new Date(), artikelbezeichnung, artikelbestand, mitarbeiter, Ereignis.EreignisTyp.NEU);
+        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
     }
 
-    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password, int id) throws DoppelteIdException {
-        mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password, id);
+    public List<Ereignis> getEreignisListe(){
+        return ereignisManagement.getEreignisse();
     }
 
-    public void addKunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) throws  DoppelteIdException {
-        kundenManagement.addKunde(vorname, nachname, email, username, password, id, ort, plz, strasse, strassenNummer);
+    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password) throws DoppelteIdException {
+        mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
     }
 
-    public boolean loginMitarbeiter(String usernameOrEmail, String password){
+    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws  DoppelteIdException {
+        kundenManagement.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
+    }
+
+    public boolean loginMitarbeiter(String usernameOrEmail, String password) throws LoginException{
         return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
     }
 
-    public Kunde loginKunde(String usernameOrEmail, String password){
+    public Kunde loginKunde(String usernameOrEmail, String password)throws LoginException {
         return kundenManagement.loginkunde(usernameOrEmail, password);
     }
 
@@ -66,12 +74,23 @@ public class E_Shop {
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
 
-    public  boolean aendereArtikelBestand(int artikelnummer, int neuerBestand){
+    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
+        // Überprüfen Sie, ob artikelManagement und mitarbeiterManagement deklariert und initialisiert sind
+        Artikel a = artikelManagement.gibArtikelPerId(artikelnummer);
+
+        // Überprüfen Sie, ob mitarbeiterManagement deklariert und initialisiert ist
+        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+
+        // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+        Ereignis neuesEreignis = new Ereignis(new Date(), a.getArtikelbezeichnung(), neuerBestand, mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG);
+        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+
+        // Ändern des Artikelbestands und das Ergebnis der Operation zurückgeben
         return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
     }
 
     //Warenkorb
-//    public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
+    //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen1(Artikel artikel, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
         // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen

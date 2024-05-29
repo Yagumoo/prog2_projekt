@@ -14,8 +14,8 @@ public class Kunde extends Person {
     private int strassenNummer;
     private  Warenkorb warenkorb;
 
-    public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
-        super(vorname, nachname, email, username, password, id);
+    public Kunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) {
+        super(vorname, nachname, email, username, password);
         this.ort = ort;
         this.plz = plz;
         this.strasse = strasse;
