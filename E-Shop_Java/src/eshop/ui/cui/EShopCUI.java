@@ -1,14 +1,11 @@
 package eshop.ui.cui;
 
-import eshop.domain.ArtikelManagement;
 import eshop.domain.E_Shop;
-import eshop.domain.exceptions.*;
+import eshop.domain.exceptions.LoginException;
 import eshop.enitities.*;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.*;
-import java.util.List;
+import java.util.Scanner;
 
 public class EShopCUI {
     /**
@@ -117,7 +114,6 @@ public class EShopCUI {
                 break;
         }
     }
-    //aaa
 
     private void KundenSeite(){
         System.out.println("Was willst du machen?");
@@ -393,14 +389,14 @@ public class EShopCUI {
         int menge = scan.nextInt();
 
         // Suche Artikel mit der angegebenen Artikelnummer
-        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
-        if (artikel == null) {
-            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
-            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
-        }
+//        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+//        if (artikel == null) {
+//            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
+//            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+//        }
 
         // Fügen Artikel dem Warenkorb hinzu
-        eShop.artikelInWarenkorbHinzufuegen1(artikel, menge);
+        eShop.artikelInWarenkorbHinzufuegen1((Kunde) eingeloggtePerson, artikelnummer, menge);
 
         System.out.println("Artikel erfolgreich hinzugefügt.");
     }

@@ -3,6 +3,7 @@ import java.util.*;
 
 import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
+import eshop.enitities.Warenkorb;
 import eshop.enitities.Ereignis;
 
 import eshop.persistence.filePersistenceManager;
@@ -10,6 +11,7 @@ import eshop.persistence.filePersistenceManager;
 public class ArtikelManagement {
 
     private filePersistenceManager fpm = new filePersistenceManager();
+    private Warenkorb warenkorb = new Warenkorb();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
     ArrayList<Artikel> artikelListe1 = new ArrayList<>(artikelListe.values());
     private EreignisManagement ereignisManagement;
@@ -63,6 +65,10 @@ public class ArtikelManagement {
         return false;
     }
 
+    public void bestandAbbuchen(int artikelbestand){
+        artikelListe.containsKey(artikelbestand);
+    }
+
 
     public Map<Integer, Artikel> gibAlleArtikel() {
 
@@ -70,6 +76,7 @@ public class ArtikelManagement {
     }
 
     public Artikel gibArtikelPerId(int artikelnummer){
+        // TODO: Exception werfen
         return artikelListe.get(artikelnummer);
     }
 
