@@ -117,6 +117,7 @@ public class EShopCUI {
                 break;
         }
     }
+    //aaa
 
     private void KundenSeite(){
         System.out.println("Was willst du machen?");
