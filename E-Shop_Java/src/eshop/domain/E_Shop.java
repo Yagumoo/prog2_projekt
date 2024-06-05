@@ -35,10 +35,10 @@ public class E_Shop {
         return kundenManagement.gibAlleKunden();
     }
 
-    public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
-        artikelManagement.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+    public void addArtikel(Artikel artikel) throws DoppelteIdException {
+        artikelManagement.addArtikel(artikel);
         Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-        Ereignis neuesEreignis = new Ereignis(new Date(), artikelbezeichnung, artikelbestand, mitarbeiter, Ereignis.EreignisTyp.NEU);
+        Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.NEU);
         ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
     }
 

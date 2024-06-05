@@ -5,6 +5,7 @@ import eshop.domain.exceptions.DoppelteIdException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Warenkorb;
 import eshop.enitities.Ereignis;
+import eshop.enitities.MassengutArtikel;
 
 import eshop.persistence.filePersistenceManager;
 
@@ -21,9 +22,10 @@ public class ArtikelManagement {
             artikelListe = fpm.loadArtikelListe("artikel.txt");
 
             if(artikelListe.isEmpty()){
-                addArtikel(5, "Energy", 20, 2.49);
-                addArtikel(2, "Laptop", 3, 1599.99);
-                addArtikel(1, "Hähnchen", 2000, 5.99);
+                addArtikel(new Artikel(5, "Energy", 20, 2.49));
+                addArtikel(new Artikel(2, "Laptop", 3, 1599.99));
+                addArtikel(new Artikel(1, "Hähnchen", 2000, 5.99));
+                addArtikel(new MassengutArtikel(9, "Bier", 100, 0.99, 6));
             }
 
         } catch (Exception e){
@@ -32,20 +34,12 @@ public class ArtikelManagement {
 
     }
 
-    public void addArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) throws DoppelteIdException {
-        if(sucheArtikel(artikelnummer)){
-            throw new DoppelteIdException(artikelnummer);
-        }else{
-            Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
-            artikelListe.put(artikelnummer, artikel);
-
-            try {
-                fpm.saveArtikelListe("artikel.txt", artikelListe);
-            }catch (Exception e){
-                System.err.println("Fehler beim Speichern der Artikel-Liste:" + e.getMessage());
-            }
+    public void addArtikel(Artikel artikel) throws DoppelteIdException {
+        if (sucheArtikel(artikel.getArtikelnummer())) {
+            throw new DoppelteIdException(artikel.getArtikelnummer());
+        } else {
+            artikelListe.put(artikel.getArtikelnummer(), artikel);
         }
-
     }
 
     public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
@@ -56,9 +50,8 @@ public class ArtikelManagement {
                 fpm.saveArtikelListe("artikel.txt", artikelListe);
             }
             catch (Exception e){
-
+                // Muss hier nicht was rein?
             }
-
 
             return true;
         }

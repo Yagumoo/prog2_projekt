@@ -209,7 +209,10 @@ public class EShopCUI {
 
     }
 
-    private void artikelHinzufugen(Scanner scan){
+    private void artikelHinzufugen(Scanner scan) {
+
+        int massengutAnzahl = 1;
+
         System.out.println("Bitte Artikelnummer einfügen:");
         printArrow();
         int artikelnummer = scan.nextInt();
@@ -219,6 +222,15 @@ public class EShopCUI {
         printArrow();
         String artikelbezeichnung = scan.next();
 
+        System.out.println("Moechten sie einen normalen Artikel oder ein Massengut hinzufügen?\nM = Massgut / N = Normal");
+        printArrow();
+        String artikelTyp = scan.next();
+
+        if (artikelTyp.equalsIgnoreCase("M")) {
+            System.out.println("Bitte die anzahl an in dem der Artikel verkauft werden soll: ");
+            printArrow();
+            massengutAnzahl = scan.nextInt();
+        }
 
         System.out.println("Bitte Artikelbestand einfügen:");
         printArrow();
@@ -226,7 +238,7 @@ public class EShopCUI {
 
 
         System.out.println("Bitte Artikelpreis einfügen:");
-        while(!scan.hasNextDouble()){
+        while (!scan.hasNextDouble()) {
             System.out.println("Ungultige Eingabe. Bitte nochmal versuchen");
             printArrow();
             scan.next();
@@ -234,11 +246,15 @@ public class EShopCUI {
         printArrow();
         double artikelPreis = scan.nextDouble();
 
-
-        try{
-            eShop.addArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
-            System.out.println("Artikel wurde hinzugefügt");
-        }catch (Exception e){
+        try {
+            Artikel artikel;
+            if (artikelTyp.equalsIgnoreCase("M")) {
+                artikel = new MassengutArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis, massengutAnzahl);
+            } else {
+                artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+            }
+            eShop.addArtikel(artikel);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
