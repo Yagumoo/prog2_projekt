@@ -15,7 +15,6 @@ public class Warenkorb {
 
     public Warenkorb() {
         this.warenkorbMap = new HashMap<>();
-        this.rechnung = new Rechnung();
     }
 
     public void artikelHinzufuegen(Artikel artikel, int menge) {
@@ -41,6 +40,25 @@ public class Warenkorb {
         return warenkorbMap;
     }
 
+    public void warenkorbKaufen() {
+        for (Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()) {
+            Artikel artikel = entry.getKey();
+            int mengeImWarenkorb = entry.getValue();
+
+            // Überprüfen, ob der Artikel in der Artikel-Map vorhanden ist
+            if (artikel != null) {
+                int bestand = artikel.getArtikelbestand();
+                int neuerBestand = bestand - mengeImWarenkorb;
+
+                // Den neuen Bestand setzen
+                artikel.setArtikelbestand(neuerBestand);
+            }
+        }
+
+        // Warenkorb leeren, nachdem der Kauf abgeschlossen ist
+        warenkorbLeeren();
+    }
+
     public double gesamtPreis(){
         double gesamtPreis = 0;
         for(Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()){
@@ -60,43 +78,22 @@ public class Warenkorb {
         return Math.round(zahl * faktor) / faktor;
     }
 
-    public String gibtRechnung() {
-        String rechnung = "";
-        for (Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()) {
-            Artikel artikel = entry.getKey();
-            int menge = entry.getValue();
-            rechnung += "Artikel: \n" + "Artikelnummer: " + artikel.getArtikelnummer() + " | ";
-            rechnung += "Bezeichnung: " + artikel.getArtikelbezeichnung() + " | ";
-            rechnung += "Menge: " + menge + " | ";
-            rechnung += "Preis: " + artikel.getArtikelPreis() + "\n";
-        }
-        return rechnung;
-    }
-
-    public Rechnung getRechnung(){
-        return rechnung;
-    }
-
-    public void warenkorbKaufen() {
-        for (Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()) {
-            Artikel artikel = entry.getKey();
-            int mengeImWarenkorb = entry.getValue();
-
-            // Überprüfen, ob der Artikel in der Artikel-Map vorhanden ist
-            if (artikel != null) {
-                int bestand = artikel.getArtikelbestand();
-                int neuerBestand = bestand - mengeImWarenkorb;
-
-                // Den neuen Bestand setzen
-                artikel.setArtikelbestand(neuerBestand);
-            }
-        }
-        // Warenkorb leeren, nachdem der Kauf abgeschlossen ist
-        warenkorbLeeren();
-    }
 
     public void warenkorbLeeren() {
         warenkorbMap.clear();
+    }
+
+    public String toString(){
+        String artikelAusWarenkorb =  "";
+        for(Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()){
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+            artikelAusWarenkorb += "Artikel: \n" + "Artikelnummer: " + artikel.getArtikelnummer() + " | ";
+            artikelAusWarenkorb += "Bezeichnung: " + artikel.getArtikelbezeichnung() + " | ";
+            artikelAusWarenkorb += "Menge: " + menge + " | ";
+            artikelAusWarenkorb += "Preis: " + artikel.getArtikelPreis() + "\n";
+        }
+        return artikelAusWarenkorb;
     }
 
     /*

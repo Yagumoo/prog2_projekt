@@ -46,12 +46,6 @@ public class MitarbeiterManagement {
             throw new DoppelteIdException(id);
         } else {
             mitarbeiterListe.put(id, mitarbeiter);
-
-            try {
-                fpm.saveMitarbeiterListe("mitarbeiter.txt", mitarbeiterListe);
-            } catch (Exception e) {
-                System.err.println("Fehler beim Speichern der Mitarbeiter-Liste: " + e.getMessage());
-            }
         }
     }
 

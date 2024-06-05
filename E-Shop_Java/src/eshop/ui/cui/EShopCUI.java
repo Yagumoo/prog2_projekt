@@ -1,6 +1,7 @@
 package eshop.ui.cui;
 
 import eshop.domain.E_Shop;
+import eshop.domain.exceptions.BestandNichtAusreichendException;
 import eshop.domain.exceptions.LoginException;
 import eshop.enitities.*;
 
@@ -23,7 +24,8 @@ public class EShopCUI {
             System.out.println("Willkommen Kunde");
             System.out.println("___________________________");
             System.out.println("Haben Sie bereits ein Konto? (Y/N)");
-            printArrow(); String input2 = scan.next();
+            printArrow();
+            String input2 = scan.next();
             if(input2.equalsIgnoreCase("N")){
                 System.out.println("Bitte Registrieren Sie sich");
                 kundeRegistrieren(scan);
@@ -193,9 +195,9 @@ public class EShopCUI {
             System.out.println(kundeDaten.toString());
         });
     }
-
+    //Umschreiben
     private void ListeVonWarenkorb(){
-        System.out.println(eShop.printWarenkorbRechnung());
+        System.out.println(eShop.printWarenkorbArtikel());
         System.out.println("Gesamt Preis: "+ eShop.gesamtPreis());
 
     }
@@ -205,7 +207,6 @@ public class EShopCUI {
         for (Ereignis ereignisListe : eShop.getEreignisListe()){
             System.out.println(ereignisListe);
         }
-
 
     }
 
@@ -428,7 +429,12 @@ public class EShopCUI {
         if (antwort.equalsIgnoreCase("Y")) {
             // Artikel im Warenkorb kaufen
             System.out.print("Gesamt Preis: "); ListeVonWarenkorb();
-            eShop.warenkorbKaufen();
+            try {
+                eShop.warenkorbKaufen();
+            } catch (BestandNichtAusreichendException e){
+                System.out.println(e.getMessage());
+            }
+
             System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
 
 

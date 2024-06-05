@@ -1,7 +1,7 @@
 package eshop.domain;
 
-import eshop.domain.exceptions.DoppelteIdException;
-import eshop.domain.exceptions.LoginException;
+
+import eshop.domain.exceptions.*;
 import eshop.enitities.*;
 
 import java.util.Date;
@@ -72,44 +72,65 @@ public class E_Shop {
     }
 
     public Artikel sucheArtikelMitNummer(int artikelnummer){
-        return artikelManagement.gibArtikelPerId(artikelnummer);
+        try{
+            return artikelManagement.gibArtikelPerId(artikelnummer);
+        } catch (IdNichtVorhandenException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
-        // Überprüfen Sie, ob artikelManagement und mitarbeiterManagement deklariert und initialisiert sind
-        Artikel a = artikelManagement.gibArtikelPerId(artikelnummer);
+        try {
+            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
-        // Überprüfen Sie, ob mitarbeiterManagement deklariert und initialisiert ist
-        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+            // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
+            Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
 
-        // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-        Ereignis neuesEreignis = new Ereignis(new Date(), a.getArtikelbezeichnung(), neuerBestand, mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG);
-        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+            // Ändern des Artikelbestands und das Ergebnis der Operation speichern
+            boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
 
-        // Ändern des Artikelbestands und das Ergebnis der Operation zurückgeben
-        return artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+            if (bestandGeaendert) {
+                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+
+                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), neuerBestand, mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG);
+                ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+            }
+
+            // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
+            return bestandGeaendert;
+        } catch (IdNichtVorhandenException e) {
+            System.err.println(e.getMessage());
+            return false;
+        }
     }
+
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen1(Kunde kunde, int artikelnummer, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
-        Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
-        if (artikel == null) {
-            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
-            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+        try{
+            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+            if (artikel == null) {
+                System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
+                return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+            }
+            warenkorbManagement.artikelInWarenkorbHinzufuegen(kunde, artikel, menge);
+        }catch (IdNichtVorhandenException e){
+            System.out.println(e.getMessage());
         }
+
         // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen
 //        Kunde k = kundenManagement.getEingeloggterKunde();
 //        Warenkorb wk = kunde.getWarenkorb();
 //        wk.artikelHinzufuegen(artikel, menge);
-        warenkorbManagement.artikelInWarenkorbHinzufuegen(kunde, artikel, menge);
     }
 
-    public String printWarenkorbRechnung(){
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        return wk.gibtRechnung();
+    public String printWarenkorbArtikel(){
+        Kunde kunden = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = warenkorbManagement.getWarenkorb(kunden);
+        return warenkorb.toString();
     }
 
     public double gesamtPreis(){
@@ -119,22 +140,29 @@ public class E_Shop {
     }
 
     public void warenkorbLeeren() {
-        warenkorbManagement.warenkorbLeeren(kunde);
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        wk.warenkorbLeeren();
+        Kunde kunden = kundenManagement.getEingeloggterKunde();
+        warenkorbManagement.warenkorbLeeren(kunden);
     }
 
-    public void warenkorbKaufen() throws BestandNichtAusreichendException {
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        if (artikelManagement.bestandAbbuchen(wk)){ // Kann BestandNichtAusreichendException werfen
-            throw new BestandNichtAusreichendException();
+    public Rechnung warenkorbKaufen() throws BestandNichtAusreichendException {
+        Kunde kunden = kundenManagement.getEingeloggterKunde();
+
+        // bestandAbbuchen wirft eine BestandNichtAusreichendException, wenn der Bestand nicht ausreicht
+        Warenkorb wk = warenkorbManagement.getWarenkorb(kunden);
+        artikelManagement.bestandAbbuchen(wk);
+
+        // Füge Ereignisse für alle Einträge im Warenkorb hinzu
+        for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunden, Ereignis.EreignisTyp.KAUF);
+            ereignisManagement.addEreignis(kunden, neuesEreignis);
         }
-        ereignisManagement.addEreignis(k, wk); // für alle Einträge im Warenkorb
-        warenkorbManagement.rechnungErstellen(k);
-        warenkorbManagement.warenkorbLeeren(k);
+
+        return warenkorbManagement.warenkorbKaufen(kunden);
+
     }
+
 
     public void bestandImWarenkorbAendern(Artikel artikel, int menge){
         Kunde k = kundenManagement.getEingeloggterKunde();

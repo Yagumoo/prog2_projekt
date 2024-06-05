@@ -44,12 +44,6 @@ public class KundenManagement {
             throw new DoppelteIdException(id);
         } else {
             kundenListe.put(id, kunde);
-
-            try {
-                fpm.saveKundenListe("kunden.txt", kundenListe);
-            } catch (Exception e) {
-                System.err.println("Fehler beim Speichern der Kunden-Liste: " + e.getMessage());
-            }
         }
     }
 

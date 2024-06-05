@@ -1,11 +1,12 @@
 package eshop.domain;
 import java.util.*;
 
-import eshop.domain.exceptions.DoppelteIdException;
+import eshop.domain.exceptions.*;
 import eshop.enitities.Artikel;
 import eshop.enitities.Warenkorb;
 import eshop.enitities.Ereignis;
 import eshop.enitities.MassengutArtikel;
+
 
 import eshop.persistence.filePersistenceManager;
 
@@ -14,7 +15,6 @@ public class ArtikelManagement {
     private filePersistenceManager fpm = new filePersistenceManager();
     private Warenkorb warenkorb = new Warenkorb();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
-    ArrayList<Artikel> artikelListe1 = new ArrayList<>(artikelListe.values());
     private EreignisManagement ereignisManagement;
 
     public ArtikelManagement() {
@@ -43,24 +43,32 @@ public class ArtikelManagement {
     }
 
     public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
+
         Artikel artikel = artikelListe.get(artikelnummer);
         if (artikel != null) {
             artikel.setArtikelbestand(neuerBestand);
-            try{
-                fpm.saveArtikelListe("artikel.txt", artikelListe);
-            }
-            catch (Exception e){
-                // Muss hier nicht was rein?
-            }
-
             return true;
         }
         return false;
     }
 
-    public void bestandAbbuchen(int artikelbestand){
-        artikelListe.containsKey(artikelbestand);
+    public void bestandAbbuchen(Warenkorb warenkorb) throws BestandNichtAusreichendException {
+        for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+
+            if (artikel.getArtikelbestand() < menge) {
+                throw new BestandNichtAusreichendException(artikel);
+            }
+        }
+
+        for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+            artikel.setArtikelbestand(artikel.getArtikelbestand() - menge);
+        }
     }
+
 
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -68,8 +76,11 @@ public class ArtikelManagement {
         return artikelListe;
     }
 
-    public Artikel gibArtikelPerId(int artikelnummer){
+    public Artikel gibArtikelPerId(int artikelnummer)throws IdNichtVorhandenException{
         // TODO: Exception werfen
+        if (!artikelListe.containsKey(artikelnummer)) {
+            throw new IdNichtVorhandenException(artikelnummer);
+        }
         return artikelListe.get(artikelnummer);
     }
 
