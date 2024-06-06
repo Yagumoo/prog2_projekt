@@ -1,13 +1,13 @@
 package eshop.ui.cui;
 
 import eshop.domain.E_Shop;
-<<<<<<< Updated upstream
+
 import eshop.domain.exceptions.BestandNichtAusreichendException;
 import eshop.domain.exceptions.LoginException;
-=======
+
 import eshop.domain.exceptions.*;
 
->>>>>>> Stashed changes
+
 import eshop.enitities.*;
 
 import java.util.Map;
@@ -24,7 +24,7 @@ public class EShopCUI {
     private void KundeOderMitarbeiter() throws LoginException, FalscheEingabeException {
         Scanner scan = new Scanner(System.in);
         String input = scan.next();
-<<<<<<< Updated upstream
+
 
         if(input.equalsIgnoreCase("k")){
             System.out.println("Willkommen Kunde");
@@ -61,7 +61,7 @@ public class EShopCUI {
                         }
                     } while (true);
 
-=======
+
         try {
             if(input.equalsIgnoreCase("k")){
                 System.out.println("Willkommen Kunde");
@@ -76,7 +76,6 @@ public class EShopCUI {
                     kundeLogin(scan);
                 } else {
                     throw new FalscheEingabeException("Ungueltige Eingabe " + input + " ist keine gueltige Auswahl");
->>>>>>> Stashed changes
                 }
             } else if(input.equalsIgnoreCase("M")) {
                 MitarbeiterLogin();
