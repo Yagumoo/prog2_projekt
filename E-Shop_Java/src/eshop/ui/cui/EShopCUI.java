@@ -346,6 +346,7 @@ public class EShopCUI {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+
     }
 
     private void kundeLogin(Scanner scan){
@@ -439,7 +440,7 @@ public class EShopCUI {
 
 
             // Warenkorb leeren
-            eShop.warenkorbLeeren();
+           // eShop.warenkorbLeeren();
         } else {
             System.out.println("Der Kauf wurde abgebrochen.");
         }

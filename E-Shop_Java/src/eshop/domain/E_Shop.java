@@ -129,8 +129,8 @@ public class E_Shop {
 
     public String printWarenkorbArtikel(){
         Kunde kunden = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = warenkorbManagement.getWarenkorb(kunden);
-        return warenkorb.toString();
+        Warenkorb wk = kunden.getWarenkorb();
+        return wk.toString();
     }
 
     public double gesamtPreis(){
@@ -148,7 +148,7 @@ public class E_Shop {
         Kunde kunden = kundenManagement.getEingeloggterKunde();
 
         // bestandAbbuchen wirft eine BestandNichtAusreichendException, wenn der Bestand nicht ausreicht
-        Warenkorb wk = warenkorbManagement.getWarenkorb(kunden);
+        Warenkorb wk = kunden.getWarenkorb();
         artikelManagement.bestandAbbuchen(wk);
 
         // Füge Ereignisse für alle Einträge im Warenkorb hinzu

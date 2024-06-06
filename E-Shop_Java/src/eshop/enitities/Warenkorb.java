@@ -17,12 +17,14 @@ public class Warenkorb {
         this.warenkorbMap = new HashMap<>();
     }
 
+
     public void artikelHinzufuegen(Artikel artikel, int menge) {
-         if (warenkorbMap.containsKey(artikel)) {
-             warenkorbMap.put(artikel, warenkorbMap.get(artikel) + menge);
-         } else {
-             warenkorbMap.put(artikel, menge);
-         }
+//         if (warenkorbMap.containsKey(artikel)) {
+//             warenkorbMap.put(artikel, warenkorbMap.get(artikel) + menge);
+//         } else {
+//             warenkorbMap.put(artikel, menge);
+//         }
+        warenkorbMap.put(artikel, menge);
 
         //ereignisAusgeben(artikel);
     }

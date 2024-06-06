@@ -31,17 +31,14 @@ public class WarenkorbManagement {
     }
 
     public void artikelInWarenkorbHinzufuegen(Kunde kunde,Artikel artikel,int menge){
-        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        Warenkorb warenkorb = kunde.getWarenkorb();
         warenkorb.artikelHinzufuegen(artikel, menge);
-    }
-
-    public Warenkorb getWarenkorb(Kunde kunde){
-        return warenkorbVonKunde.get(kunde);
     }
 
 
     public Rechnung warenkorbKaufen(Kunde kunde) {
-        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        Warenkorb warenkorb = kunde.getWarenkorb();
         warenkorb.warenkorbKaufen();
         return rechnungErstellen(kunde);
     }
