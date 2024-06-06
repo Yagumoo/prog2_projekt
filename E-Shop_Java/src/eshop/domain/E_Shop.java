@@ -110,6 +110,7 @@ public class E_Shop {
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen1(Kunde kunde, int artikelnummer, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
+<<<<<<< Updated upstream
         try{
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel == null) {
@@ -125,6 +126,21 @@ public class E_Shop {
 //        Kunde k = kundenManagement.getEingeloggterKunde();
 //        Warenkorb wk = kunde.getWarenkorb();
 //        wk.artikelHinzufuegen(artikel, menge);
+=======
+        Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+        if (artikel == null) {
+            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
+            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+        }else {
+            Kunde k = kundenManagement.getEingeloggterKunde();
+            Warenkorb wk = kunde.getWarenkorb();
+            wk.artikelHinzufuegen(artikel, menge);
+            warenkorbManagement.artikelInWarenkorbHinzufuegen(kunde, artikel, menge);
+        }
+
+
+
+>>>>>>> Stashed changes
     }
 
     public String printWarenkorbArtikel(){
@@ -139,6 +155,7 @@ public class E_Shop {
         return wk.gesamtPreis();
     }
 
+<<<<<<< Updated upstream
     public void warenkorbLeeren() {
         Kunde kunden = kundenManagement.getEingeloggterKunde();
         warenkorbManagement.warenkorbLeeren(kunden);
@@ -157,6 +174,22 @@ public class E_Shop {
             int menge = entry.getValue();
             Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunden, Ereignis.EreignisTyp.KAUF);
             ereignisManagement.addEreignis(kunden, neuesEreignis);
+=======
+  public void warenkorbLeeren() {
+        warenkorbManagement.warenkorbLeeren(kunde);
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        wk.warenkorbLeeren();
+    }
+
+
+
+    public void warenkorbKaufen() throws BestandNichtAusreichendException {
+        Kunde k = kundenManagement.getEingeloggterKunde();
+        Warenkorb wk = k.getWarenkorb();
+        if (artikelManagement.bestandAbbuchen(wk)){ // Kann BestandNichtAusreichendException werfen
+            throw new BestandNichtAusreichendException();
+>>>>>>> Stashed changes
         }
 
         return warenkorbManagement.warenkorbKaufen(kunden);
@@ -164,6 +197,10 @@ public class E_Shop {
     }
 
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     public void bestandImWarenkorbAendern(Artikel artikel, int menge){
         Kunde k = kundenManagement.getEingeloggterKunde();
         Warenkorb wk = k.getWarenkorb();

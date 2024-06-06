@@ -3,14 +3,19 @@ package eshop.domain;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Warenkorb;
+<<<<<<< Updated upstream
 import eshop.enitities.Rechnung;
 
+=======
+import eshop.enitities.Kunde;
+>>>>>>> Stashed changes
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WarenkorbManagement {
+<<<<<<< Updated upstream
     private Map<Artikel, Integer> warenkorbMap;
     private Map<Kunde, Warenkorb> warenkorbVonKunde;
     private Rechnung rechnung;
@@ -41,6 +46,16 @@ public class WarenkorbManagement {
         Warenkorb warenkorb = kunde.getWarenkorb();
         warenkorb.warenkorbKaufen();
         return rechnungErstellen(kunde);
+=======
+    Warenkorb warenkorb = new Warenkorb();
+
+    public WarenkorbManagement() {
+
+    }
+
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel, int menge) {
+        warenkorb.artikelHinzufuegen(kunde, artikel, menge);
+>>>>>>> Stashed changes
     }
 
 }

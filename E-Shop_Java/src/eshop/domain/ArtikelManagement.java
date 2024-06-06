@@ -52,6 +52,7 @@ public class ArtikelManagement {
         return false;
     }
 
+<<<<<<< Updated upstream
     public void bestandAbbuchen(Warenkorb warenkorb) throws BestandNichtAusreichendException {
         for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();
@@ -69,6 +70,8 @@ public class ArtikelManagement {
         }
     }
 
+=======
+>>>>>>> Stashed changes
 
 
     public Map<Integer, Artikel> gibAlleArtikel() {

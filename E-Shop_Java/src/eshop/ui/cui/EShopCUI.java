@@ -1,8 +1,13 @@
 package eshop.ui.cui;
 
 import eshop.domain.E_Shop;
+<<<<<<< Updated upstream
 import eshop.domain.exceptions.BestandNichtAusreichendException;
 import eshop.domain.exceptions.LoginException;
+=======
+import eshop.domain.exceptions.*;
+
+>>>>>>> Stashed changes
 import eshop.enitities.*;
 
 import java.util.Map;
@@ -14,11 +19,12 @@ public class EShopCUI {
      */
 
     private Person eingeloggtePerson = null;
+    Scanner scan = new Scanner(System.in);
 
-    private void KundeOderMitarbeiter() throws LoginException {
+    private void KundeOderMitarbeiter() throws LoginException, FalscheEingabeException {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'?");
         String input = scan.next();
+<<<<<<< Updated upstream
 
         if(input.equalsIgnoreCase("k")){
             System.out.println("Willkommen Kunde");
@@ -55,14 +61,35 @@ public class EShopCUI {
                         }
                     } while (true);
 
+=======
+        try {
+            if(input.equalsIgnoreCase("k")){
+                System.out.println("Willkommen Kunde");
+                System.out.println("___________________________");
+                System.out.println("Haben Sie bereits ein Konto? (Y/N)");
+                printArrow();
+                input = scan.next();
+                if(input.equalsIgnoreCase("N")){
+                    System.out.println("Bitte Registrieren Sie sich");
+                    kundeRegistrieren(scan);
+                }else if(input.equalsIgnoreCase("Y")){
+                    kundeLogin(scan);
+                } else {
+                    throw new FalscheEingabeException("Ungueltige Eingabe " + input + " ist keine gueltige Auswahl");
+>>>>>>> Stashed changes
                 }
-            } catch (LoginException e) {
-
-                System.out.println(e.getMessage());
+            } else if(input.equalsIgnoreCase("M")) {
+                MitarbeiterLogin();
+            } else {
+                throw new FalscheEingabeException("Ungueltige Eingabe " + input + " ist keine gueltige Auswahl");
             }
-        } else {
-            System.out.println("Falsche Eingabe");
+
+        }catch (FalscheEingabeException e){
+            System.err.println(e.getMessage());
         }
+        System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'?");
+
+
 
     }
 
@@ -287,11 +314,41 @@ public class EShopCUI {
 
         try {
             eShop.addMitarbeiter(vorname, nachname, email, username, passwort);
-            System.out.println("Neuer Mitarbeiter wurde registrert");
+            System.out.println("Neuer Mitarbeiter wurde registriert");
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
 
+    }
+
+    private void MitarbeiterLogin(){
+        String input;
+        System.out.println("Willkommen Arbeiter!");
+        System.out.println("___________________________");
+
+        System.out.println("Bitte geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
+        printArrow(); String usernameOrEmail = scan.next();
+        System.out.println("Bitte geben Sie ihr Passwort ein: ");
+        printArrow(); String password = scan.next();
+        mitarbeiterRegistrieren(scan);
+
+        try {
+            if (eShop.loginMitarbeiter(usernameOrEmail, password)) {
+
+                do {
+                    MitarbeiterSeite();
+                    System.out.println("Zurueck zum Menue? (y/n)");
+                    printArrow(); input = scan.next();
+                    if (input.equalsIgnoreCase("n")) {
+                        break;
+                    }
+                } while (true);
+
+            }
+        } catch (LoginException e) {
+
+            System.out.println(e.getMessage());
+        }
     }
 
     private void kundeRegistrieren(Scanner scan){
@@ -394,7 +451,7 @@ public class EShopCUI {
         System.out.print("--> ");
     }
 
-    private void artikelInWarenkorb(Scanner scan){
+    private void artikelInWarenkorb(){
         scan = new Scanner(System.in);
 
         System.out.println("Bitte geben Sie die Artikelnummer ein:");
@@ -405,13 +462,6 @@ public class EShopCUI {
         System.out.println("Bitte geben Sie die Menge ein:");
         printArrow();
         int menge = scan.nextInt();
-
-        // Suche Artikel mit der angegebenen Artikelnummer
-//        Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
-//        if (artikel == null) {
-//            System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
-//            return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
-//        }
 
         // Fügen Artikel dem Warenkorb hinzu
         eShop.artikelInWarenkorbHinzufuegen1((Kunde) eingeloggtePerson, artikelnummer, menge);
