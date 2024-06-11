@@ -63,9 +63,7 @@ public class EShopCUI {
     }
 
     private void MitarbeiterSeite(){
-        System.out.println("Was willst du machen?");
-        System.out.println();
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Artikel löschen \n4: Artikelbestand ändern \n5: Kunden Liste ausgeben \n6: Angestellte Mitarbeiter ausgeben \n7: Mitarbeiter registrieren \n8: Ereignisliste Ausgeben lassen \n9: Zurueck zum Login");
+        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Einen Artikel löschen \n4: Artikelbestand verändern \n5: Liste von Kunden ausgeben lassen \n6: Liste von Mitarbeitern ausgeben lassen \n7: Neuen Mitarbeiter registrieren \n8: Liste von Ereignissen Ausgeben lassen  \n9: Zurueck zum Login");
         int eingabe = scan.nextInt();
 
         switch(eingabe) {
@@ -109,8 +107,6 @@ public class EShopCUI {
     }
 
     private void KundenSeite(){
-        System.out.println("Was willst du machen?");
-        System.out.println();
         System.out.println("1: Artikel ausgeben lassen \n2: Artikel im Warenkorb ausgeben lassen \n3: Artikel in Warenkorb einfügen \n4: Menge von einem Artikel im Warenkorb aendern \n5: Warenkorb leeren \n6: Alle Artikel aus dem Warenkorb kaufen \n7: Bestimmten Artikel aus dem Warenkorb entfernen \n8: Zurueck zum Login");
         int eingabe = scan.nextInt();
 
@@ -171,7 +167,6 @@ public class EShopCUI {
     }
 
     private void artikelHinzufugen() {
-
         try {
             int massengutAnzahl = 1;
 
@@ -412,25 +407,16 @@ public class EShopCUI {
     private void warenkorbKaufen(){
 
         try {
-            // Kauf bestätigen
-            System.out.println("Möchten Sie den Warenkorb kaufen? (Y/N)");
-            printArrow();
-            String antwort = getStringInput("String");
 
-            if (antwort.equalsIgnoreCase("Y")) {
-                // Artikel im Warenkorb kaufen
-                System.out.print("Gesamt Preis: "); ListeVonWarenkorb();
+            // Artikel im Warenkorb kaufen
+            System.out.print("Gesamt Preis: "); ListeVonWarenkorb();
 
-                eShop.warenkorbKaufen();
+            eShop.warenkorbKaufen();
 
-                System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
-                // Warenkorb leeren
-                // eShop.warenkorbLeeren();
-            } else {
-                System.out.println("Der Kauf wurde abgebrochen.");
-            }
-        } catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
+            // Warenkorb leeren
+            // eShop.warenkorbLeeren();
+
         } catch (BestandNichtAusreichendException e){
             System.err.println(e.getMessage());
         }
