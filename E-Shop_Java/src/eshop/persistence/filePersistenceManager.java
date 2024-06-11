@@ -1,12 +1,20 @@
 package eshop.persistence;
 
 import eshop.enitities.Artikel;
+import eshop.enitities.MassengutArtikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
+import eshop.enitities.Ereignis;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 
 
 public class filePersistenceManager {
@@ -74,7 +82,13 @@ public class filePersistenceManager {
                 String artikelbezeichnung = parts[1];
                 int artikelbestand = Integer.parseInt(parts[2]);
                 double artikelPreis = Double.parseDouble(parts[3]);
-                Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+                Artikel artikel;
+                if (parts.length == 5) {
+                    int anzahlMassengut = Integer.parseInt(parts[4]);
+                    artikel = new MassengutArtikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis, anzahlMassengut);
+                } else {
+                    artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
+                }
                 artikelListe.put(artikelnummer, artikel);
             }
         } finally {
@@ -83,17 +97,25 @@ public class filePersistenceManager {
         return artikelListe;
     }
 
+
     public void saveArtikelListe(String datei, Map<Integer, Artikel> artikelListe) throws IOException {
         zumSchreiben(datei);
         try {
             for (Artikel artikel : artikelListe.values()) {
-                String daten = artikel.getArtikelnummer() + "," + artikel.getArtikelbezeichnung() + "," + artikel.getArtikelbestand() + "," + artikel.getArtikelPreis();
+                String daten;
+                if (artikel instanceof MassengutArtikel) {
+                    MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+                    daten = artikel.getArtikelnummer() + "," + artikel.getArtikelbezeichnung() + "," + artikel.getArtikelbestand() + "," + artikel.getArtikelPreis() + "," + massengutArtikel.getAnzahlMassengut();
+                } else {
+                    daten = artikel.getArtikelnummer() + "," + artikel.getArtikelbezeichnung() + "," + artikel.getArtikelbestand() + "," + artikel.getArtikelPreis();
+                }
                 schreibeZeile(daten);
             }
         } finally {
             close();
         }
     }
+
 
     public Map<Integer, Kunde> loadKundenListe(String datei) throws IOException {
         Map<Integer, Kunde> kundenListe = new HashMap<>();
@@ -189,4 +211,42 @@ public class filePersistenceManager {
         }
     }
 
+    public List<Ereignis> loadEreignisListe(String datei) throws IOException, ParseException {
+        List<Ereignis> ereignisList = new ArrayList<>();
+        zumLesen(datei);
+        try {
+            String line;
+            while ((line = liesZeile()) != null) {
+                String[] parts = line.split(",");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date datum = sdf.parse(parts[0]);
+                String artikelbezeichnung = parts[1];
+                int anzahl = Integer.parseInt(parts[2]);
+                Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(parts[3]);
+                Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, null, typ);
+                ereignisList.add(ereignis);
+            }
+        } finally {
+            close();
+        }
+        return ereignisList;
+    }
+
+    public void saveEreignisListe(String datei, List<Ereignis> ereignisList) throws IOException {
+        zumSchreiben(datei);
+        try {
+            for (Ereignis ereignis : ereignisList) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String daten = String.join(",",
+                        sdf.format(ereignis.getDatum()),
+                        ereignis.getArtikel(),
+                        String.valueOf(ereignis.getAnzahl()),
+                        ereignis.getTyp().toString()
+                );
+                schreibeZeile(daten);
+            }
+        } finally {
+            close();
+        }
+    }
 }

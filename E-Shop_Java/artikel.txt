@@ -1,5 +1,11 @@
+67,Monitor,20,700.99
 999,Mensch,600,1.88
+7,Wasser/Saskia,72,2.99,6
+8,Wasser/Gerolsteiner,36,0.99,6
+12,Bier/Becks,192,12.99,24
+111,Duden,500,5.0
+789,RedBull,20,2.99,4
 888,Honig,5000,0.9
-666,Brot,666,6.66
+666,Brot,660,6.66
 123,Rindfleisch,500,5.99
 444,Spielkarten,30,0.99

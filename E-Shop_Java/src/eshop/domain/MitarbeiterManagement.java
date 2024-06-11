@@ -49,7 +49,7 @@ public class MitarbeiterManagement {
         }
     }
 
-    public boolean loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
+    public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
         try {
             // Überprüfung der Mitarbeiter-Anmeldeinformationen
             for (Map.Entry<Integer, Mitarbeiter> entry : mitarbeiterListe.entrySet()) {
@@ -57,7 +57,7 @@ public class MitarbeiterManagement {
                 if (mitarbeiter.getUsername().equals(usernameOrEmail) || mitarbeiter.getEmail().equals(usernameOrEmail)) {
                     if (mitarbeiter.checkPasswort(password)) {
                         setEingeloggteMitarbeiter(mitarbeiter);
-                        return true;
+                        return mitarbeiter;
                     }
                 }
             }

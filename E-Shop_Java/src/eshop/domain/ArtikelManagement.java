@@ -69,12 +69,18 @@ public class ArtikelManagement {
         }
     }
 
-
-
     public Map<Integer, Artikel> gibAlleArtikel() {
 
         return artikelListe;
     }
+
+    public void loescheArtikel(int artikelnummer) throws IdNichtVorhandenException {
+        if (!artikelListe.containsKey(artikelnummer)) {
+            throw new IdNichtVorhandenException(artikelnummer);
+        }
+        artikelListe.remove(artikelnummer);
+    }
+
 
     public Artikel gibArtikelPerId(int artikelnummer)throws IdNichtVorhandenException{
         // TODO: Exception werfen
@@ -83,6 +89,7 @@ public class ArtikelManagement {
         }
         return artikelListe.get(artikelnummer);
     }
+
 
     public boolean sucheArtikel(int artikelnummer){
         return artikelListe.containsKey(artikelnummer);

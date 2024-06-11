@@ -12,10 +12,14 @@ public class Rechnung {
         this.warenkorb = warenkorb;
         this.kunde = kunde;
     }
+    public Kunde getKunde(){
+        return kunde;
+    }
 
     @Override
     public String toString() {
-        String rechnung = "";
+        String rechnung = "Rechnung für Kunde " + kunde.getUsername() + ":\n";
+
         for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();

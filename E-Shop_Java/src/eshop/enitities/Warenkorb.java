@@ -56,7 +56,6 @@ public class Warenkorb {
                 artikel.setArtikelbestand(neuerBestand);
             }
         }
-
         // Warenkorb leeren, nachdem der Kauf abgeschlossen ist
         warenkorbLeeren();
     }

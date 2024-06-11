@@ -3,10 +3,14 @@ package eshop.domain;
 
 import eshop.domain.exceptions.*;
 import eshop.enitities.*;
+import eshop.persistence.filePersistenceManager;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
+import java.io.IOException;
+
+
 
 public class E_Shop {
 
@@ -16,23 +20,37 @@ public class E_Shop {
     private Warenkorb warenkorb = new Warenkorb();
     private WarenkorbManagement warenkorbManagement = new WarenkorbManagement();
     private EreignisManagement ereignisManagement = new EreignisManagement();
+    private filePersistenceManager fpm = new filePersistenceManager();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
     public E_Shop() {
-
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Speichern der Listen beim Beenden...");
+            saveAlleListen();
+            System.out.println("Speichern abgeschlossen.");
+        }));
     }
 
-    public Map<Integer, Artikel> gibAlleArtikel() {
-        return artikelManagement.gibAlleArtikel();
+    public void ListeVonArtikel() {
+        Map<Integer, Artikel> artikel = artikelManagement.gibAlleArtikel();
+        artikel.forEach((arikelnummer, artikelbezeichnung)-> {
+            System.out.println("Gesamt Preis: "+ artikelbezeichnung);
+        });
     }
 
-    public  Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
-        return mitarbeiterManagement.gibAlleMitarbeiter();
+    public void ListeVonMitarbeiter(){
+        Map<Integer, Mitarbeiter> mitarbeiter = mitarbeiterManagement.gibAlleMitarbeiter();
+        mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
+            System.out.println(mitarbeiterDaten.toString());
+        });
     }
 
-    public  Map<Integer, Kunde> gibAlleKunden() {
-        return kundenManagement.gibAlleKunden();
+    public void ListeVonKunden(){
+        Map<Integer, Kunde> kunden = kundenManagement.gibAlleKunden();
+        kunden.forEach((kundeId, kundeDaten)-> {
+            System.out.println(kundeDaten.toString());
+        });
     }
 
     public void addArtikel(Artikel artikel) throws DoppelteIdException {
@@ -55,7 +73,7 @@ public class E_Shop {
         kundenManagement.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
     }
 
-    public boolean loginMitarbeiter(String usernameOrEmail, String password) throws LoginException{
+    public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException{
         return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
     }
 
@@ -75,8 +93,18 @@ public class E_Shop {
         try{
             return artikelManagement.gibArtikelPerId(artikelnummer);
         } catch (IdNichtVorhandenException e){
-            System.out.println(e.getMessage());
+           // System.out.println(e.getMessage());
             return null;
+        }
+    }
+
+    public void loescheArtikel(int artikelnummer){
+        try {
+            sucheArtikelMitNummer(artikelnummer);
+            artikelManagement.loescheArtikel(artikelnummer);
+            System.out.println("Artikel mit der Nummer " + artikelnummer + " wurde erfolgreich gelöscht.");
+        } catch (IdNichtVorhandenException e){
+            System.err.println(e.getMessage());
         }
     }
 
@@ -87,14 +115,29 @@ public class E_Shop {
             // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
             Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
 
+            //Aktuellen Artikelbestand Speichern
+            int aktuellerBestand = artikel.getArtikelbestand();
+
+            int differenz = neuerBestand - aktuellerBestand;
+
             // Ändern des Artikelbestands und das Ergebnis der Operation speichern
             boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
 
             if (bestandGeaendert) {
                 // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                Ereignis.EreignisTyp ereignisTyp;
 
-                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), neuerBestand, mitarbeiter, Ereignis.EreignisTyp.ERHOEHUNG);
+                if(differenz < 0){
+                    ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
+
+                }else{
+                    ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
+
+                }
+                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
                 ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+                System.out.println("Artikel wurde erfolgreich geändert");
             }
 
             // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
@@ -105,26 +148,19 @@ public class E_Shop {
         }
     }
 
-
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufuegen1(Kunde kunde, int artikelnummer, int menge){
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde, int artikelnummer, int menge){
         // 1. Artikelbestand im ArtikelManagement prüfen
         try{
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
-            if (artikel == null) {
-                System.out.println("Artikel mit der angegebenen Artikelnummer nicht gefunden.");
-                return; // Beendet Methode, wenn der Artikel nicht gefunden wurde
+            if (artikel != null) {
+                System.out.println("Artikel erfolgreich hinzugefügt.");
             }
             warenkorbManagement.artikelInWarenkorbHinzufuegen(kunde, artikel, menge);
         }catch (IdNichtVorhandenException e){
             System.out.println(e.getMessage());
         }
-
-        // 2. Wenn ok: Artikel über WarenkorbManagement hinzufügen
-//        Kunde k = kundenManagement.getEingeloggterKunde();
-//        Warenkorb wk = kunde.getWarenkorb();
-//        wk.artikelHinzufuegen(artikel, menge);
     }
 
     public String printWarenkorbArtikel(){
@@ -158,22 +194,46 @@ public class E_Shop {
             Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunden, Ereignis.EreignisTyp.KAUF);
             ereignisManagement.addEreignis(kunden, neuesEreignis);
         }
-
         return warenkorbManagement.warenkorbKaufen(kunden);
-
     }
 
-
-    public void bestandImWarenkorbAendern(Artikel artikel, int menge){
+    public void bestandImWarenkorbAendern(Artikel artikel, int menge) {
+        int aktuellerBestand = artikel.getArtikelbestand();
         Kunde k = kundenManagement.getEingeloggterKunde();
         Warenkorb wk = k.getWarenkorb();
-        wk.bestandImWarenkorbAendern(artikel, menge);
+        if(artikel != null){
+            wk.bestandImWarenkorbAendern(artikel, menge);
+            System.out.println("Artikel wurde erfolgreich geaendert!");
+        }
+        if(menge > aktuellerBestand){
+            System.out.println("Es sind nur noch " + aktuellerBestand + " Einheiten vom Artikel: " + artikel.getArtikelbezeichnung() + " enthalten!");
+        }
     }
 
     public void artikelImWarenkorbEntfernen(Artikel artikel){
         Kunde k = kundenManagement.getEingeloggterKunde();
         Warenkorb wk = k.getWarenkorb();
         wk.artikelEntfernen(artikel);
+    }
+
+    public void saveAlleListen(){
+        try {
+            fpm.saveArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
+            System.out.println("Artikelliste gespeichert");
+
+            fpm.saveKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
+            System.out.println("Kundenliste gespeichert");
+
+            fpm.saveMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
+            System.out.println("Mitarbeiterliste gespeichert");
+
+            fpm.saveEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
+
+            System.out.println("Alle Listen wurden erfolgreich gespeichert.");
+        } catch (IOException e) {
+            System.err.println("Fehler beim Speichern der Listen: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 

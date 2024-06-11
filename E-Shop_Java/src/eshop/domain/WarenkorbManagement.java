@@ -1,5 +1,6 @@
 package eshop.domain;
 
+import eshop.domain.exceptions.IdNichtVorhandenException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Warenkorb;
@@ -30,16 +31,17 @@ public class WarenkorbManagement {
         return rechnung;
     }
 
-    public void artikelInWarenkorbHinzufuegen(Kunde kunde,Artikel artikel,int menge){
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde,Artikel artikel,int menge) {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
         Warenkorb warenkorb = kunde.getWarenkorb();
         warenkorb.artikelHinzufuegen(artikel, menge);
+
     }
 
 
     public Rechnung warenkorbKaufen(Kunde kunde) {
         Warenkorb warenkorb = kunde.getWarenkorb();
-        warenkorb.warenkorbKaufen();
+        //warenkorb.warenkorbKaufen(); //Führte zum doppelten abbuchen
         return rechnungErstellen(kunde);
     }
 
