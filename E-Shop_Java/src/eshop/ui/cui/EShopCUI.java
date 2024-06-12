@@ -66,7 +66,16 @@ public class EShopCUI {
     }
 
     private void MitarbeiterSeite(){
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel einfügen \n3: Einen Artikel löschen \n4: Artikelbestand verändern \n5: Liste von Kunden ausgeben lassen \n6: Liste von Mitarbeitern ausgeben lassen \n7: Neuen Mitarbeiter registrieren \n8: Liste von Ereignissen Ausgeben lassen  \n9: Zurueck zum Login");
+        System.out.println("\n" +
+                "1: Artikel ausgeben lassen \n" +
+                "2: Artikel einfügen \n" +
+                "3: Einen Artikel löschen \n" +
+                "4: Artikelbestand verändern \n" +
+                "5: Liste von Kunden ausgeben lassen \n" +
+                "6: Liste von Mitarbeitern ausgeben lassen \n" +
+                "7: Neuen Mitarbeiter registrieren \n" +
+                "8: Liste von Ereignissen Ausgeben lassen  \n" +
+                "9: Zurueck zum Login");
         int eingabe = scan.nextInt();
 
         switch(eingabe) {
@@ -110,7 +119,14 @@ public class EShopCUI {
     }
 
     private void KundenSeite(){
-        System.out.println("1: Artikel ausgeben lassen \n2: Artikel im Warenkorb ausgeben lassen \n3: Artikel in Warenkorb einfügen \n4: Menge von einem Artikel im Warenkorb aendern \n5: Warenkorb leeren \n6: Alle Artikel aus dem Warenkorb kaufen \n7: Bestimmten Artikel aus dem Warenkorb entfernen \n8: Zurueck zum Login");
+        System.out.println("\n1: Artikel ausgeben lassen \n" +
+                "2: Artikel im Warenkorb ausgeben lassen \n" +
+                "3: Artikel in Warenkorb einfügen \n" +
+                "4: Menge von einem Artikel im Warenkorb aendern \n" +
+                "5: Warenkorb leeren \n" +
+                "6: Alle Artikel aus dem Warenkorb kaufen \n" +
+                "7: Bestimmten Artikel aus dem Warenkorb entfernen \n" +
+                "8: Zurueck zum Login");
         int eingabe = scan.nextInt();
 
         switch(eingabe) {
@@ -335,7 +351,6 @@ public class EShopCUI {
 
             eShop.addKunde(vorname, nachname, email, username, passwort,ort, plz, strasse, strassenNummer);
             System.out.println("Sie haben sich als Kunden registriert");
-            KundenSeite();
 
         }catch (FalscheEingabeException e){
             System.err.println(e.getMessage());

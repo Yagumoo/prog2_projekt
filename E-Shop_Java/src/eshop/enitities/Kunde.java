@@ -20,13 +20,7 @@ public class Kunde extends Person {
         this.plz = plz;
         this.strasse = strasse;
         this.strassenNummer = strassenNummer;
-
-
     }
-
-
-
-
 
     // Getter und Setter für PLZ
     public int getPlz() {

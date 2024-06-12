@@ -78,7 +78,9 @@ public class E_Shop {
     }
 
     public Kunde loginKunde(String usernameOrEmail, String password)throws LoginException {
-        return kundenManagement.loginkunde(usernameOrEmail, password);
+        Kunde kunde = kundenManagement.loginkunde(usernameOrEmail, password);
+        warenkorbManagement.warenkorbHinzufuegen(kunde);
+        return kunde;
     }
 
     public Kunde getEingeloggterKunde() {
@@ -148,7 +150,8 @@ public class E_Shop {
     public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException{
         if(kunde instanceof Kunde k){
 
-            warenkorbManagement.warenkorbHinzufuegen(k);
+            //warenkorbManagement.warenkorbHinzufuegen(k);
+            //Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
@@ -175,7 +178,7 @@ public class E_Shop {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             return wk.gesamtPreis();
         }
-        return 0.0;
+        return -1.0;
     }
 
 

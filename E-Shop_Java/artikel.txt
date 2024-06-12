@@ -1,4 +1,5 @@
 1,Planet,9,1.0E11
+5665,Maus,10,5.99,2
 2,Bread,56,3.0
 67,Monitor,20,700.99
 3,Water,50,3.99
@@ -13,6 +14,6 @@
 111,Duden,498,5.0
 789,RedBull,16,2.99,4
 888,Honig,5000,0.9
-666,Brot,666,6.66
+666,Brot,654,6.66
 123,Rindfleisch,500,5.99
-444,Spielkarten,30,0.99
+444,Spielkarten,26,0.99

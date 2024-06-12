@@ -33,17 +33,14 @@ public class WarenkorbManagement {
         return rechnung;
     }
 
-    public void artikelInWarenkorbHinzufuegen(Kunde kunde,Artikel artikel,int menge) {
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
-        Warenkorb warenkorb = getWarenkorb(kunde);
+        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
         warenkorb.artikelHinzufuegen(artikel, menge);
     }
 
-
-
-
     public Warenkorb getWarenkorb(Kunde kunde){
-    return warenkorbVonKunde.get(kunde);
+        return warenkorbVonKunde.get(kunde);
     }
 
     public void warenkorbHinzufuegen(Kunde kunde){
@@ -57,7 +54,7 @@ public class WarenkorbManagement {
 
 
     public Rechnung warenkorbKaufen(Kunde kunde) {
-        Warenkorb warenkorb = getWarenkorb(kunde);
+        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
         //warenkorb.warenkorbKaufen(); //Führte zum doppelten abbuchen
         return rechnungErstellen(kunde);
     }
