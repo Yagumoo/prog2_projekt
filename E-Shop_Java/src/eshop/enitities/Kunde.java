@@ -12,7 +12,7 @@ public class Kunde extends Person {
     private String ort;
     private String strasse;
     private int strassenNummer;
-    private  Warenkorb warenkorb;
+
 
     public Kunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) {
         super(vorname, nachname, email, username, password);
@@ -20,17 +20,13 @@ public class Kunde extends Person {
         this.plz = plz;
         this.strasse = strasse;
         this.strassenNummer = strassenNummer;
-        this.warenkorb = new Warenkorb();
+
 
     }
 
-    public Warenkorb getWarenkorb() {
-        return warenkorb;
-    }
 
-    public void setWarenkorb(Warenkorb warenkorb) {
-        this.warenkorb = warenkorb;
-    }
+
+
 
     // Getter und Setter für PLZ
     public int getPlz() {

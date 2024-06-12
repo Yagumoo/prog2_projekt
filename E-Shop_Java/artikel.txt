@@ -13,6 +13,6 @@
 111,Duden,498,5.0
 789,RedBull,16,2.99,4
 888,Honig,5000,0.9
-666,Brot,660,6.66
+666,Brot,480,6.66
 123,Rindfleisch,500,5.99
 444,Spielkarten,30,0.99

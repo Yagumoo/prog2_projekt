@@ -59,9 +59,9 @@ public class E_Shop {
         });
     }
 
-    public void ListeVonWarenkorb(){
-        System.out.println(printWarenkorbArtikel());
-        System.out.println("Gesamt Preis: "+ gesamtPreis());
+    public void ListeVonWarenkorb(Person kunde){
+        System.out.println(printWarenkorbArtikel(kunde));
+        System.out.println("Gesamt Preis: "+ gesamtPreis(kunde));
     }
 
     public void EreignisListeAusgeben(){
@@ -163,73 +163,89 @@ public class E_Shop {
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufuegen(Kunde kunde, int artikelnummer, int menge){
-        // 1. Artikelbestand im ArtikelManagement prüfen
-        try{
-            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
-            if (artikel != null) {
-                System.out.println("Artikel erfolgreich hinzugefügt.");
+    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge){
+        if(kunde instanceof Kunde k){
+            try{
+                warenkorbManagement.warenkorbHinzufuegen(k);
+                Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+                if (artikel != null) {
+                    System.out.println("Artikel erfolgreich hinzugefügt.");
+                }
+                warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
+            }catch (IdNichtVorhandenException e){
+                System.out.println(e.getMessage());
             }
-            warenkorbManagement.artikelInWarenkorbHinzufuegen(kunde, artikel, menge);
-        }catch (IdNichtVorhandenException e){
-            System.out.println(e.getMessage());
         }
     }
 
-    public String printWarenkorbArtikel(){
-        Kunde kunden = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = kunden.getWarenkorb();
-        return wk.toString();
-    }
 
-    public double gesamtPreis(){
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        return wk.gesamtPreis();
-    }
-
-    public void warenkorbLeeren() {
-        Kunde kunden = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = kunden.getWarenkorb();
-        wk.warenkorbLeeren();
-    }
-
-    public Rechnung warenkorbKaufen() throws BestandNichtAusreichendException {
-        Kunde kunden = kundenManagement.getEingeloggterKunde();
-
-        // bestandAbbuchen wirft eine BestandNichtAusreichendException, wenn der Bestand nicht ausreicht
-        Warenkorb wk = kunden.getWarenkorb();
-        artikelManagement.bestandAbbuchen(wk);
-
-        // Füge Ereignisse für alle Einträge im Warenkorb hinzu
-        for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
-            Artikel artikel = entry.getKey();
-            int menge = entry.getValue();
-            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunden, Ereignis.EreignisTyp.KAUF);
-            ereignisManagement.addEreignis(/*kunden,*/ neuesEreignis);
+    public String printWarenkorbArtikel(Person kunde){
+        if(kunde instanceof Kunde k){
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            return wk.toString();
         }
-        warenkorbLeeren();
-        return warenkorbManagement.warenkorbKaufen(kunden);
+        return "Person ist kein Kunde";
     }
 
-    public void bestandImWarenkorbAendern(Artikel artikel, int menge) {
-        int aktuellerBestand = artikel.getArtikelbestand();
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        if(artikel != null){
-            wk.bestandImWarenkorbAendern(artikel, menge);
-            System.out.println("Artikel wurde erfolgreich geaendert!");
+
+    public double gesamtPreis(Person kunde){
+        if(kunde instanceof Kunde k){
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            return wk.gesamtPreis();
         }
-        if(menge > aktuellerBestand){
-            System.out.println("Es sind nur noch " + aktuellerBestand + " Einheiten vom Artikel: " + artikel.getArtikelbezeichnung() + " enthalten!");
+        return 0.0;
+    }
+
+
+    public void warenkorbLeeren(Person kunde) {
+        if(kunde instanceof Kunde k){
+            warenkorbManagement.warenkorbLeeren(k);
         }
     }
 
-    public void artikelImWarenkorbEntfernen(Artikel artikel){
-        Kunde k = kundenManagement.getEingeloggterKunde();
-        Warenkorb wk = k.getWarenkorb();
-        wk.artikelEntfernen(artikel);
+
+    public Rechnung warenkorbKaufen(Person kunde) throws BestandNichtAusreichendException {
+        if(kunde instanceof Kunde k){
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            artikelManagement.bestandAbbuchen(wk);
+
+            for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
+                Artikel artikel = entry.getKey();
+                int menge = entry.getValue();
+                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, k, Ereignis.EreignisTyp.KAUF);
+                ereignisManagement.addEreignis(neuesEreignis);
+            }
+            Rechnung rechnung = new Rechnung(wk, k);
+            warenkorbManagement.warenkorbKaufen(k);
+            warenkorbLeeren(k);
+            return rechnung;
+        }
+        return null;
     }
+
+
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) {
+        if(kunde instanceof Kunde k){
+            int aktuellerBestand = artikel.getArtikelbestand();
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            if(artikel != null){
+                wk.bestandImWarenkorbAendern(artikel, menge);
+                System.out.println("Artikel wurde erfolgreich geaendert!");
+            }
+            if(menge > aktuellerBestand){
+                System.out.println("Es sind nur noch " + aktuellerBestand + " Einheiten vom Artikel: " + artikel.getArtikelbezeichnung() + " enthalten!");
+            }
+        }
+    }
+
+
+    public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel){
+        if(kunde instanceof Kunde k){
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            wk.artikelEntfernen(artikel);
+        }
+    }
+
 
     public void saveAlleListen(){
         try {
@@ -243,6 +259,7 @@ public class E_Shop {
             System.out.println("Mitarbeiterliste gespeichert");
 
             fpm.saveEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
+            System.out.println("Ereignisliste gespeichert");
 
             System.out.println("Alle Listen wurden erfolgreich gespeichert.");
         } catch (IOException e) {

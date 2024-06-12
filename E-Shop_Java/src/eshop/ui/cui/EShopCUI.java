@@ -120,7 +120,7 @@ public class EShopCUI {
                 System.out.println("Alle Artikel:");
                 //ListeVonArtikel();
                 System.out.println("________________________________________________________________");
-                eShop.ListeVonWarenkorb();
+                eShop.ListeVonWarenkorb(eingeloggtePerson);
                 break;
             case 3:
                 System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
@@ -131,12 +131,11 @@ public class EShopCUI {
                 bestandImWarenkorbAendern();
                 break;
             case 5:
-                eShop.warenkorbLeeren();
+                eShop.warenkorbLeeren(eingeloggtePerson);
                 System.out.println("Der Warenkorb wurde geleert!");
                 System.out.println();
                 break;
             case 6:
-                System.out.println("Moechten Sie alle Artikel im Warenkorb kaufen?");
                 warenkorbKaufen();
                 break;
             case 7:
@@ -395,9 +394,10 @@ public class EShopCUI {
         try {
 
             // Artikel im Warenkorb kaufen
-            System.out.print("Gesamt Preis: "); eShop.ListeVonWarenkorb();
+            //eShop.ListeVonWarenkorb();
+            Rechnung rechnung = eShop.warenkorbKaufen(eingeloggtePerson);
 
-            eShop.warenkorbKaufen();
+            System.out.println(rechnung);
 
             System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
             // Warenkorb leeren
@@ -421,14 +421,13 @@ public class EShopCUI {
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
             if (artikel != null) {
-                eShop.artikelImWarenkorbEntfernen(artikel);
+                eShop.artikelImWarenkorbEntfernen(eingeloggtePerson, artikel);
             } else {
                 System.out.println("Artikel nicht gefunden.");
             }
         }catch (FalscheEingabeException e){
             System.err.println(e);
         }
-
     }
 
     //Geht noch nicht
@@ -441,7 +440,7 @@ public class EShopCUI {
             int neuerBestand = getIntInput("int");
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
-            eShop.bestandImWarenkorbAendern(artikel, neuerBestand);
+            eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
         }catch (FalscheEingabeException e){
             System.err.println(e);
         }
