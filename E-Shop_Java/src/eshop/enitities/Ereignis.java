@@ -15,7 +15,7 @@ public class Ereignis {
     private int anzahl;
     private Person kundeOderMitarbeiter;
     private EreignisTyp typ;
-    private Person betroffenePerson;
+//    private Person betroffenePerson;
 
     public Ereignis(Date datum, String artikelbezeichnung, int anzahl, Person kundeOderMitarbeiter, EreignisTyp typ){
         this.datum = datum;
@@ -41,8 +41,12 @@ public class Ereignis {
         this.artikelbezeichnung = artikelbezeichnung.getArtikelbezeichnung();
     }
 
-    public void setBetroffenePerson(Person betroffenePerson){
-        this.betroffenePerson = betroffenePerson;
+//    public void setBetroffenePerson(Person betroffenePerson){
+//        this.betroffenePerson = betroffenePerson;
+//    }
+
+    public Person getKundeOderMitarbeiter() {
+        return kundeOderMitarbeiter;
     }
 
     public int getAnzahl() {

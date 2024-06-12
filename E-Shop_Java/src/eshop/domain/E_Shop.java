@@ -14,17 +14,23 @@ import java.io.IOException;
 
 public class E_Shop {
 
-    private ArtikelManagement artikelManagement = new ArtikelManagement();
+    private ArtikelManagement artikelManagement; // = new ArtikelManagement();
     private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
     private KundenManagement kundenManagement = new KundenManagement();
     private Warenkorb warenkorb = new Warenkorb();
     private WarenkorbManagement warenkorbManagement = new WarenkorbManagement();
     private EreignisManagement ereignisManagement = new EreignisManagement();
-    private filePersistenceManager fpm = new filePersistenceManager();
+    private filePersistenceManager fpm; //  = new filePersistenceManager();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
     public E_Shop() {
+        fpm = new filePersistenceManager();
+        artikelManagement = new ArtikelManagement(fpm);
+//        kundenManagement = new KundenManagement(fpm);
+//        mitarbeiterManagement = new MitarbeiterManagement(fpm);
+//        ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Speichern der Listen beim Beenden...");
             saveAlleListen();
@@ -53,11 +59,22 @@ public class E_Shop {
         });
     }
 
+    public void ListeVonWarenkorb(){
+        System.out.println(printWarenkorbArtikel());
+        System.out.println("Gesamt Preis: "+ gesamtPreis());
+    }
+
+    public void EreignisListeAusgeben(){
+        for (Ereignis ereignisListe : getEreignisListe()){
+            System.out.println(ereignisListe);
+        }
+    }
+
     public void addArtikel(Artikel artikel) throws DoppelteIdException {
         artikelManagement.addArtikel(artikel);
         Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
         Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.NEU);
-        ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+        ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
     }
 
     public List<Ereignis> getEreignisListe(){
@@ -98,14 +115,10 @@ public class E_Shop {
         }
     }
 
-    public void loescheArtikel(int artikelnummer){
-        try {
-            sucheArtikelMitNummer(artikelnummer);
-            artikelManagement.loescheArtikel(artikelnummer);
-            System.out.println("Artikel mit der Nummer " + artikelnummer + " wurde erfolgreich gelöscht.");
-        } catch (IdNichtVorhandenException e){
-            System.err.println(e.getMessage());
-        }
+    public void loescheArtikel(int artikelnummer) throws IdNichtVorhandenException {
+        sucheArtikelMitNummer(artikelnummer);
+        artikelManagement.loescheArtikel(artikelnummer);
+
     }
 
     public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
@@ -136,7 +149,7 @@ public class E_Shop {
                 }
                 // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
                 Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
-                ereignisManagement.addEreignis(mitarbeiter, neuesEreignis);
+                ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
                 System.out.println("Artikel wurde erfolgreich geändert");
             }
 
@@ -177,7 +190,8 @@ public class E_Shop {
 
     public void warenkorbLeeren() {
         Kunde kunden = kundenManagement.getEingeloggterKunde();
-        warenkorbManagement.warenkorbLeeren(kunden);
+        Warenkorb wk = kunden.getWarenkorb();
+        wk.warenkorbLeeren();
     }
 
     public Rechnung warenkorbKaufen() throws BestandNichtAusreichendException {
@@ -192,8 +206,9 @@ public class E_Shop {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();
             Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunden, Ereignis.EreignisTyp.KAUF);
-            ereignisManagement.addEreignis(kunden, neuesEreignis);
+            ereignisManagement.addEreignis(/*kunden,*/ neuesEreignis);
         }
+        warenkorbLeeren();
         return warenkorbManagement.warenkorbKaufen(kunden);
     }
 

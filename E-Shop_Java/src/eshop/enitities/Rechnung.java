@@ -18,7 +18,7 @@ public class Rechnung {
 
     @Override
     public String toString() {
-        String rechnung = "Rechnung für Kunde " + kunde.getUsername() + ":\n";
+        String rechnung = " ";
 
         for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();

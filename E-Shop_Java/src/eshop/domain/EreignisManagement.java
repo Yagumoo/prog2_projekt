@@ -18,7 +18,7 @@ public class EreignisManagement {
     public  EreignisManagement(){
         //ereignisListe.add(new Ereignis(aktuellesDatum, "Initialisierung", 0, new Person("System", 0)));
         try {
-            ereignisListe = fpm.loadEreignisListe("ereignis.txt");
+            ereignisListe = fpm.loadEreignisListe("ereignis.txt" /* kundenListe, mitarbeiterListe */);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -29,8 +29,8 @@ public class EreignisManagement {
         return  ereignisListe;
     }
 
-    public void addEreignis(Person person, Ereignis ereignis){
-        ereignis.setBetroffenePerson(person);
+    public void addEreignis(/*Person person,*/ Ereignis ereignis){
+//        ereignis.setBetroffenePerson(person);
         ereignisListe.add(ereignis);
     }
 }

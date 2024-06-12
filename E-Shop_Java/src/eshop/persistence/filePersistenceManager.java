@@ -223,6 +223,14 @@ public class filePersistenceManager {
                 String artikelbezeichnung = parts[1];
                 int anzahl = Integer.parseInt(parts[2]);
                 Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(parts[3]);
+                boolean istKunde = parts[4].equals("k");
+                if (istKunde) {
+                    // Kunde aus Kundenliste raussuchen
+                    System.out.println(("TEST: Kunde mit ID " + parts[5]));
+                } else {
+                    // Mitarbeiter aus Mitarbeiterliste raussuchen
+                    System.out.println(("TEST: Mitarbeiter mit ID " + parts[5]));
+                }
                 Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, null, typ);
                 ereignisList.add(ereignis);
             }
@@ -236,12 +244,15 @@ public class filePersistenceManager {
         zumSchreiben(datei);
         try {
             for (Ereignis ereignis : ereignisList) {
+                boolean istKunde = ereignis.getKundeOderMitarbeiter() instanceof Kunde;
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String daten = String.join(",",
                         sdf.format(ereignis.getDatum()),
                         ereignis.getArtikel(),
                         String.valueOf(ereignis.getAnzahl()),
-                        ereignis.getTyp().toString()
+                        ereignis.getTyp().toString(),
+                        istKunde ? "k" : "m",
+                        ereignis.getKundeOderMitarbeiter() != null ? ereignis.getKundeOderMitarbeiter().getId()+"" : "777"
                 );
                 schreibeZeile(daten);
             }

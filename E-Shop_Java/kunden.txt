@@ -1,5 +1,3 @@
-Sinan,Wolters,Drachenlord@gmail.com,Dragonslayer19,1234,9,Bremen,65656,Hamburgerweg,90
-Denis,Neufeld,Neuf@gmail.com,Deteb,1234,6,Delmenhorst,27751,Sommerweg,24
-Dima,Test,www,D1m,1234,7,Test,23424,Testweg,23
-Kevin,Wittmer,Wittmer@gmail.com,Rednic,1234,8,Delmenhorst,27752,Heidkrugerweg,420
-Maximilian,Stenzel,Stenz@gmail.com,Spetzle,1234,10,Delmenhorst,27753,Friedensstrasse,454
+Hannah,Lotus,Hannah@gmail.com,H4n,1234,6,Hamburg,27754,Feldweg,69
+Dima,Lotik,Dima@gmail.com,D1m,1234,7,Hamburg,27754,Feldweg,69
+Hans,Lotus,Hans@gmail.com,H4n5,1234,8,Hamburg,27554,Feldstr,123

@@ -1,5 +1,6 @@
 package eshop.domain;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import eshop.domain.exceptions.*;
 import eshop.enitities.Artikel;
@@ -12,13 +13,16 @@ import eshop.persistence.filePersistenceManager;
 
 public class ArtikelManagement {
 
-    private filePersistenceManager fpm = new filePersistenceManager();
+    private filePersistenceManager fpm; // = new filePersistenceManager();
     private Warenkorb warenkorb = new Warenkorb();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
+    private Map<String, Artikel> artikelListe2 = new HashMap<>();
+    private List<Artikel> artikelListeAsList = new ArrayList<>();
     private EreignisManagement ereignisManagement;
 
-    public ArtikelManagement() {
+    public ArtikelManagement(filePersistenceManager fpm) {
         try{
+            this.fpm = fpm;
             artikelListe = fpm.loadArtikelListe("artikel.txt");
 
             if(artikelListe.isEmpty()){
@@ -81,6 +85,14 @@ public class ArtikelManagement {
         artikelListe.remove(artikelnummer);
     }
 
+    public Artikel gibArtikelPerName(String artikelbezeichnung)throws ArtikelExisitiertNichtException{
+        // TODO: Exception werfen
+        if (!artikelListe.containsKey(artikelbezeichnung)) {
+            throw new ArtikelExisitiertNichtException(artikelbezeichnung);
+        }
+        return artikelListe.get(artikelbezeichnung);
+    }
+
 
     public Artikel gibArtikelPerId(int artikelnummer)throws IdNichtVorhandenException{
         // TODO: Exception werfen
@@ -89,7 +101,6 @@ public class ArtikelManagement {
         }
         return artikelListe.get(artikelnummer);
     }
-
 
     public boolean sucheArtikel(int artikelnummer){
         return artikelListe.containsKey(artikelnummer);

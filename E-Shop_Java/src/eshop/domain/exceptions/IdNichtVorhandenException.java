@@ -1,7 +1,14 @@
 package eshop.domain.exceptions;
 
-public class IdNichtVorhandenException extends Exception{
+public class IdNichtVorhandenException extends Exception {
+
+    private int id;
     public IdNichtVorhandenException(int id){
-        System.out.println("Die ID " +id+ " exestiert nicht");
+        super("Die ID " +id+ " existiert nicht");
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

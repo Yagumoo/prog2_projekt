@@ -7,6 +7,7 @@ import eshop.enitities.*;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.List;
 
 
 public class EShopCUI {
@@ -94,7 +95,7 @@ public class EShopCUI {
                 mitarbeiterRegistrieren();
                 break;
             case 8:
-                EreignisListeAusgeben();
+                eShop.EreignisListeAusgeben();
                 break;
             case 9:
                 try {
@@ -119,7 +120,7 @@ public class EShopCUI {
                 System.out.println("Alle Artikel:");
                 //ListeVonArtikel();
                 System.out.println("________________________________________________________________");
-                ListeVonWarenkorb();
+                eShop.ListeVonWarenkorb();
                 break;
             case 3:
                 System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
@@ -130,8 +131,9 @@ public class EShopCUI {
                 bestandImWarenkorbAendern();
                 break;
             case 5:
-                System.out.println("Moechten Sie den Warenkorb wirklich leeren? (Y/N)");
-                warenkorbLeeren();
+                eShop.warenkorbLeeren();
+                System.out.println("Der Warenkorb wurde geleert!");
+                System.out.println();
                 break;
             case 6:
                 System.out.println("Moechten Sie alle Artikel im Warenkorb kaufen?");
@@ -152,20 +154,6 @@ public class EShopCUI {
                 break;
         }
     }
-
-    //Umschreiben
-    private void ListeVonWarenkorb(){
-        System.out.println(eShop.printWarenkorbArtikel());
-        System.out.println("Gesamt Preis: "+ eShop.gesamtPreis());
-    }
-
-    private void EreignisListeAusgeben(){
-
-        for (Ereignis ereignisListe : eShop.getEreignisListe()){
-            System.out.println(ereignisListe);
-        }
-    }
-
     private void artikelHinzufugen() {
         try {
             int massengutAnzahl = 1;
@@ -224,10 +212,10 @@ public class EShopCUI {
             int artikelnummer = getIntInput("int");
 
             eShop.loescheArtikel(artikelnummer);
-        }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.out.println("Artikel mit der Nummer " + artikelnummer + " wurde erfolgreich gelöscht.");
+        } catch (FalscheEingabeException | IdNichtVorhandenException e){
+            System.err.println(e.getMessage());
         }
-
     }
 
     private void mitarbeiterRegistrieren(){
@@ -373,20 +361,18 @@ public class EShopCUI {
         }
 
     }
-
-
     private void artikelInWarenkorb() {
         try {
             System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
             int artikelnummer = getIntInput("int");
 
-
             System.out.println("Bitte geben Sie die Menge ein:");
             printArrow();
             int menge = getIntInput("int");
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+
             if (artikel instanceof MassengutArtikel) {
                 MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
                 int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
@@ -409,7 +395,7 @@ public class EShopCUI {
         try {
 
             // Artikel im Warenkorb kaufen
-            System.out.print("Gesamt Preis: "); ListeVonWarenkorb();
+            System.out.print("Gesamt Preis: "); eShop.ListeVonWarenkorb();
 
             eShop.warenkorbKaufen();
 
@@ -423,17 +409,6 @@ public class EShopCUI {
 
     }
 
-    private  void warenkorbLeeren(){
-        try {
-            String scaner = getStringInput("String");
-            if(scaner.equalsIgnoreCase("Y")){
-                eShop.warenkorbLeeren();
-            }
-        } catch (FalscheEingabeException e){
-            System.err.println(e);
-        }
-
-    }
 
     //Funktioniert semi
     private void artikelAusWarenkorbEntfernen(){
