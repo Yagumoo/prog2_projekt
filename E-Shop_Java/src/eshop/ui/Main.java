@@ -15,10 +15,6 @@ public class Main{
 //        //leer.printDetails();
 //        af.artikelAusgeben();
 
-
-
-
-
    }
 }
 

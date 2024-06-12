@@ -18,10 +18,11 @@ public class KundenManagement {
     //Warenkorb öffnen
     private Map<Integer, Kunde> kundenListe = new HashMap<>();
     private Kunde eingeloggterKunde;
-    private filePersistenceManager fpm = new filePersistenceManager();
+    private filePersistenceManager fpm;// = new filePersistenceManager();
 
-    public KundenManagement() {
+    public KundenManagement(filePersistenceManager fpm) {
         try{
+            this.fpm = fpm;
 
             kundenListe = fpm.loadKundenListe("kunden.txt");
             if(kundenListe.isEmpty()){

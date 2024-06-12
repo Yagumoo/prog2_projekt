@@ -1,10 +1,6 @@
 package eshop.persistence;
 
-import eshop.enitities.Artikel;
-import eshop.enitities.MassengutArtikel;
-import eshop.enitities.Kunde;
-import eshop.enitities.Mitarbeiter;
-import eshop.enitities.Ereignis;
+import eshop.enitities.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -211,11 +207,12 @@ public class filePersistenceManager {
         }
     }
 
-    public List<Ereignis> loadEreignisListe(String datei) throws IOException, ParseException {
+    public List<Ereignis> loadEreignisListe(String datei, Map<Integer, Kunde> alleKunden, Map<Integer, Mitarbeiter> alleMitarbeiter) throws IOException, ParseException {
         List<Ereignis> ereignisList = new ArrayList<>();
         zumLesen(datei);
         try {
             String line;
+            Person person;
             while ((line = liesZeile()) != null) {
                 String[] parts = line.split(",");
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -225,13 +222,14 @@ public class filePersistenceManager {
                 Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(parts[3]);
                 boolean istKunde = parts[4].equals("k");
                 if (istKunde) {
-                    // Kunde aus Kundenliste raussuchen
-                    System.out.println(("TEST: Kunde mit ID " + parts[5]));
+                    person = alleKunden.get(Integer.parseInt(parts[5]));
+                    //System.out.println(("TEST: Kunde mit ID " + parts[5]));
                 } else {
                     // Mitarbeiter aus Mitarbeiterliste raussuchen
-                    System.out.println(("TEST: Mitarbeiter mit ID " + parts[5]));
+                    person = alleMitarbeiter.get(Integer.parseInt(parts[5]));
+                    //System.out.println(("TEST: Mitarbeiter mit ID " + parts[5]));
                 }
-                Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, null, typ);
+                Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, person, typ);
                 ereignisList.add(ereignis);
             }
         } finally {
@@ -252,7 +250,7 @@ public class filePersistenceManager {
                         String.valueOf(ereignis.getAnzahl()),
                         ereignis.getTyp().toString(),
                         istKunde ? "k" : "m",
-                        ereignis.getKundeOderMitarbeiter() != null ? ereignis.getKundeOderMitarbeiter().getId()+"" : "777"
+                        ereignis.getKundeOderMitarbeiter() != null ? ereignis.getKundeOderMitarbeiter().getId()+"" : "000"
                 );
                 schreibeZeile(daten);
             }

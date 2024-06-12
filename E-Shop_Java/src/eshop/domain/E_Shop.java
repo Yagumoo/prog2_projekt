@@ -15,11 +15,10 @@ import java.io.IOException;
 public class E_Shop {
 
     private ArtikelManagement artikelManagement; // = new ArtikelManagement();
-    private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement();
-    private KundenManagement kundenManagement = new KundenManagement();
-    private Warenkorb warenkorb = new Warenkorb();
-    private WarenkorbManagement warenkorbManagement = new WarenkorbManagement();
-    private EreignisManagement ereignisManagement = new EreignisManagement();
+    private MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
+    private KundenManagement kundenManagement; //= new KundenManagement();
+    private WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
+    private EreignisManagement ereignisManagement;//= new EreignisManagement();
     private filePersistenceManager fpm; //  = new filePersistenceManager();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
@@ -27,9 +26,10 @@ public class E_Shop {
     public E_Shop() {
         fpm = new filePersistenceManager();
         artikelManagement = new ArtikelManagement(fpm);
-//        kundenManagement = new KundenManagement(fpm);
-//        mitarbeiterManagement = new MitarbeiterManagement(fpm);
-//        ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
+        mitarbeiterManagement = new MitarbeiterManagement(fpm);
+        kundenManagement = new KundenManagement(fpm);
+        warenkorbManagement = new WarenkorbManagement();
+        ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Speichern der Listen beim Beenden...");

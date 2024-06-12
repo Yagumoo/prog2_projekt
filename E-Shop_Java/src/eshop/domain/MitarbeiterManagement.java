@@ -15,15 +15,17 @@ import java.util.List;
 import eshop.persistence.filePersistenceManager;
 
 public class MitarbeiterManagement {
+    private filePersistenceManager fpm;
     //Mitarbeiter erstellen
     //KundenListeaufrufen
     private Map<Integer, Mitarbeiter> mitarbeiterListe = new HashMap<>();
     private Person eingeloggterMitarbeiter;
-    private filePersistenceManager fpm = new filePersistenceManager();
+    //private filePersistenceManager fpm = new filePersistenceManager();
 
-    public MitarbeiterManagement() {
+    public MitarbeiterManagement(filePersistenceManager fpm) {
 
         try {
+            this.fpm = fpm;
             mitarbeiterListe = fpm.loadMitarbeiterListe("mitarbeiter.txt");
 
 
