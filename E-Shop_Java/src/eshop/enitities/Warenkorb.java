@@ -1,5 +1,7 @@
 package eshop.enitities;
 
+import eshop.domain.exceptions.IdNichtVorhandenException;
+
 import java.sql.SQLOutput;
 import java.text.NumberFormat;
 import java.util.Map;
@@ -34,8 +36,12 @@ public class Warenkorb {
         //ereignisAusgeben(artikel);
     }
 
-    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) {
-        warenkorbMap.replace(artikel, newQuantity);
+    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException {
+        if (warenkorbMap.containsKey(artikel)) {
+            warenkorbMap.replace(artikel, newQuantity);
+        } else {
+            throw new IdNichtVorhandenException(artikel.getArtikelnummer());
+        }
     }
 
     public Map<Artikel, Integer> getWarenkorbMap() {

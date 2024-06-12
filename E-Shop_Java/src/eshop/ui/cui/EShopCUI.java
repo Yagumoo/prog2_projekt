@@ -56,7 +56,9 @@ public class EShopCUI {
 
             } else if(input.equalsIgnoreCase("B")){
                 System.out.println("Programm wird beendet und Daten werden gespeichert...");
+                System.out.println("Speichern der Listen beim Beenden...");
                 System.exit(0); //Loest Shutdownhook aus
+                System.out.println("Speichern abgeschlossen.");
             }
         } catch (FalscheEingabeException e) {
             System.err.println(e);
@@ -70,7 +72,7 @@ public class EShopCUI {
         switch(eingabe) {
             case 1:
                 System.out.println("Alle Artikel:");
-                eShop.ListeVonArtikel();
+                listeVonArtikel();
                 break;
             case 2:
                 artikelHinzufugen();
@@ -84,18 +86,18 @@ public class EShopCUI {
                 break;
             case 5:
                 System.out.println("Registrierte Kunden ausgeben:");
-                eShop.ListeVonKunden();
+                listeVonKunden();
                 break;
             case  6:
                 System.out.println("Angestellte Mitarbeiter ausgeben:");
-                eShop.ListeVonMitarbeiter();
+                listeVonMitarbeiter();
                 break;
             case 7:
                 System.out.println("Bitte registrieren Sie den neuen Angestellten:");
                 mitarbeiterRegistrieren();
                 break;
             case 8:
-                eShop.EreignisListeAusgeben();
+                ereignisListeAusgeben();
                 break;
             case 9:
                 try {
@@ -114,13 +116,13 @@ public class EShopCUI {
         switch(eingabe) {
             case 1:
                 System.out.println("Alle Artikel:");
-                eShop.ListeVonArtikel();
+                listeVonArtikel();
                 break;
             case 2:
                 System.out.println("Alle Artikel:");
                 //ListeVonArtikel();
                 System.out.println("________________________________________________________________");
-                eShop.ListeVonWarenkorb(eingeloggtePerson);
+                listeVonWarenkorb(eingeloggtePerson);
                 break;
             case 3:
                 System.out.println("Welchen Artikel moechten Sie hinzufuegen?:");
@@ -153,6 +155,44 @@ public class EShopCUI {
                 break;
         }
     }
+
+    public void listeVonArtikel() {
+        Map<Integer, Artikel> artikel = eShop.gibAlleArtikel();
+        artikel.forEach((arikelnummer, artikelbezeichnung)-> {
+            System.out.println("Gesamt Preis: "+ artikelbezeichnung);
+        });
+    }
+
+    public void listeVonMitarbeiter(){
+        Map<Integer, Mitarbeiter> mitarbeiter = eShop.gibAlleMitarbeiter();
+        mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
+            System.out.println(mitarbeiterDaten.toString());
+        });
+    }
+
+    public void listeVonKunden(){
+        Map<Integer, Kunde> kunden = eShop.gibAlleKunden();
+        kunden.forEach((kundeId, kundeDaten)-> {
+            System.out.println(kundeDaten.toString());
+        });
+    }
+
+    public void ereignisListeAusgeben(){
+        for (Ereignis ereignisListe : eShop.getEreignisListe()){
+            System.out.println(ereignisListe);
+        }
+    }
+
+    public void listeVonWarenkorb(Person kunde){
+        try {
+            System.out.println(eShop.printWarenkorbArtikel(kunde));
+            System.out.println("Gesamt Preis: "+ eShop.gesamtPreis(kunde));
+        } catch (IstLeerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     private void artikelHinzufugen() {
         try {
             int massengutAnzahl = 1;
@@ -195,10 +235,10 @@ public class EShopCUI {
             } else {
                 artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
             }
-            eShop.addArtikel(artikel);
+            eShop.addArtikel(eingeloggtePerson, artikel);
 
         } catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -210,7 +250,7 @@ public class EShopCUI {
             printArrow();
             int artikelnummer = getIntInput("int");
 
-            eShop.loescheArtikel(artikelnummer);
+            eShop.loescheArtikel(eingeloggtePerson, artikelnummer);
             System.out.println("Artikel mit der Nummer " + artikelnummer + " wurde erfolgreich gelöscht.");
         } catch (FalscheEingabeException | IdNichtVorhandenException e){
             System.err.println(e.getMessage());
@@ -244,11 +284,11 @@ public class EShopCUI {
             String passwort = getStringInput("String");
 
 
-            eShop.addMitarbeiter(vorname, nachname, email, username, passwort);
+            eShop.addMitarbeiter(eingeloggtePerson, vorname, nachname, email, username, passwort);
             System.out.println("Neuer Mitarbeiter wurde registrert");
 
         }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -298,7 +338,7 @@ public class EShopCUI {
             KundenSeite();
 
         }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -318,7 +358,7 @@ public class EShopCUI {
             } while (true);
 
         }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         } catch (LoginException e){
             System.out.println(e.getMessage());
             kundeLogin();
@@ -339,7 +379,7 @@ public class EShopCUI {
             } while (true);
 
         }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         } catch (LoginException e){
             System.out.println(e.getMessage());
             MitarbeiterLogin();
@@ -354,9 +394,10 @@ public class EShopCUI {
             System.out.println("Bitte neuen Artikelbestand einfügen:");
             printArrow();
             int neuerBestand = getIntInput("int");
-            eShop.aendereArtikelBestand(artikelnummer, neuerBestand);
+            eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
+            System.out.println("Artikel wurde erfolgreich geändert");
         } catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
 
     }
@@ -381,10 +422,9 @@ public class EShopCUI {
             }
             // Fügen Artikel dem Warenkorb hinzu
             eShop.artikelInWarenkorbHinzufuegen((Kunde) eingeloggtePerson, artikelnummer, menge);
+            System.out.println("Artikel erfolgreich hinzugefügt.");
 
-        } catch (FalscheEingabeException e){
-            System.err.println(e);
-        } catch (KeinMassengutException e){
+        } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException e){
             System.err.println(e.getMessage());
         }
     }
@@ -425,7 +465,7 @@ public class EShopCUI {
             } else {
                 System.out.println("Artikel nicht gefunden.");
             }
-        }catch (FalscheEingabeException e){
+        }catch (FalscheEingabeException | IdNichtVorhandenException e){
             System.err.println(e);
         }
     }
@@ -441,8 +481,9 @@ public class EShopCUI {
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
-        }catch (FalscheEingabeException e){
-            System.err.println(e);
+            System.out.println("Artikel wurde erfolgreich geaendert!");
+        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException e){
+            System.err.println(e.getMessage());
         }
     }
 

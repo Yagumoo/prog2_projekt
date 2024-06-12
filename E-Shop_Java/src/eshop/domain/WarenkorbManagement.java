@@ -37,8 +37,10 @@ public class WarenkorbManagement {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
         Warenkorb warenkorb = getWarenkorb(kunde);
         warenkorb.artikelHinzufuegen(artikel, menge);
-
     }
+
+
+
 
     public Warenkorb getWarenkorb(Kunde kunde){
     return warenkorbVonKunde.get(kunde);

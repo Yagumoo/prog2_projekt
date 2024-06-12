@@ -57,12 +57,13 @@ public class ArtikelManagement {
     }
 
     public void bestandAbbuchen(Warenkorb warenkorb) throws BestandNichtAusreichendException {
+
         for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();
-
+            int aktuellerBestand = artikel.getArtikelbestand();
             if (artikel.getArtikelbestand() < menge) {
-                throw new BestandNichtAusreichendException(artikel);
+                throw new BestandNichtAusreichendException(artikel, aktuellerBestand);
             }
         }
 

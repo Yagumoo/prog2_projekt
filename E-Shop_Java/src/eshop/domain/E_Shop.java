@@ -32,58 +32,42 @@ public class E_Shop {
         ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Speichern der Listen beim Beenden...");
             saveAlleListen();
-            System.out.println("Speichern abgeschlossen.");
         }));
     }
 
-    public void ListeVonArtikel() {
-        Map<Integer, Artikel> artikel = artikelManagement.gibAlleArtikel();
-        artikel.forEach((arikelnummer, artikelbezeichnung)-> {
-            System.out.println("Gesamt Preis: "+ artikelbezeichnung);
-        });
+    public Map<Integer, Artikel> gibAlleArtikel() {
+        return artikelManagement.gibAlleArtikel();
     }
 
-    public void ListeVonMitarbeiter(){
-        Map<Integer, Mitarbeiter> mitarbeiter = mitarbeiterManagement.gibAlleMitarbeiter();
-        mitarbeiter.forEach((mitarbeiterId, mitarbeiterDaten)-> {
-            System.out.println(mitarbeiterDaten.toString());
-        });
+    public  Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
+        return mitarbeiterManagement.gibAlleMitarbeiter();
     }
 
-    public void ListeVonKunden(){
-        Map<Integer, Kunde> kunden = kundenManagement.gibAlleKunden();
-        kunden.forEach((kundeId, kundeDaten)-> {
-            System.out.println(kundeDaten.toString());
-        });
+    public  Map<Integer, Kunde> gibAlleKunden() {
+        return kundenManagement.gibAlleKunden();
     }
 
-    public void ListeVonWarenkorb(Person kunde){
-        System.out.println(printWarenkorbArtikel(kunde));
-        System.out.println("Gesamt Preis: "+ gesamtPreis(kunde));
-    }
-
-    public void EreignisListeAusgeben(){
-        for (Ereignis ereignisListe : getEreignisListe()){
-            System.out.println(ereignisListe);
+    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException {
+        if(mitarbeiter instanceof Mitarbeiter m){
+            artikelManagement.addArtikel(artikel);
+            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), m, Ereignis.EreignisTyp.NEU);
+            ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
         }
-    }
 
-    public void addArtikel(Artikel artikel) throws DoppelteIdException {
-        artikelManagement.addArtikel(artikel);
-        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-        Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.NEU);
-        ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
     }
 
     public List<Ereignis> getEreignisListe(){
         return ereignisManagement.getEreignisse();
     }
 
-    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password) throws DoppelteIdException {
-        mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
-        Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException {
+        if(mitarbeiter instanceof Mitarbeiter){
+            mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
+            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+        }
+
     }
 
     public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws  DoppelteIdException {
@@ -106,83 +90,82 @@ public class E_Shop {
         kundenManagement.setEingeloggterKunde(kunde);
     }
 
-    public Artikel sucheArtikelMitNummer(int artikelnummer){
-        try{
-            return artikelManagement.gibArtikelPerId(artikelnummer);
-        } catch (IdNichtVorhandenException e){
-           // System.out.println(e.getMessage());
-            return null;
+    public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException{
+        return artikelManagement.gibArtikelPerId(artikelnummer);
+    }
+
+    public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
+        if(mitarbeiter instanceof Mitarbeiter m){
+            sucheArtikelMitNummer(artikelnummer);
+            artikelManagement.loescheArtikel(artikelnummer);
         }
-    }
 
-    public void loescheArtikel(int artikelnummer) throws IdNichtVorhandenException {
-        sucheArtikelMitNummer(artikelnummer);
-        artikelManagement.loescheArtikel(artikelnummer);
 
     }
 
-    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
-        try {
-            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+    public boolean aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
+        if(mitarbeiter instanceof Mitarbeiter m){
+            try {
+                Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
-            // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
-            Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+                // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
+                //Person m = mitarbeiterManagement.getEingeloggterMitarbeiter();
 
-            //Aktuellen Artikelbestand Speichern
-            int aktuellerBestand = artikel.getArtikelbestand();
+                //Aktuellen Artikelbestand Speichern
+                int aktuellerBestand = artikel.getArtikelbestand();
 
-            int differenz = neuerBestand - aktuellerBestand;
+                int differenz = neuerBestand - aktuellerBestand;
 
-            // Ändern des Artikelbestands und das Ergebnis der Operation speichern
-            boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+                // Ändern des Artikelbestands und das Ergebnis der Operation speichern
+                boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
 
-            if (bestandGeaendert) {
-                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                Ereignis.EreignisTyp ereignisTyp;
+                if (bestandGeaendert) {
+                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                    Ereignis.EreignisTyp ereignisTyp;
 
-                if(differenz < 0){
-                    ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
+                    if(differenz < 0){
+                        ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
 
-                }else{
-                    ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
+                    }else{
+                        ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
 
+                    }
+                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                    Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
+                    ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
                 }
-                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
-                ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
-                System.out.println("Artikel wurde erfolgreich geändert");
+                // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
+                return bestandGeaendert;
+            } catch (IdNichtVorhandenException e) {
+                System.err.println(e.getMessage());
+                return false;
             }
-
-            // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
-            return bestandGeaendert;
-        } catch (IdNichtVorhandenException e) {
-            System.err.println(e.getMessage());
-            return false;
         }
+        return true;
     }
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge){
+    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException{
         if(kunde instanceof Kunde k){
-            try{
-                warenkorbManagement.warenkorbHinzufuegen(k);
-                Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
-                if (artikel != null) {
-                    System.out.println("Artikel erfolgreich hinzugefügt.");
-                }
+
+            warenkorbManagement.warenkorbHinzufuegen(k);
+            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+            if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
-            }catch (IdNichtVorhandenException e){
-                System.out.println(e.getMessage());
             }
         }
     }
 
 
-    public String printWarenkorbArtikel(Person kunde){
+    public String printWarenkorbArtikel(Person kunde) throws IstLeerException{
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            return wk.toString();
+            if(wk != null){
+                return wk.toString();
+            } else{
+                throw new IstLeerException();
+            }
         }
         return "Person ist kein Kunde";
     }
@@ -224,16 +207,18 @@ public class E_Shop {
     }
 
 
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) {
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException {
         if(kunde instanceof Kunde k){
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             if(artikel != null){
                 wk.bestandImWarenkorbAendern(artikel, menge);
-                System.out.println("Artikel wurde erfolgreich geaendert!");
+            }else{
+                throw new IdNichtVorhandenException(artikel.getArtikelnummer());
             }
+            int neuerBestand = artikel.getArtikelbestand();
             if(menge > aktuellerBestand){
-                System.out.println("Es sind nur noch " + aktuellerBestand + " Einheiten vom Artikel: " + artikel.getArtikelbezeichnung() + " enthalten!");
+                throw new BestandNichtAusreichendException(artikel, neuerBestand);
             }
         }
     }
