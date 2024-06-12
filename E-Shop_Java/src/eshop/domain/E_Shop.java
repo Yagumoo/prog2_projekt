@@ -55,7 +55,6 @@ public class E_Shop {
             Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), m, Ereignis.EreignisTyp.NEU);
             ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
         }
-
     }
 
     public List<Ereignis> getEreignisListe(){
