@@ -5,7 +5,13 @@ public class Artikel{
     private String artikelbezeichnung;
     private int artikelbestand;
     private double artikelPreis;
-
+    /**
+     * @param artikelbezeichnung ist der Name vom Artikel
+     * @param artikelbestand ist die Anzahl der Artikel
+     * @param artikelnummer ist die Nummer der Artikel
+     * @param artikelPreis ist der Preis der Artikel
+     *
+     * */
     public Artikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis) {
         this.artikelnummer = artikelnummer;
         this.artikelbezeichnung = artikelbezeichnung;

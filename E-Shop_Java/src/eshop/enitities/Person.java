@@ -9,6 +9,13 @@ public abstract class Person {
   private String password;
   private static int idzeahler = 1;
 
+  /**
+   * @param vorname ist der Vorname vom Benutzer
+   * @param nachname ist der Nachname vom Benutzer
+   * @param email ist die E-mail vom Benutzer
+   * @param username ist der Benutzername vom Benutzer
+   * @param password ist das Password vom Benutzer
+   * */
   public Person(String vorname, String nachname, String email, String username, String password) {
       this.vorname = vorname;
       this.nachname = nachname;

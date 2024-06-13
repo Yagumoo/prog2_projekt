@@ -4,6 +4,10 @@ public class MassengutArtikel extends Artikel {
     private  int anzahlMassengut;
 
     //Konstruktor
+    /**
+     * @param anzahlMassengut ist die Anzahl, in der der Artikel verkauft werden soll
+     *
+     * */
     public MassengutArtikel(int artikelnummer, String artikelbezeichnung, int artikelbestand, double artikelPreis, int anzahlMassengut){
         super(artikelnummer, artikelbezeichnung, artikelbestand, artikelPreis);
         this.anzahlMassengut = anzahlMassengut;

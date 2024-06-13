@@ -18,3 +18,9 @@
 12-06-2024,Spielkarten,4,KAUF,k,7
 12-06-2024,Brot,6,KAUF,k,7
 12-06-2024,Maus,10,NEU,m,1
+13-06-2024,Brot,666,NEU,m,1
+13-06-2024,Spielkarten,18,ERHOEHUNG,m,1
+13-06-2024,Spielkarten,4,KAUF,k,7
+13-06-2024,Brot,6,KAUF,k,7
+13-06-2024,Honig,80,KAUF,k,7
+13-06-2024,Brot,6,KAUF,k,7

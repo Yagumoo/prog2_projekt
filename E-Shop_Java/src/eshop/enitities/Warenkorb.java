@@ -31,11 +31,19 @@ public class Warenkorb {
         //ereignisAusgeben(artikel);
     }
 
+    /**
+     * @param artikel Fügt das Artikelobjekt ein
+     * */
     public void artikelEntfernen(Artikel artikel) {
         warenkorbMap.remove(artikel);
         //ereignisAusgeben(artikel);
     }
 
+    /**
+     * @param artikel Holt sich den gegebenen Artikel
+     * @param newQuantity Ist die neue Anzahl vom Artikel im Warenkorb
+     *
+     * */
     public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException {
         if (warenkorbMap.containsKey(artikel)) {
             warenkorbMap.replace(artikel, newQuantity);

@@ -7,6 +7,7 @@ import eshop.domain.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Rechnung {
     private Artikel artikel;
     private Warenkorb warenkorb;
@@ -14,6 +15,11 @@ public class Rechnung {
     private WarenkorbManagement warenkorbManagement;
     private Map<Artikel, Integer> warenkorbKopie;
 
+    /**
+     * @param kunde ist das Kundenobjekt
+     * @param warenkorb ist das Warenkorbobjekt
+     *
+     * */
     public Rechnung(Warenkorb warenkorb, Kunde kunde){
         this.warenkorb = warenkorb;
         this.kunde = kunde;
@@ -26,7 +32,8 @@ public class Rechnung {
 
     @Override
     public String toString() {
-        String rechnung = "Rechnung für Kunde: " + kunde.getVorname() + " " + kunde.getNachname() + "\n\n";
+        String rechnung = "Rechnung für Kunde: " + kunde.getVorname() + " " + kunde.getNachname() +"\n" +
+                "Wohnort:"+ kunde.getPlz() + " " + kunde.getOrt() + " " + kunde.getStrasse() + " " + kunde.getStrassenNummer() +  "\n\n";
 
         for (Map.Entry<Artikel, Integer> entry : warenkorbKopie.entrySet()) {
             Artikel artikel = entry.getKey();

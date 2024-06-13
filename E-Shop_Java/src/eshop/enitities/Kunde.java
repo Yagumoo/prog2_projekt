@@ -12,7 +12,13 @@ public class Kunde extends Person {
     private String ort;
     private String strasse;
     private int strassenNummer;
-
+    /**
+     * @param ort ist der Name der Stadt vom Kunden
+     * @param plz ist die PLZ der Stadt
+     * @param strasse ist der Strassenname
+     * @param strassenNummer ist die Hausnummer
+     *
+     * */
 
     public Kunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) {
         super(vorname, nachname, email, username, password);

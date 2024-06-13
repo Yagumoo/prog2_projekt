@@ -16,7 +16,15 @@ public class Ereignis {
     private Person kundeOderMitarbeiter;
     private EreignisTyp typ;
 //    private Person betroffenePerson;
-
+    /**
+     * @param anzahl ist die Anzahl der Artikel
+     * @param artikelbezeichnung ist der Name des Artikels
+     * @param datum erstellt ein Datum
+     * @param typ ist der Typ, der verwendet wird zb: NEU, KAUF, ERHOEHUNG, REDUZIERUNG
+     * @param kundeOderMitarbeiter Fügt den eingeloggten Benutzer ein
+     *
+     *
+     * */
     public Ereignis(Date datum, String artikelbezeichnung, int anzahl, Person kundeOderMitarbeiter, EreignisTyp typ){
         this.datum = datum;
         this.artikelbezeichnung = artikelbezeichnung;
