@@ -33,8 +33,7 @@ public class EreignisManagement {
         return  ereignisListe;
     }
 
-    public void addEreignis(/*Person person,*/ Ereignis ereignis){
-//        ereignis.setBetroffenePerson(person);
+    public void addEreignis(Ereignis ereignis){
         ereignisListe.add(ereignis);
     }
 }

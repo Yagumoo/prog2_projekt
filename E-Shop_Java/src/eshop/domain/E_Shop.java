@@ -14,12 +14,12 @@ import java.io.IOException;
 
 public class E_Shop {
 
-    private ArtikelManagement artikelManagement; // = new ArtikelManagement();
-    private MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
-    private KundenManagement kundenManagement; //= new KundenManagement();
-    private WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
-    private EreignisManagement ereignisManagement;//= new EreignisManagement();
-    private filePersistenceManager fpm; //  = new filePersistenceManager();
+    private final ArtikelManagement artikelManagement; // = new ArtikelManagement();
+    private final MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
+    private final KundenManagement kundenManagement; //= new KundenManagement();
+    private final WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
+    private final EreignisManagement ereignisManagement;//= new EreignisManagement();
+    private final filePersistenceManager fpm; //  = new filePersistenceManager();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
@@ -31,9 +31,7 @@ public class E_Shop {
         warenkorbManagement = new WarenkorbManagement();
         ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            saveAlleListen();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::saveAlleListen));
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -83,20 +81,12 @@ public class E_Shop {
         return kunde;
     }
 
-    public Kunde getEingeloggterKunde() {
-        return kundenManagement.gibKundePerId(1); // oder die entsprechende Logik, um den eingeloggten Kunden zu identifizieren
-    }
-
-    public void setEingeloggterKunde(Kunde kunde) {
-        kundenManagement.setEingeloggterKunde(kunde);
-    }
-
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException{
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
 
     public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
-        if(mitarbeiter instanceof Mitarbeiter m){
+        if(mitarbeiter instanceof Mitarbeiter){
             sucheArtikelMitNummer(artikelnummer);
             artikelManagement.loescheArtikel(artikelnummer);
         }
@@ -104,8 +94,8 @@ public class E_Shop {
 
     }
 
-    public boolean aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
-        if(mitarbeiter instanceof Mitarbeiter m){
+    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
+        if(mitarbeiter instanceof Mitarbeiter){
             try {
                 Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
@@ -121,7 +111,7 @@ public class E_Shop {
                 boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
 
                 if (bestandGeaendert) {
-                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+
                     Ereignis.EreignisTyp ereignisTyp;
 
                     if(differenz < 0){
@@ -136,22 +126,16 @@ public class E_Shop {
                     ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
                 }
                 // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
-                return bestandGeaendert;
             } catch (IdNichtVorhandenException e) {
                 System.err.println(e.getMessage());
-                return false;
             }
         }
-        return true;
     }
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException{
         if(kunde instanceof Kunde k){
-
-            //warenkorbManagement.warenkorbHinzufuegen(k);
-            //Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
@@ -213,11 +197,7 @@ public class E_Shop {
         if(kunde instanceof Kunde k){
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            if(artikel != null){
-                wk.bestandImWarenkorbAendern(artikel, menge);
-            }else{
-                throw new IdNichtVorhandenException(artikel.getArtikelnummer());
-            }
+            wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();
             if(menge > aktuellerBestand){
                 throw new BestandNichtAusreichendException(artikel, neuerBestand);
@@ -234,7 +214,7 @@ public class E_Shop {
     }
 
 
-    public void saveAlleListen(){
+    public void saveAlleListen() {
         try {
             fpm.saveArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
             System.out.println("Artikelliste gespeichert");

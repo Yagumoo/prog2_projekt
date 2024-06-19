@@ -3,14 +3,10 @@ package eshop.domain;
 
 import eshop.domain.exceptions.DoppelteIdException;
 import eshop.domain.exceptions.LoginException;
-import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
-import eshop.enitities.Person;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
 
 import eshop.persistence.filePersistenceManager;
 

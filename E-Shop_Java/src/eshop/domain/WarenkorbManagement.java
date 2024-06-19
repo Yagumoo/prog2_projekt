@@ -1,6 +1,5 @@
 package eshop.domain;
 
-import eshop.domain.exceptions.IdNichtVorhandenException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
 import eshop.enitities.Warenkorb;
@@ -8,10 +7,7 @@ import eshop.enitities.Rechnung;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
 
-import static javax.swing.UIManager.put;
 
 public class WarenkorbManagement {
     private Map<Artikel, Integer> warenkorbMap;
@@ -29,8 +25,7 @@ public class WarenkorbManagement {
 
     public Rechnung rechnungErstellen(Kunde kunde){
         Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
-        Rechnung rechnung = new Rechnung(warenkorb, kunde);
-        return rechnung;
+        return new Rechnung(warenkorb, kunde);
     }
 
     public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) {
@@ -54,8 +49,7 @@ public class WarenkorbManagement {
 
 
     public Rechnung warenkorbKaufen(Kunde kunde) {
-        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
-        //warenkorb.warenkorbKaufen(); //Führte zum doppelten abbuchen
+        warenkorbVonKunde.get(kunde);
         return rechnungErstellen(kunde);
     }
 

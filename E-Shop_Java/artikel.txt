@@ -9,11 +9,12 @@
 67686,Tisch,6,6.0
 8,Wasser/Gerolsteiner,36,0.99,6
 9,Fenster,30,100.0,5
+490,Handy/Samsung,800,800.0
 12,Bier/Becks,192,12.99,24
 333,Stuhl,42,34.0
 111,Duden,498,5.0
 789,RedBull,16,2.99,4
 888,Honig,4920,0.9
-666,Brot,654,6.66
+666,Brot,659,6.66
 123,Rindfleisch,500,5.99
 444,Spielkarten,40,0.99
