@@ -51,6 +51,15 @@ public class EShopGUI extends JFrame{
         this.setVisible(true);
     }
 
+    private void showCustomerLogin(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+    }
+
+    private void showEmployeeLogin(){
+
+    }
+
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Mann.png");
         if (imgURL != null) {
@@ -60,7 +69,6 @@ public class EShopGUI extends JFrame{
             return null;
         }
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(EShopGUI::new); //Lambda wurde durch :: ersetzt
