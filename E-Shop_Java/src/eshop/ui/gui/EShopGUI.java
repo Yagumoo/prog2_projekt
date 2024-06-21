@@ -1,13 +1,14 @@
 package eshop.ui.gui;
 
 import eshop.domain.E_Shop;
+import eshop.ui.gui.LoginGUI;
 import eshop.enitities.*;
 
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
 
-public class EShopGUI extends JFrame{
+public class EShopGUI extends JFrame {
 
     private E_Shop eShop;
     private final Person eingeloggtePerson = null;
@@ -30,40 +31,54 @@ public class EShopGUI extends JFrame{
         showLoginOptions();
     }
 
-
     private void showLoginOptions() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
+
+        JPanel panelN = new JPanel();
+        JPanel panelE = new JPanel();
+        JPanel panelS = new JPanel();
+        JPanel panelW = new JPanel();
+        JPanel panelC = new JPanel();
+
+        //panel.setLayout(new GridLayout(3, 1));
+
+        JTextField suchFeld = new JTextField(20);
+        panelN.add(suchFeld);
+
+        JButton suchButton = new JButton("Suchen");
+        //customerButton.addActionListener(e -> showCustomerLogin());
+        panelN.add(suchButton);
+
 
         JButton customerButton = new JButton("Customer");
         //customerButton.addActionListener(e -> showCustomerLogin());
-        panel.add(customerButton);
+        panelC.add(customerButton);
 
         JButton employeeButton = new JButton("Employee");
         //employeeButton.addActionListener(e -> showEmployeeLogin());
-        panel.add(employeeButton);
+        panelC.add(employeeButton);
 
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(e -> System.exit(0));
-        panel.add(exitButton);
+        panelS.add(exitButton);
 
-        this.add(panel, BorderLayout.CENTER);
+        this.add(panelN, BorderLayout.NORTH);
+        this.add(panelE, BorderLayout.EAST);
+        this.add(panelS, BorderLayout.SOUTH);
+        this.add(panelW, BorderLayout.WEST);
+        this.add(panelC, BorderLayout.CENTER);
+
         this.setVisible(true);
     }
 
     private ImageIcon loadImageIcon() {
-        java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Mann.png");
+        java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Icon/Mann.png");
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + "eshop/ui/gui/Mann.png");
+            System.err.println("Couldn't find file: " + "eshop/ui/gui/Icon/Mann.png");
             return null;
         }
     }
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(EShopGUI::new); //Lambda wurde durch :: ersetzt
-
-    }
 }
+
+
