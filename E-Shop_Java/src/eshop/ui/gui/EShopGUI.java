@@ -89,11 +89,12 @@ public class EShopGUI extends JFrame {
         }
     }
 
-
+    /*
     public static void main(String[] args) {
         SwingUtilities.invokeLater(EShopGUI::new); //Lambda wurde durch :: ersetzt
 
     }
+     */
 
 }
 
