@@ -29,3 +29,4 @@
 19-06-2024,Brot,7,KAUF,m,000
 19-06-2024,Handy/Samsung,800,NEU,m,000
 21-06-2024,Gurke,45,NEU,m,1
+
