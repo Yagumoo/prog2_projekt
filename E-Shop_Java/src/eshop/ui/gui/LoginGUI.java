@@ -37,6 +37,8 @@ public class LoginGUI extends JFrame {
         JPanel panelC = new JPanel();
         //TODO: Gird verwenden evtl
         //panelC.setLayout(new GridLayout(2, 2));
+        //JLabel passwortLabel = new JLabel("Passwort:");
+        // Richtig ins Borderlayout einbauen
 
         JTextField usernameOrEmailTextfeld = new JTextField(20);
         JTextField passwortTextfeld = new JTextField(20);
