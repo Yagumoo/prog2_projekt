@@ -16,6 +16,8 @@ public class EShopCUI {
      */
 
     private final E_Shop eShop;
+    private Person eingeloggtePerson = null;
+    Scanner scan = new Scanner(System.in);
 
     public EShopCUI() {
         this.eShop = new E_Shop();
@@ -24,9 +26,6 @@ public class EShopCUI {
     public E_Shop getEShop() {
         return eShop;
     }
-
-    private Person eingeloggtePerson = null;
-    Scanner scan = new Scanner(System.in);
 
     private void KundeOderMitarbeiter() {
 
