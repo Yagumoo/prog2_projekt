@@ -1,5 +1,7 @@
 package eshop.ui.gui;
 
+import eshop.domain.E_Shop;
+
 import javax.swing.*;
 
 

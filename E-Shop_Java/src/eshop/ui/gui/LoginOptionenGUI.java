@@ -3,6 +3,7 @@ package eshop.ui.gui;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
+
 public class LoginOptionenGUI extends JFrame{
 
     public LoginOptionenGUI() {
@@ -31,9 +32,9 @@ public class LoginOptionenGUI extends JFrame{
         JButton mitarbeiterButton = new JButton("Mitarbeiter");
         panel.add(mitarbeiterButton);
 
-        JButton exitButton = new JButton("Beenden");
-        exitButton.addActionListener(e -> System.exit(0));
-        panel.add(exitButton);
+        JButton beendenButton = new JButton("Beenden");
+        beendenButton.addActionListener(e -> System.exit(0));
+        panel.add(beendenButton);
 
         this.add(panel, BorderLayout.CENTER);
         this.revalidate();
@@ -49,12 +50,10 @@ public class LoginOptionenGUI extends JFrame{
         mitarbeiterButton.addActionListener(e -> {
             //Öffent die Mitarbeiter Login-GUI
             SwingUtilities.invokeLater(LoginMitarbeiterGUI::new);
-
             this.dispose();
         });
 
     }
-
 
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Icon/Macker.png");

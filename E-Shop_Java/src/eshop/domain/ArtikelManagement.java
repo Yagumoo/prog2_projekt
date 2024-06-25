@@ -21,7 +21,7 @@ public class ArtikelManagement {
     public ArtikelManagement(filePersistenceManager fpm) {
         try{
             this.fpm = fpm;
-            artikelListe = fpm.loadArtikelListe("artikel.txt");
+            artikelListe = fpm.ladeArtikelListe("artikel.txt");
 
             if(artikelListe.isEmpty()){
                 addArtikel(new Artikel(5, "Energy", 20, 2.49));

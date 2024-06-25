@@ -30,7 +30,7 @@ public class EShopCUI {
     private void KundeOderMitarbeiter() {
 
         try {
-            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? Programm beenden mit B");
+            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? \n Programm beenden mit B \n");
             String input = getStringInput();
 
             if(input.equalsIgnoreCase("k")){
@@ -57,7 +57,9 @@ public class EShopCUI {
                 System.out.println("Programm wird beendet und Daten werden gespeichert...");
                 System.out.println("Speichern der Listen beim Beenden...");
                 System.exit(0); //Loest Shutdownhook aus
+                //eShop.speicherAlleListen();
                 System.out.println("Speichern abgeschlossen.");
+
             }
         } catch (FalscheEingabeException e) {
             System.err.println(e.getMessage());
@@ -465,7 +467,6 @@ public class EShopCUI {
 
     }
 
-
     //Funktioniert semi
     private void artikelAusWarenkorbEntfernen(){
         try {
@@ -529,6 +530,7 @@ public class EShopCUI {
             throw new FalscheEingabeException("Falsche Eingabe", "double", gegebeneEingabe);
         }
     }
+
     private void printArrow() {
         System.out.print("--> ");
     }

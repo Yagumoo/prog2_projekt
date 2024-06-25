@@ -21,7 +21,7 @@ public class MitarbeiterManagement {
 
         try {
             this.fpm = fpm;
-            mitarbeiterListe = fpm.loadMitarbeiterListe("mitarbeiter.txt");
+            mitarbeiterListe = fpm.ladeMitarbeiterListe("mitarbeiter.txt");
 
 
             if(mitarbeiterListe.isEmpty()){
@@ -67,7 +67,6 @@ public class MitarbeiterManagement {
         }
     }
 
-
     public  void setEingeloggteMitarbeiter(Person mitarbeiter) {
         this.eingeloggterMitarbeiter = mitarbeiter;
     }
@@ -81,7 +80,6 @@ public class MitarbeiterManagement {
     }
 
     public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
-
         return mitarbeiterListe;
     }
 }

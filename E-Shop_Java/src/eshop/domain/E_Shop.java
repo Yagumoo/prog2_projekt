@@ -31,7 +31,7 @@ public class E_Shop {
         warenkorbManagement = new WarenkorbManagement();
         ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
 
-        Runtime.getRuntime().addShutdownHook(new Thread(this::saveAlleListen));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::speicherAlleListen));
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -90,8 +90,6 @@ public class E_Shop {
             sucheArtikelMitNummer(artikelnummer);
             artikelManagement.loescheArtikel(artikelnummer);
         }
-
-
     }
 
     public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
@@ -192,7 +190,6 @@ public class E_Shop {
         return null;
     }
 
-
     public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException {
         if(kunde instanceof Kunde k){
             int aktuellerBestand = artikel.getArtikelbestand();
@@ -205,7 +202,6 @@ public class E_Shop {
         }
     }
 
-
     public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel){
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
@@ -213,19 +209,18 @@ public class E_Shop {
         }
     }
 
-
-    public void saveAlleListen() {
+    public void speicherAlleListen() {
         try {
-            fpm.saveArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
+            fpm.speicherArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
             System.out.println("Artikelliste gespeichert");
 
-            fpm.saveKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
+            fpm.speicherKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
             System.out.println("Kundenliste gespeichert");
 
-            fpm.saveMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
+            fpm.speicherMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
             System.out.println("Mitarbeiterliste gespeichert");
 
-            fpm.saveEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
+            fpm.speicherEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
             System.out.println("Ereignisliste gespeichert");
 
             System.out.println("Alle Listen wurden erfolgreich gespeichert.");

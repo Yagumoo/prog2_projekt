@@ -22,7 +22,7 @@ public class EreignisManagement {
         try {
             this.fpm = fpm;
 
-            ereignisListe = fpm.loadEreignisListe("ereignis.txt", alleKunden, alleMitarbeiter);
+            ereignisListe = fpm.ladeEreignisListe("ereignis.txt", alleKunden, alleMitarbeiter);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
