@@ -93,7 +93,7 @@ public class EShopCUI {
                 break;
             case 4:
                 System.out.println("Welchen Artikelbestand willst du ändern?");
-                bestandAeundern();
+                bestandAendern();
                 break;
             case 5:
                 System.out.println("Registrierte Kunden ausgeben:");
@@ -405,20 +405,25 @@ public class EShopCUI {
         }
     }
 
-    private void bestandAeundern(){
+    private void bestandAendern() {
         try {
-            System.out.println("Bitte Artikelnummer einfügen:");
+            // Eingabe der Artikelnummer
+            System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
             int artikelnummer = getIntInput();
-            System.out.println("Bitte neuen Artikelbestand einfügen:");
+
+            // Eingabe des neuen Bestands
+            System.out.println("Bitte geben Sie den neuen Artikelbestand ein:");
             printArrow();
             int neuerBestand = getIntInput();
-            eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
-            System.out.println("Artikel wurde erfolgreich geändert");
-        } catch (FalscheEingabeException e){
-            System.err.println(e.getMessage());
-        }
 
+            // Änderung des Bestands aufrufen (ohne Überprüfung auf Massengutartikel hier in der CUI)
+            eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
+            System.out.println("Artikelbestand erfolgreich geändert.");
+
+        } catch (FalscheEingabeException | IdNichtVorhandenException | KeinMassengutException e) {
+            System.err.println("Fehler beim Ändern des Artikelbestands: " + e.getMessage());
+        }
     }
     private void artikelInWarenkorb() {
         try {
@@ -499,7 +504,7 @@ public class EShopCUI {
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
             System.out.println("Artikel wurde erfolgreich geaendert!");
-        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException e){
+        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException e){
             System.err.println(e.getMessage());
         }
     }

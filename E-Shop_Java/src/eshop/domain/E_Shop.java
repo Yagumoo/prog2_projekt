@@ -92,40 +92,37 @@ public class E_Shop {
         }
     }
 
-    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
-        if(mitarbeiter instanceof Mitarbeiter){
-            try {
-                Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException {
+        if (mitarbeiter instanceof Mitarbeiter) {
+            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
-                // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
-                //Person m = mitarbeiterManagement.getEingeloggterMitarbeiter();
-
-                //Aktuellen Artikelbestand Speichern
-                int aktuellerBestand = artikel.getArtikelbestand();
-
-                int differenz = neuerBestand - aktuellerBestand;
-
-                // Ändern des Artikelbestands und das Ergebnis der Operation speichern
-                boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
-
-                if (bestandGeaendert) {
-
-                    Ereignis.EreignisTyp ereignisTyp;
-
-                    if(differenz < 0){
-                        ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
-
-                    }else{
-                        ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
-
-                    }
-                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                    Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
-                    ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
+            // Überprüfen, ob der Artikel ein Massengutartikel ist
+            if (artikel instanceof MassengutArtikel) {
+                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+                // Überprüfen, ob der neue Bestand ein Vielfaches der Massengut-Anzahl ist
+                if (neuerBestand % massengutArtikel.getAnzahlMassengut() != 0) {
+                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
                 }
-                // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
-            } catch (IdNichtVorhandenException e) {
-                System.err.println(e.getMessage());
+            }
+
+            // Aktuellen Artikelbestand speichern
+            int aktuellerBestand = artikel.getArtikelbestand();
+            int differenz = neuerBestand - aktuellerBestand;
+
+            // Ändern des Artikelbestands und das Ergebnis der Operation speichern
+            boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+
+            if (bestandGeaendert) {
+                Ereignis.EreignisTyp ereignisTyp;
+                if (differenz < 0) {
+                    ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
+                } else {
+                    ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
+                }
+
+                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
+                ereignisManagement.addEreignis(neuesEreignis);
             }
         }
     }
@@ -190,17 +187,29 @@ public class E_Shop {
         return null;
     }
 
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException {
-        if(kunde instanceof Kunde k){
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException {
+        if (kunde instanceof Kunde k) {
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+
+            // Überprüfen, ob der Artikel ein Massengutartikel ist
+            if (artikel instanceof MassengutArtikel) {
+                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+                // Überprüfen, ob die Menge ein Vielfaches der Massengut-Anzahl ist
+                if (menge % massengutArtikel.getAnzahlMassengut() != 0) {
+                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
+                }
+            }
+
             wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();
-            if(menge > aktuellerBestand){
+
+            if (menge > aktuellerBestand) {
                 throw new BestandNichtAusreichendException(artikel, neuerBestand);
             }
         }
     }
+
 
     public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel){
         if(kunde instanceof Kunde k){
