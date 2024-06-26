@@ -46,7 +46,7 @@ public class E_Shop {
         return kundenManagement.gibAlleKunden();
     }
 
-    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException {
+    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
         if(mitarbeiter instanceof Mitarbeiter m){
             artikelManagement.addArtikel(artikel);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
@@ -59,7 +59,7 @@ public class E_Shop {
         return ereignisManagement.getEreignisse();
     }
 
-    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException {
+    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
         if(mitarbeiter instanceof Mitarbeiter){
             mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
@@ -67,11 +67,11 @@ public class E_Shop {
 
     }
 
-    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws  DoppelteIdException {
+    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
         kundenManagement.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
     }
 
-    public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException{
+    public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
         return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
     }
 
@@ -129,7 +129,7 @@ public class E_Shop {
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException {
+    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
         if(kunde instanceof Kunde k){
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
@@ -193,13 +193,7 @@ public class E_Shop {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
 
             // Überprüfen, ob der Artikel ein Massengutartikel ist
-            if (artikel instanceof MassengutArtikel) {
-                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
-                // Überprüfen, ob die Menge ein Vielfaches der Massengut-Anzahl ist
-                if (menge % massengutArtikel.getAnzahlMassengut() != 0) {
-                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
-                }
-            }
+
 
             wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();
@@ -211,10 +205,9 @@ public class E_Shop {
     }
 
 
-    public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel){
+    public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel) throws ArtikelExisitiertNichtException, IdNichtVorhandenException {
         if(kunde instanceof Kunde k){
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            wk.artikelEntfernen(artikel);
+            warenkorbManagement.entferneArtikelAusWarenkorb(k, artikel);
         }
     }
 

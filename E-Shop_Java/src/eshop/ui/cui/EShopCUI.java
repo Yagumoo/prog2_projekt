@@ -241,11 +241,6 @@ public class EShopCUI {
             printArrow();
             int artikelbestand = getIntInput();
 
-            //TODO: Richitg werfen
-            if(artikelTyp.equalsIgnoreCase("M") && artikelbestand % massengutAnzahl != 0){
-                throw new KeinMassengutException(massengutAnzahl);
-            }
-
             System.out.println("Bitte Artikelpreis einfügen:");
             printArrow();
             double artikelPreis = getDoubleInput();
@@ -258,7 +253,7 @@ public class EShopCUI {
             }
             eShop.addArtikel(eingeloggtePerson, artikel);
 
-        } catch (FalscheEingabeException | MinusZahlException e){
+        } catch (FalscheEingabeException | MinusZahlException | KeinMassengutException e){
             System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -308,7 +303,7 @@ public class EShopCUI {
             eShop.addMitarbeiter(eingeloggtePerson, vorname, nachname, email, username, passwort);
             System.out.println("Neuer Mitarbeiter wurde registrert");
 
-        }catch (FalscheEingabeException e){
+        }catch (FalscheEingabeException | UsernameExistiertException | EmailExistiertException e){
             System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -357,7 +352,7 @@ public class EShopCUI {
             eShop.addKunde(vorname, nachname, email, username, passwort,ort, plz, strasse, strassenNummer);
             System.out.println("Sie haben sich als Kunden registriert");
 
-        }catch (FalscheEingabeException e){
+        }catch (FalscheEingabeException | UsernameExistiertException | EmailExistiertException e){
             System.err.println(e.getMessage());
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -401,7 +396,7 @@ public class EShopCUI {
         }catch (FalscheEingabeException e){
             System.err.println(e.getMessage());
         } catch (LoginException e){
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
             MitarbeiterLogin();
         }
     }
@@ -441,7 +436,7 @@ public class EShopCUI {
             eShop.artikelInWarenkorbHinzufuegen(eingeloggtePerson, artikelnummer, menge);
             System.out.println("Artikel erfolgreich hinzugefügt.");
 
-        } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException | MinusZahlException e){
+        } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException | MinusZahlException |BestandNichtAusreichendException e){
             System.err.println(e.getMessage());
         }
     }
@@ -473,15 +468,11 @@ public class EShopCUI {
             printArrow();
             int artikelnummer = getIntInput();
 
-
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
-            if (artikel != null) {
-                eShop.artikelImWarenkorbEntfernen(eingeloggtePerson, artikel);
-            } else {
-                System.out.println("Artikel nicht gefunden.");
-            }
-        }catch (FalscheEingabeException | IdNichtVorhandenException e){
+            eShop.artikelImWarenkorbEntfernen(eingeloggtePerson, artikel);
+
+        }catch (FalscheEingabeException | IdNichtVorhandenException | ArtikelExisitiertNichtException e){
             System.err.println(e.getMessage());
         }
     }

@@ -26,7 +26,7 @@ public class WarenkorbManagement {
         return new Rechnung(warenkorb, kunde);
     }
 
-    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) throws MinusZahlException, KeinMassengutException {
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) throws MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
 
         if (artikel instanceof MassengutArtikel massengutArtikel) {
@@ -35,11 +35,31 @@ public class WarenkorbManagement {
                 throw new KeinMassengutException(massengutAnzahl);
             }
         }
+
         if(menge <=0 ){
             throw new MinusZahlException();
         }
+
+        if(menge > artikel.getArtikelbestand() ){
+            throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
+        }
+
         Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        //Wenn Artikel schon im Warenkorb ist, wird die neue Menge dazu addiert
+        if(warenkorb.getWarenkorbMap().containsKey(artikel)){
+            int bestehendeMenge = warenkorb.getWarenkorbMap().get(artikel);
+            menge += bestehendeMenge;
+        }
         warenkorb.artikelHinzufuegen(artikel, menge);
+    }
+
+    public void entferneArtikelAusWarenkorb(Kunde kunde, Artikel artikel) throws ArtikelExisitiertNichtException{
+        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+
+        if(!warenkorb.getWarenkorbMap().containsKey(artikel)){
+            throw new ArtikelExisitiertNichtException(artikel.getArtikelbezeichnung());
+        }
+        warenkorb.artikelEntfernen(artikel);
     }
 
     public Warenkorb getWarenkorb(Kunde kunde){

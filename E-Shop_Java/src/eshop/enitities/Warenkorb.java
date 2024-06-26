@@ -43,9 +43,22 @@ public class Warenkorb {
      * @param newQuantity Ist die neue Anzahl vom Artikel im Warenkorb
      *
      * */
-    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException, MinusZahlException {
+    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
+
+        if (artikel instanceof MassengutArtikel) {
+            MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+            // Überprüfen, ob die Menge ein Vielfaches der Massengut-Anzahl ist
+            if (newQuantity % massengutArtikel.getAnzahlMassengut() != 0) {
+                throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
+            }
+        }
+
         if(newQuantity <=0 ){
             throw new MinusZahlException();
+        }
+
+        if(newQuantity > artikel.getArtikelbestand()){
+            throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
         }
         if (warenkorbMap.containsKey(artikel)) {
             warenkorbMap.replace(artikel, newQuantity);

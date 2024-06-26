@@ -35,7 +35,20 @@ public class MitarbeiterManagement {
 
     }
 
-    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password) throws DoppelteIdException {
+    public void addMitarbeiter(String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
+        // Überprüfung, ob der Username bereits existiert
+        for (Mitarbeiter mitarbeiter : mitarbeiterListe.values()) {
+            if (mitarbeiter.getUsername().equals(username)) {
+                throw new UsernameExistiertException(username);
+            }
+        }
+
+        for(Mitarbeiter mitarbeiter : mitarbeiterListe.values()){
+            if(mitarbeiter.getEmail().equals(email)){
+                throw new EmailExistiertException(email);
+            }
+        }
+
         Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, password);
         int id = mitarbeiter.getId();
 
@@ -47,24 +60,20 @@ public class MitarbeiterManagement {
     }
 
     public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
-        try {
-            // Überprüfung der Mitarbeiter-Anmeldeinformationen
-            for (Map.Entry<Integer, Mitarbeiter> entry : mitarbeiterListe.entrySet()) {
-                Mitarbeiter mitarbeiter = entry.getValue();
-                if (mitarbeiter.getUsername().equals(usernameOrEmail) || mitarbeiter.getEmail().equals(usernameOrEmail)) {
-                    if (mitarbeiter.checkPasswort(password)) {
-                        setEingeloggteMitarbeiter(mitarbeiter);
-                        return mitarbeiter;
-                    }
+
+        // Überprüfung der Mitarbeiter-Anmeldeinformationen
+        for (Map.Entry<Integer, Mitarbeiter> entry : mitarbeiterListe.entrySet()) {
+            Mitarbeiter mitarbeiter = entry.getValue();
+            if (mitarbeiter.getUsername().equals(usernameOrEmail) || mitarbeiter.getEmail().equals(usernameOrEmail)) {
+                if (mitarbeiter.checkPasswort(password)) {
+                    setEingeloggteMitarbeiter(mitarbeiter);
+                    return mitarbeiter;
                 }
             }
-
-            // Ungültige Anmeldeinformationen
-            throw new LoginException();
-        } catch (LoginException e) {
-            // Logge die Ausnahme oder handle sie auf andere Weise
-            throw e; // Falls eine Weiterverarbeitung erforderlich ist
         }
+
+        throw new LoginException();
+
     }
 
     public  void setEingeloggteMitarbeiter(Person mitarbeiter) {

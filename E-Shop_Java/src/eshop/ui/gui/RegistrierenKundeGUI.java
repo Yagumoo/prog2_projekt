@@ -112,7 +112,7 @@ public class RegistrierenKundeGUI extends JFrame {
                     }
                 });
                 this.dispose();
-            } catch (DoppelteIdException ex) {
+            } catch (DoppelteIdException | UsernameExistiertException | EmailExistiertException ex) {
                 JOptionPane.showMessageDialog(null, "Benutzername oder E-Mail bereits registriert!", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });

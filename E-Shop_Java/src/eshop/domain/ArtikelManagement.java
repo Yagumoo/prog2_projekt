@@ -36,29 +36,44 @@ public class ArtikelManagement {
 
     }
 
-    public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException {
+    public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
         if(artikel.getArtikelnummer() <=0 ||artikel.getArtikelbestand() <=0 || artikel.getArtikelPreis() <0){
             throw new MinusZahlException();
 
         }
         if (sucheArtikel(artikel.getArtikelnummer())) {
             throw new DoppelteIdException(artikel.getArtikelnummer());
-        } else {
-            artikelListe.put(artikel.getArtikelnummer(), artikel);
         }
+        // Überprüfen, ob es sich um ein Massengut handelt und ob die Anzahl korrekt ist
+        if (artikel instanceof MassengutArtikel) {
+            MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+            int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
+            int artikelbestand = artikel.getArtikelbestand();
+
+            if (artikelbestand % massengutAnzahl != 0) {
+                throw new KeinMassengutException(massengutAnzahl);
+            }
+        }
+            artikelListe.put(artikel.getArtikelnummer(), artikel);
+
     }
 
-    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) throws MinusZahlException{
+    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) throws MinusZahlException, KeinMassengutException {
 
         Artikel artikel = artikelListe.get(artikelnummer);
         if (artikel != null) {
-
-            artikel.setArtikelbestand(neuerBestand);
             if(neuerBestand <=0 ) {
                 throw new MinusZahlException();
-            }else {
-                return true;
             }
+
+            if(artikel instanceof MassengutArtikel massengutArtikel){
+                int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
+                if (neuerBestand % massengutAnzahl != 0){
+                    throw new KeinMassengutException(massengutAnzahl);
+                }
+            }
+            artikel.setArtikelbestand(neuerBestand);
+            return true;
         }
         return false;
     }

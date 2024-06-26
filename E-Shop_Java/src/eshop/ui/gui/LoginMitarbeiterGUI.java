@@ -2,6 +2,7 @@ package eshop.ui.gui;
 
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.LoginException;
+import eshop.domain.exceptions.ZuVieleFehlversucheException;
 import eshop.enitities.Person;
 
 import javax.swing.*;

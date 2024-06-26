@@ -2,12 +2,15 @@ package eshop.domain;
 
 
 import eshop.domain.exceptions.DoppelteIdException;
+import eshop.domain.exceptions.EmailExistiertException;
 import eshop.domain.exceptions.LoginException;
+import eshop.domain.exceptions.UsernameExistiertException;
 import eshop.enitities.Kunde;
 
 import java.util.Map;
 import java.util.HashMap;
 
+import eshop.enitities.Mitarbeiter;
 import eshop.persistence.filePersistenceManager;
 
 public class KundenManagement {
@@ -33,7 +36,21 @@ public class KundenManagement {
 
     }
 
-    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException {
+    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
+
+        // Überprüfung, ob der Username bereits existiert
+        for (Kunde kunde : kundenListe.values()) {
+            if (kunde.getUsername().equals(username)) {
+                throw new UsernameExistiertException(username);
+            }
+        }
+
+        for(Kunde kunde : kundenListe.values()){
+            if(kunde.getEmail().equals(email)){
+                throw new EmailExistiertException(email);
+            }
+        }
+
         Kunde kunde = new Kunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
         int id = kunde.getId();
 
@@ -45,25 +62,21 @@ public class KundenManagement {
     }
 
     public Kunde loginkunde(String usernameOrEmail, String password) throws LoginException {
-  //      try {
-            // Überprüfung der Mitarbeiter-Anmeldeinformationen
-            for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {
-                Kunde kunde = entry.getValue();
-                if (kunde.getUsername().equals(usernameOrEmail) || kunde.getEmail().equals(usernameOrEmail)) {
-                    if (kunde.checkPasswort(password)) {
-                        // Kunde erfolgreich angemeldet
-                        setEingeloggterKunde(kunde);
-                        return kunde;
-                    }
+        // Überprüfung der Mitarbeiter-Anmeldeinformationen
+        for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {
+            Kunde kunde = entry.getValue();
+            if (kunde.getUsername().equals(usernameOrEmail) || kunde.getEmail().equals(usernameOrEmail)) {
+                if (kunde.checkPasswort(password)) {
+                    // Kunde erfolgreich angemeldet
+                    setEingeloggterKunde(kunde);
+                    return kunde;
                 }
             }
+        }
 
-            // Ungültige Anmeldeinformationen
-            throw new LoginException();
-//        } catch (LoginException e) {
-//            // Logge die Ausnahme oder handle sie auf andere Weise
-//            throw e; // Falls eine Weiterverarbeitung erforderlich ist
-//        }
+        // Ungültige Anmeldeinformationen
+        throw new LoginException();
+
     }
 
 
