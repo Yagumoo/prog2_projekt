@@ -1,16 +1,11 @@
 package eshop.domain;
 
 import eshop.domain.exceptions.*;
-import eshop.enitities.Artikel;
-import eshop.domain.ArtikelManagement;
-import eshop.enitities.Kunde;
 import eshop.enitities.Mitarbeiter;
 import eshop.enitities.Person;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
 
 import eshop.persistence.filePersistenceManager;
 
@@ -26,7 +21,7 @@ public class MitarbeiterManagement {
 
         try {
             this.fpm = fpm;
-            mitarbeiterListe = fpm.loadMitarbeiterListe("mitarbeiter.txt");
+            mitarbeiterListe = fpm.ladeMitarbeiterListe("mitarbeiter.txt");
 
 
             if(mitarbeiterListe.isEmpty()){
@@ -72,7 +67,6 @@ public class MitarbeiterManagement {
         }
     }
 
-
     public  void setEingeloggteMitarbeiter(Person mitarbeiter) {
         this.eingeloggterMitarbeiter = mitarbeiter;
     }
@@ -86,7 +80,6 @@ public class MitarbeiterManagement {
     }
 
     public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
-
         return mitarbeiterListe;
     }
 }

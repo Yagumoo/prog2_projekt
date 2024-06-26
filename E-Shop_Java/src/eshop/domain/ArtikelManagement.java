@@ -1,11 +1,9 @@
 package eshop.domain;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import eshop.domain.exceptions.*;
 import eshop.enitities.Artikel;
 import eshop.enitities.Warenkorb;
-import eshop.enitities.Ereignis;
 import eshop.enitities.MassengutArtikel;
 
 
@@ -14,16 +12,16 @@ import eshop.persistence.filePersistenceManager;
 public class ArtikelManagement {
 
     private filePersistenceManager fpm; // = new filePersistenceManager();
-    private Warenkorb warenkorb = new Warenkorb();
+    private final Warenkorb warenkorb = new Warenkorb();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
-    private Map<String, Artikel> artikelListe2 = new HashMap<>();
-    private List<Artikel> artikelListeAsList = new ArrayList<>();
+    private final Map<String, Artikel> artikelListe2 = new HashMap<>();
+    private final List<Artikel> artikelListeAsList = new ArrayList<>();
     private EreignisManagement ereignisManagement;
 
     public ArtikelManagement(filePersistenceManager fpm) {
         try{
             this.fpm = fpm;
-            artikelListe = fpm.loadArtikelListe("artikel.txt");
+            artikelListe = fpm.ladeArtikelListe("artikel.txt");
 
             if(artikelListe.isEmpty()){
                 addArtikel(new Artikel(5, "Energy", 20, 2.49));

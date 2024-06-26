@@ -14,12 +14,12 @@ import java.io.IOException;
 
 public class E_Shop {
 
-    private ArtikelManagement artikelManagement; // = new ArtikelManagement();
-    private MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
-    private KundenManagement kundenManagement; //= new KundenManagement();
-    private WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
-    private EreignisManagement ereignisManagement;//= new EreignisManagement();
-    private filePersistenceManager fpm; //  = new filePersistenceManager();
+    private final ArtikelManagement artikelManagement; // = new ArtikelManagement();
+    private final MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
+    private final KundenManagement kundenManagement; //= new KundenManagement();
+    private final WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
+    private final EreignisManagement ereignisManagement;//= new EreignisManagement();
+    private final filePersistenceManager fpm; //  = new filePersistenceManager();
     // => WarenkorbManagement
     //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
 
@@ -31,9 +31,7 @@ public class E_Shop {
         warenkorbManagement = new WarenkorbManagement();
         ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            saveAlleListen();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::speicherAlleListen));
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
@@ -83,75 +81,56 @@ public class E_Shop {
         return kunde;
     }
 
-    public Kunde getEingeloggterKunde() {
-        return kundenManagement.gibKundePerId(1); // oder die entsprechende Logik, um den eingeloggten Kunden zu identifizieren
-    }
-
-    public void setEingeloggterKunde(Kunde kunde) {
-        kundenManagement.setEingeloggterKunde(kunde);
-    }
-
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException{
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
 
     public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
-        if(mitarbeiter instanceof Mitarbeiter m){
+        if(mitarbeiter instanceof Mitarbeiter){
             sucheArtikelMitNummer(artikelnummer);
             artikelManagement.loescheArtikel(artikelnummer);
         }
-
-
     }
 
-    public boolean aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) {
-        if(mitarbeiter instanceof Mitarbeiter m){
-            try {
-                Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException {
+        if (mitarbeiter instanceof Mitarbeiter) {
+            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
-                // Überprüfen Sie, ob der eingeloggte Mitarbeiter existiert
-                //Person m = mitarbeiterManagement.getEingeloggterMitarbeiter();
-
-                //Aktuellen Artikelbestand Speichern
-                int aktuellerBestand = artikel.getArtikelbestand();
-
-                int differenz = neuerBestand - aktuellerBestand;
-
-                // Ändern des Artikelbestands und das Ergebnis der Operation speichern
-                boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
-
-                if (bestandGeaendert) {
-                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                    Ereignis.EreignisTyp ereignisTyp;
-
-                    if(differenz < 0){
-                        ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
-
-                    }else{
-                        ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
-
-                    }
-                    // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                    Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
-                    ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
+            // Überprüfen, ob der Artikel ein Massengutartikel ist
+            if (artikel instanceof MassengutArtikel) {
+                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+                // Überprüfen, ob der neue Bestand ein Vielfaches der Massengut-Anzahl ist
+                if (neuerBestand % massengutArtikel.getAnzahlMassengut() != 0) {
+                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
                 }
-                // Rückgabewert entsprechend dem Ergebnis der Bestandsänderung
-                return bestandGeaendert;
-            } catch (IdNichtVorhandenException e) {
-                System.err.println(e.getMessage());
-                return false;
+            }
+
+            // Aktuellen Artikelbestand speichern
+            int aktuellerBestand = artikel.getArtikelbestand();
+            int differenz = neuerBestand - aktuellerBestand;
+
+            // Ändern des Artikelbestands und das Ergebnis der Operation speichern
+            boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
+
+            if (bestandGeaendert) {
+                Ereignis.EreignisTyp ereignisTyp;
+                if (differenz < 0) {
+                    ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
+                } else {
+                    ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
+                }
+
+                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
+                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
+                ereignisManagement.addEreignis(neuesEreignis);
             }
         }
-        return true;
     }
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException{
         if(kunde instanceof Kunde k){
-
-            //warenkorbManagement.warenkorbHinzufuegen(k);
-            //Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
@@ -208,18 +187,24 @@ public class E_Shop {
         return null;
     }
 
-
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException {
-        if(kunde instanceof Kunde k){
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException {
+        if (kunde instanceof Kunde k) {
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            if(artikel != null){
-                wk.bestandImWarenkorbAendern(artikel, menge);
-            }else{
-                throw new IdNichtVorhandenException(artikel.getArtikelnummer());
+
+            // Überprüfen, ob der Artikel ein Massengutartikel ist
+            if (artikel instanceof MassengutArtikel) {
+                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+                // Überprüfen, ob die Menge ein Vielfaches der Massengut-Anzahl ist
+                if (menge % massengutArtikel.getAnzahlMassengut() != 0) {
+                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
+                }
             }
+
+            wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();
-            if(menge > aktuellerBestand){
+
+            if (menge > aktuellerBestand) {
                 throw new BestandNichtAusreichendException(artikel, neuerBestand);
             }
         }
@@ -233,19 +218,18 @@ public class E_Shop {
         }
     }
 
-
-    public void saveAlleListen(){
+    public void speicherAlleListen() {
         try {
-            fpm.saveArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
+            fpm.speicherArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
             System.out.println("Artikelliste gespeichert");
 
-            fpm.saveKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
+            fpm.speicherKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
             System.out.println("Kundenliste gespeichert");
 
-            fpm.saveMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
+            fpm.speicherMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
             System.out.println("Mitarbeiterliste gespeichert");
 
-            fpm.saveEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
+            fpm.speicherEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
             System.out.println("Ereignisliste gespeichert");
 
             System.out.println("Alle Listen wurden erfolgreich gespeichert.");

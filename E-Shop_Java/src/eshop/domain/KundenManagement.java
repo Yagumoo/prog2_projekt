@@ -3,14 +3,10 @@ package eshop.domain;
 
 import eshop.domain.exceptions.DoppelteIdException;
 import eshop.domain.exceptions.LoginException;
-import eshop.enitities.Artikel;
 import eshop.enitities.Kunde;
-import eshop.enitities.Person;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
 
 import eshop.persistence.filePersistenceManager;
 
@@ -24,7 +20,7 @@ public class KundenManagement {
         try{
             this.fpm = fpm;
 
-            kundenListe = fpm.loadKundenListe("kunden.txt");
+            kundenListe = fpm.ladeKundenListe("kunden.txt");
             if(kundenListe.isEmpty()){
                 addKunde("Hannah", "Lotus", "Hannah@gmail.com", "H4n", "1234", "Hamburg", 27754, "Feldweg", 69);
                 addKunde("Dima", "Lotik", "Dima@gmail.com", "D1m", "1234", "Hamburg", 27754, "Feldweg", 69);

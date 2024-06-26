@@ -7,7 +7,7 @@ import eshop.enitities.*;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.List;
+
 
 
 public class EShopCUI {
@@ -15,7 +15,9 @@ public class EShopCUI {
      *
      */
 
-    private E_Shop eShop;
+    private final E_Shop eShop;
+    private Person eingeloggtePerson = null;
+    Scanner scan = new Scanner(System.in);
 
     public EShopCUI() {
         this.eShop = new E_Shop();
@@ -25,14 +27,11 @@ public class EShopCUI {
         return eShop;
     }
 
-    private Person eingeloggtePerson = null;
-    Scanner scan = new Scanner(System.in);
-
     private void KundeOderMitarbeiter() {
 
         try {
-            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? Programm beenden mit B");
-            String input = getStringInput("String");
+            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? \n Programm beenden mit B \n");
+            String input = getStringInput();
 
             if(input.equalsIgnoreCase("k")){
 
@@ -40,7 +39,7 @@ public class EShopCUI {
                 System.out.println("___________________________");
                 System.out.println("Haben Sie bereits ein Konto? (Y/N)");
                 printArrow();
-                String input2 = getStringInput("String");
+                String input2 = getStringInput();
                 if(input2.equalsIgnoreCase("N")){
                     System.out.println("Bitte Registrieren Sie sich");
                     kundeRegistrieren();
@@ -58,24 +57,27 @@ public class EShopCUI {
                 System.out.println("Programm wird beendet und Daten werden gespeichert...");
                 System.out.println("Speichern der Listen beim Beenden...");
                 System.exit(0); //Loest Shutdownhook aus
+                //eShop.speicherAlleListen();
                 System.out.println("Speichern abgeschlossen.");
+
             }
         } catch (FalscheEingabeException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 
     private void MitarbeiterSeite(){
-        System.out.println("\n" +
-                "1: Artikel ausgeben lassen \n" +
-                "2: Artikel einfügen \n" +
-                "3: Einen Artikel löschen \n" +
-                "4: Artikelbestand verändern \n" +
-                "5: Liste von Kunden ausgeben lassen \n" +
-                "6: Liste von Mitarbeitern ausgeben lassen \n" +
-                "7: Neuen Mitarbeiter registrieren \n" +
-                "8: Liste von Ereignissen Ausgeben lassen  \n" +
-                "9: Zurueck zum Login");
+        System.out.println("""
+        
+        1: Artikel ausgeben lassen\s
+        2: Artikel einfügen\s
+        3: Einen Artikel löschen\s
+        4: Artikelbestand verändern\s
+        5: Liste von Kunden ausgeben lassen\s
+        6: Liste von Mitarbeitern ausgeben lassen\s
+        7: Neuen Mitarbeiter registrieren\s
+        8: Liste von Ereignissen Ausgeben lassen \s
+        9: Zurück zum Login""");
         int eingabe = scan.nextInt();
 
         switch(eingabe) {
@@ -91,7 +93,7 @@ public class EShopCUI {
                 break;
             case 4:
                 System.out.println("Welchen Artikelbestand willst du ändern?");
-                bestandAeundern();
+                bestandAendern();
                 break;
             case 5:
                 System.out.println("Registrierte Kunden ausgeben:");
@@ -112,21 +114,23 @@ public class EShopCUI {
                 try {
                     KundeOderMitarbeiter();
                 }catch (Exception e) {
-                    e.getMessage();
+                    System.err.println(e.getMessage());
                 }
                 break;
         }
     }
 
     private void KundenSeite(){
-        System.out.println("\n1: Artikel ausgeben lassen \n" +
-                "2: Artikel im Warenkorb ausgeben lassen \n" +
-                "3: Artikel in Warenkorb einfügen \n" +
-                "4: Menge von einem Artikel im Warenkorb aendern \n" +
-                "5: Warenkorb leeren \n" +
-                "6: Alle Artikel aus dem Warenkorb kaufen \n" +
-                "7: Bestimmten Artikel aus dem Warenkorb entfernen \n" +
-                "8: Zurueck zum Login");
+        System.out.println("""
+
+                1: Artikel ausgeben lassen\s
+                2: Artikel im Warenkorb ausgeben lassen\s
+                3: Artikel in Warenkorb einfügen\s
+                4: Menge von einem Artikel im Warenkorb aendern\s
+                5: Warenkorb leeren\s
+                6: Alle Artikel aus dem Warenkorb kaufen\s
+                7: Bestimmten Artikel aus dem Warenkorb entfernen\s
+                8: Zurueck zum Login""");
         int eingabe = scan.nextInt();
 
         switch(eingabe) {
@@ -164,7 +168,7 @@ public class EShopCUI {
                 try {
                     KundeOderMitarbeiter();
                 }catch (Exception e) {
-                    e.getMessage();
+                    System.err.println(e.getMessage());
                 }
                 break;
             case 9:
@@ -215,27 +219,27 @@ public class EShopCUI {
 
             System.out.println("Bitte Artikelnummer einfügen:");
             printArrow();
-            int artikelnummer = getIntInput("int");
+            int artikelnummer = getIntInput();
 
             System.out.println("Bitte Artikelbezeichnung einfügen:");
             printArrow();
-            String artikelbezeichnung = getStringInput("String");
+            String artikelbezeichnung = getStringInput();
             scan.nextLine();
 
 
             System.out.println("Moechten sie einen normalen Artikel oder ein Massengut hinzufügen?\nM = Massgut / N = Normal");
             printArrow();
-            String artikelTyp = getStringInput("String");
+            String artikelTyp = getStringInput();
 
             if (artikelTyp.equalsIgnoreCase("M")) {
                 System.out.println("Bitte die anzahl an in dem der Artikel verkauft werden soll: ");
                 printArrow();
-                massengutAnzahl = getIntInput("int");
+                massengutAnzahl = getIntInput();
             }
 
             System.out.println("Bitte Artikelbestand einfügen:");
             printArrow();
-            int artikelbestand = getIntInput("int");
+            int artikelbestand = getIntInput();
 
             if(artikelTyp.equalsIgnoreCase("M") && artikelbestand % massengutAnzahl != 0){
                 throw new KeinMassengutException(massengutAnzahl);
@@ -243,7 +247,7 @@ public class EShopCUI {
 
             System.out.println("Bitte Artikelpreis einfügen:");
             printArrow();
-            double artikelPreis = getDoubleInput("double");
+            double artikelPreis = getDoubleInput();
 
             Artikel artikel;
             if (artikelTyp.equalsIgnoreCase("M")) {
@@ -264,7 +268,7 @@ public class EShopCUI {
         try {
             System.out.println("Welchen Artikel moechtest du loeschen? Bitte gebe die Artikelnummer ein:");
             printArrow();
-            int artikelnummer = getIntInput("int");
+            int artikelnummer = getIntInput();
 
             eShop.loescheArtikel(eingeloggtePerson, artikelnummer);
             System.out.println("Artikel mit der Nummer " + artikelnummer + " wurde erfolgreich gelöscht.");
@@ -277,27 +281,27 @@ public class EShopCUI {
         try {
             System.out.println("Bitte Vornamen einfügen:");
             printArrow();
-            String vorname = getStringInput("String");
+            String vorname = getStringInput();
 
 
             System.out.println("Bitte Nachnamen einfügen:");
             printArrow();
-            String nachname = getStringInput("String");
+            String nachname = getStringInput();
 
 
             System.out.println("Bitte eMail erstellen:");
             printArrow();
-            String email = getStringInput("String");
+            String email = getStringInput();
 
 
             System.out.println("Bitte username erstellen:");
             printArrow();
-            String username = getStringInput("String");
+            String username = getStringInput();
 
 
             System.out.println("Bitte Passwort erstellen:");
             printArrow();
-            String passwort = getStringInput("String");
+            String passwort = getStringInput();
 
 
             eShop.addMitarbeiter(eingeloggtePerson, vorname, nachname, email, username, passwort);
@@ -315,39 +319,39 @@ public class EShopCUI {
         try {
             System.out.println("Bitte Vornamen einfügen:");
             printArrow();
-            String vorname = getStringInput("String");
+            String vorname = getStringInput();
 
             System.out.println("Bitte Nachnamen einfügen:");
             printArrow();
-            String nachname = getStringInput("String");
+            String nachname = getStringInput();
 
             System.out.println("Bitte eMail erstellen:");
             printArrow();
-            String email = getStringInput("String");
+            String email = getStringInput();
 
             System.out.println("Bitte username erstellen:");
             printArrow();
-            String username = getStringInput("String");
+            String username = getStringInput();
 
             System.out.println("Bitte Passwort erstellen:");
             printArrow();
-            String passwort = getStringInput("String");
+            String passwort = getStringInput();
 
             System.out.println("Bitte Ort einfügen:");
             printArrow();
-            String ort = getStringInput("String");
+            String ort = getStringInput();
 
             System.out.println("Bitte PLZ einfügen:");
             printArrow();
-            int plz = getIntInput("int");
+            int plz = getIntInput();
 
             System.out.println("Bitte Strassennamen einfügen:");
             printArrow();
-            String strasse = getStringInput("String");
+            String strasse = getStringInput();
 
             System.out.println("Bitte Strassennummer einfügen:");
             printArrow();
-            int strassenNummer = getIntInput("int");
+            int strassenNummer = getIntInput();
 
             eShop.addKunde(vorname, nachname, email, username, passwort,ort, plz, strasse, strassenNummer);
             System.out.println("Sie haben sich als Kunden registriert");
@@ -362,9 +366,9 @@ public class EShopCUI {
     private void kundeLogin(){
         try {
             System.out.println("Bitte geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
-            printArrow(); String usernameOrEmail = getStringInput("String");
+            printArrow(); String usernameOrEmail = getStringInput();
             System.out.println("Bitte geben Sie ihr Passwort ein: ");
-            printArrow(); String password = getStringInput("String");
+            printArrow(); String password = getStringInput();
 
             eingeloggtePerson = eShop.loginKunde(usernameOrEmail, password);
 
@@ -383,9 +387,9 @@ public class EShopCUI {
     private void MitarbeiterLogin(){
         try {
             System.out.println("Bitte geben Sie Ihre E-mail oder Ihren Benutzernamen ein: ");
-            printArrow(); String usernameOrEmail = getStringInput("String");
+            printArrow(); String usernameOrEmail = getStringInput();
             System.out.println("Bitte geben Sie ihr Passwort ein: ");
-            printArrow(); String password = getStringInput("String");
+            printArrow(); String password = getStringInput();
 
             eingeloggtePerson = eShop.loginMitarbeiter(usernameOrEmail, password);
 
@@ -401,42 +405,46 @@ public class EShopCUI {
         }
     }
 
-    private void bestandAeundern(){
+    private void bestandAendern() {
         try {
-            System.out.println("Bitte Artikelnummer einfügen:");
+            // Eingabe der Artikelnummer
+            System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
-            int artikelnummer = getIntInput("int");
-            System.out.println("Bitte neuen Artikelbestand einfügen:");
-            printArrow();
-            int neuerBestand = getIntInput("int");
-            eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
-            System.out.println("Artikel wurde erfolgreich geändert");
-        } catch (FalscheEingabeException e){
-            System.err.println(e.getMessage());
-        }
+            int artikelnummer = getIntInput();
 
+            // Eingabe des neuen Bestands
+            System.out.println("Bitte geben Sie den neuen Artikelbestand ein:");
+            printArrow();
+            int neuerBestand = getIntInput();
+
+            // Änderung des Bestands aufrufen (ohne Überprüfung auf Massengutartikel hier in der CUI)
+            eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
+            System.out.println("Artikelbestand erfolgreich geändert.");
+
+        } catch (FalscheEingabeException | IdNichtVorhandenException | KeinMassengutException e) {
+            System.err.println("Fehler beim Ändern des Artikelbestands: " + e.getMessage());
+        }
     }
     private void artikelInWarenkorb() {
         try {
             System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
-            int artikelnummer = getIntInput("int");
+            int artikelnummer = getIntInput();
 
             System.out.println("Bitte geben Sie die Menge ein:");
             printArrow();
-            int menge = getIntInput("int");
+            int menge = getIntInput();
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
-            if (artikel instanceof MassengutArtikel) {
-                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
+            if (artikel instanceof MassengutArtikel massengutArtikel) {
                 int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
                 if (menge % massengutAnzahl != 0) {
                     throw new KeinMassengutException(massengutAnzahl);
                 }
             }
             // Fügen Artikel dem Warenkorb hinzu
-            eShop.artikelInWarenkorbHinzufuegen((Kunde) eingeloggtePerson, artikelnummer, menge);
+            eShop.artikelInWarenkorbHinzufuegen(eingeloggtePerson, artikelnummer, menge);
             System.out.println("Artikel erfolgreich hinzugefügt.");
 
         } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException e){
@@ -464,13 +472,12 @@ public class EShopCUI {
 
     }
 
-
     //Funktioniert semi
     private void artikelAusWarenkorbEntfernen(){
         try {
             System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
-            int artikelnummer = getIntInput("int");
+            int artikelnummer = getIntInput();
 
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
@@ -481,7 +488,7 @@ public class EShopCUI {
                 System.out.println("Artikel nicht gefunden.");
             }
         }catch (FalscheEingabeException | IdNichtVorhandenException e){
-            System.err.println(e);
+            System.err.println(e.getMessage());
         }
     }
 
@@ -489,45 +496,46 @@ public class EShopCUI {
     public void bestandImWarenkorbAendern() {
         try {
             System.out.println("Bitte Artikelnummer einfügen:");
-            int artikelnummer = getIntInput("int");
+            int artikelnummer = getIntInput();
 
             System.out.println("Bitte neuen Artikelbestand einfügen:");
-            int neuerBestand = getIntInput("int");
+            int neuerBestand = getIntInput();
 
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
             System.out.println("Artikel wurde erfolgreich geaendert!");
-        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException e){
+        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException e){
             System.err.println(e.getMessage());
         }
     }
 
-    private int getIntInput(String expectedType) throws FalscheEingabeException {
+    private int getIntInput() throws FalscheEingabeException {
         try {
             return scan.nextInt();
         } catch (InputMismatchException e) {
             String gegebeneEingabe = scan.next(); // Eingabe löschen
-            throw new FalscheEingabeException("Falsche Eingabe", expectedType, gegebeneEingabe);
+            throw new FalscheEingabeException("Falsche Eingabe", "int", gegebeneEingabe);
         }
     }
 
-    private String getStringInput(String expectedType) throws FalscheEingabeException {
+    private String getStringInput() throws FalscheEingabeException {
         try {
             return scan.next();
         } catch (InputMismatchException e) {
             String gegebeneEingabe = scan.nextLine(); // Eingabe löschen
-            throw new FalscheEingabeException("Falsche Eingabe", expectedType, gegebeneEingabe);
+            throw new FalscheEingabeException("Falsche Eingabe", "String", gegebeneEingabe);
         }
     }
 
-    private double getDoubleInput(String expectedType) throws FalscheEingabeException {
+    private double getDoubleInput() throws FalscheEingabeException {
         try {
             return scan.nextDouble();
         } catch (InputMismatchException e) {
             String gegebeneEingabe = scan.next(); // Eingabe löschen
-            throw new FalscheEingabeException("Falsche Eingabe", expectedType, gegebeneEingabe);
+            throw new FalscheEingabeException("Falsche Eingabe", "double", gegebeneEingabe);
         }
     }
+
     private void printArrow() {
         System.out.print("--> ");
     }

@@ -24,6 +24,7 @@ public class filePersistenceManager {
 
     private BufferedReader reader = null;
     private PrintWriter writer = null;
+
     //Erstellen eines Readers damit man überhaupt nh datei lesen kann
     public void zumLesen(String datei) throws FileNotFoundException {
         reader = new BufferedReader(new FileReader(datei));
@@ -36,7 +37,7 @@ public class filePersistenceManager {
 
     //Schließen der Datei
     public boolean close() {
-        boolean success = true;
+        boolean erfolgreich = true;
 
         if (writer != null) {
             writer.close();
@@ -47,11 +48,11 @@ public class filePersistenceManager {
                 reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                success = false;
+                erfolgreich = false;
             }
         }
 
-        return success;
+        return erfolgreich;
     }
 
     //Liest eine zeile
@@ -67,7 +68,7 @@ public class filePersistenceManager {
             writer.println(daten);
     }
 
-    public Map<Integer, Artikel> loadArtikelListe(String datei) throws IOException {
+    public Map<Integer, Artikel> ladeArtikelListe(String datei) throws IOException {
         Map<Integer, Artikel> artikelListe = new HashMap<>();
         zumLesen(datei);
         try {
@@ -94,7 +95,7 @@ public class filePersistenceManager {
     }
 
 
-    public void saveArtikelListe(String datei, Map<Integer, Artikel> artikelListe) throws IOException {
+    public void speicherArtikelListe(String datei, Map<Integer, Artikel> artikelListe) throws IOException {
         zumSchreiben(datei);
         try {
             for (Artikel artikel : artikelListe.values()) {
@@ -113,7 +114,7 @@ public class filePersistenceManager {
     }
 
 
-    public Map<Integer, Kunde> loadKundenListe(String datei) throws IOException {
+    public Map<Integer, Kunde> ladeKundenListe(String datei) throws IOException {
         Map<Integer, Kunde> kundenListe = new HashMap<>();
         zumLesen(datei);
         try {
@@ -141,7 +142,7 @@ public class filePersistenceManager {
         return kundenListe;
     }
 
-    public void saveKundenListe(String datei, Map<Integer, Kunde> kundenListe) throws IOException {
+    public void speicherKundenListe(String datei, Map<Integer, Kunde> kundenListe) throws IOException {
         zumSchreiben(datei);
         try {
             for (Kunde kunde : kundenListe.values()) {
@@ -164,7 +165,7 @@ public class filePersistenceManager {
         }
     }
 
-    public Map<Integer, Mitarbeiter> loadMitarbeiterListe(String datei) throws IOException {
+    public Map<Integer, Mitarbeiter> ladeMitarbeiterListe(String datei) throws IOException {
         Map<Integer, Mitarbeiter> mitarbeiterListe = new HashMap<>();
         zumLesen(datei);
         try {
@@ -188,7 +189,7 @@ public class filePersistenceManager {
         return mitarbeiterListe;
     }
 
-    public void saveMitarbeiterListe(String datei, Map<Integer, Mitarbeiter> mitarbeiterListe) throws IOException {
+    public void speicherMitarbeiterListe(String datei, Map<Integer, Mitarbeiter> mitarbeiterListe) throws IOException {
         zumSchreiben(datei);
         try {
             for (Mitarbeiter mitarbeiter : mitarbeiterListe.values()) {
@@ -207,7 +208,7 @@ public class filePersistenceManager {
         }
     }
 
-    public List<Ereignis> loadEreignisListe(String datei, Map<Integer, Kunde> alleKunden, Map<Integer, Mitarbeiter> alleMitarbeiter) throws IOException, ParseException {
+    public List<Ereignis> ladeEreignisListe(String datei, Map<Integer, Kunde> alleKunden, Map<Integer, Mitarbeiter> alleMitarbeiter) throws IOException, ParseException {
         List<Ereignis> ereignisList = new ArrayList<>();
         zumLesen(datei);
         try {
@@ -238,7 +239,7 @@ public class filePersistenceManager {
         return ereignisList;
     }
 
-    public void saveEreignisListe(String datei, List<Ereignis> ereignisList) throws IOException {
+    public void speicherEreignisListe(String datei, List<Ereignis> ereignisList) throws IOException {
         zumSchreiben(datei);
         try {
             for (Ereignis ereignis : ereignisList) {
