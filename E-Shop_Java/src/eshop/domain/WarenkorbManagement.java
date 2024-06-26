@@ -1,9 +1,7 @@
 package eshop.domain;
 
-import eshop.enitities.Artikel;
-import eshop.enitities.Kunde;
-import eshop.enitities.Warenkorb;
-import eshop.enitities.Rechnung;
+import eshop.enitities.*;
+import eshop.domain.exceptions.*;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -28,8 +26,18 @@ public class WarenkorbManagement {
         return new Rechnung(warenkorb, kunde);
     }
 
-    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) {
+    public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) throws MinusZahlException, KeinMassengutException {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+
+        if (artikel instanceof MassengutArtikel massengutArtikel) {
+            int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
+            if (menge % massengutAnzahl != 0) {
+                throw new KeinMassengutException(massengutAnzahl);
+            }
+        }
+        if(menge <=0 ){
+            throw new MinusZahlException();
+        }
         Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
         warenkorb.artikelHinzufuegen(artikel, menge);
     }

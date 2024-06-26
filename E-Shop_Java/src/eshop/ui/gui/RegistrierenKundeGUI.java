@@ -13,12 +13,12 @@ public class RegistrierenKundeGUI extends JFrame {
     boolean loginErfolgreich = false;
     private E_Shop eShop;
 
-    public RegistrierenKundeGUI() {
-        eShop = new E_Shop();
-        this.setTitle("Login");
+    public RegistrierenKundeGUI(E_Shop eShop) {
+        this.eShop = eShop;
+        this.setTitle("Registrieren");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(420, 160);
-        this.setLayout(new BorderLayout());
+        this.setSize(400, 500);
+        this.setLayout(new GridLayout(10, 2, 10, 10));
 
         // Load image icon
         ImageIcon image = loadImageIcon();
@@ -30,10 +30,6 @@ public class RegistrierenKundeGUI extends JFrame {
     }
 
     private void kundeRegistrieren() {
-        JFrame registrierFenster = new JFrame("Registrieren");
-        registrierFenster.setSize(400, 500);
-        registrierFenster.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        registrierFenster.setLayout(new GridLayout(10, 2, 10, 10));
 
         JLabel vornameLabel = new JLabel("Vorname:");
         JTextField vornameField = new JTextField();
@@ -64,61 +60,64 @@ public class RegistrierenKundeGUI extends JFrame {
 
         JButton registerButton = new JButton("Registrieren");
 
-        registrierFenster.add(vornameLabel);
-        registrierFenster.add(vornameField);
+        this.add(vornameLabel);
+        this.add(vornameField);
 
-        registrierFenster.add(nachnameLabel);
-        registrierFenster.add(nachnameField);
+        this.add(nachnameLabel);
+        this.add(nachnameField);
 
-        registrierFenster.add(emailLabel);
-        registrierFenster.add(emailField);
+        this.add(emailLabel);
+        this.add(emailField);
 
-        registrierFenster.add(usernameLabel);
-        registrierFenster.add(usernameField);
+        this.add(usernameLabel);
+        this.add(usernameField);
 
-        registrierFenster.add(passwortLabel);
-        registrierFenster.add(passwortField);
+        this.add(passwortLabel);
+        this.add(passwortField);
 
-        registrierFenster.add(ortLabel);
-        registrierFenster.add(ortField);
+        this.add(ortLabel);
+        this.add(ortField);
 
-        registrierFenster.add(plzLabel);
-        registrierFenster.add(plzField);
+        this.add(plzLabel);
+        this.add(plzField);
 
-        registrierFenster.add(strasseLabel);
-        registrierFenster.add(strasseField);
+        this.add(strasseLabel);
+        this.add(strasseField);
 
-        registrierFenster.add(strassenNummerLabel);
-        registrierFenster.add(strassenNummerField);
+        this.add(strassenNummerLabel);
+        this.add(strassenNummerField);
 
-        registrierFenster.add(new JLabel());
-        registrierFenster.add(registerButton);
+        this.add(new JLabel());
+        this.add(registerButton);
 
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String vorname = vornameField.getText();
-                String nachname = nachnameField.getText();
-                String email = emailField.getText();
-                String username = usernameField.getText();
-                String passwort = new String(passwortField.getPassword());
-                String ort = ortField.getText();
-                String plz = plzField.getText();
-                String strasse = strasseField.getText();
-                String strassenNummer = strassenNummerField.getText();
+        registerButton.addActionListener(e -> {
+            String vorname = vornameField.getText();
+            String nachname = nachnameField.getText();
+            String email = emailField.getText();
+            String username = usernameField.getText();
+            String passwort = new String(passwortField.getPassword());
+            String ort = ortField.getText();
+            String plz = plzField.getText();
+            String strasse = strasseField.getText();
+            String strassenNummer = strassenNummerField.getText();
 
                 try {
-                    // Hier wird die Methode addKunde aufgerufen
-                    eShop.addKunde(vorname, nachname, email, username, passwort, ort, Integer.parseInt(plz), strasse, Integer.parseInt(strassenNummer));
-                    JOptionPane.showMessageDialog(null, "Registrierung erfolgreich!");
-                    registrierFenster.dispose();
-                } catch (DoppelteIdException ex) {
-                    JOptionPane.showMessageDialog(null, "Benutzername oder E-Mail bereits registriert!", "Fehler", JOptionPane.ERROR_MESSAGE);
-                }
+                // Hier wird die Methode addKunde aufgerufen
+                eShop.addKunde(vorname, nachname, email, username, passwort, ort, Integer.parseInt(plz), strasse, Integer.parseInt(strassenNummer));
+                JOptionPane.showMessageDialog(null, "Registrierung erfolgreich!");
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new LoginKundeGUI(eShop);
+                    }
+                });
+                this.dispose();
+            } catch (DoppelteIdException ex) {
+                JOptionPane.showMessageDialog(null, "Benutzername oder E-Mail bereits registriert!", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        registrierFenster.setVisible(true);
+        this.setVisible(true);
     }
 
     private ImageIcon loadImageIcon() {
@@ -126,7 +125,7 @@ public class RegistrierenKundeGUI extends JFrame {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + "eshop/ui/gui/Icon/Dj.png");
+            System.err.println("Könnte Pfard nicht finden: " + "eshop/ui/gui/Icon/Dj.png");
             return null;
         }
     }

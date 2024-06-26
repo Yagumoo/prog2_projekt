@@ -45,7 +45,7 @@ public class KundenManagement {
     }
 
     public Kunde loginkunde(String usernameOrEmail, String password) throws LoginException {
-        try {
+  //      try {
             // Überprüfung der Mitarbeiter-Anmeldeinformationen
             for (Map.Entry<Integer, Kunde> entry : kundenListe.entrySet()) {
                 Kunde kunde = entry.getValue();
@@ -60,10 +60,10 @@ public class KundenManagement {
 
             // Ungültige Anmeldeinformationen
             throw new LoginException();
-        } catch (LoginException e) {
-            // Logge die Ausnahme oder handle sie auf andere Weise
-            throw e; // Falls eine Weiterverarbeitung erforderlich ist
-        }
+//        } catch (LoginException e) {
+//            // Logge die Ausnahme oder handle sie auf andere Weise
+//            throw e; // Falls eine Weiterverarbeitung erforderlich ist
+//        }
     }
 
 

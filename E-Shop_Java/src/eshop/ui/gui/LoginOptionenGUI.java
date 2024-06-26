@@ -1,16 +1,20 @@
 package eshop.ui.gui;
 
+import eshop.domain.E_Shop;
+
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
 
 public class LoginOptionenGUI extends JFrame{
+    private E_Shop eShop;
 
-    public LoginOptionenGUI() {
+    public LoginOptionenGUI(E_Shop eShop) {
+        this.eShop = eShop;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 160);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridLayout(3, 1));
         showLoginOptions();
 
         // Load image icon
@@ -21,35 +25,38 @@ public class LoginOptionenGUI extends JFrame{
     }
 
     private void showLoginOptions() {
-        this.getContentPane().removeAll();
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
 
         JButton kundeButton = new JButton("Kunde");
-        panel.add(kundeButton);
+        this.add(kundeButton);
 
         JButton mitarbeiterButton = new JButton("Mitarbeiter");
-        panel.add(mitarbeiterButton);
+        this.add(mitarbeiterButton);
 
         JButton beendenButton = new JButton("Beenden");
         beendenButton.addActionListener(e -> System.exit(0));
-        panel.add(beendenButton);
+        this.add(beendenButton);
 
-        this.add(panel, BorderLayout.CENTER);
-        this.revalidate();
-        this.repaint();
         this.setVisible(true);
 
         kundeButton.addActionListener(e -> {
             //Öffent die Kunden Login-GUI
-            SwingUtilities.invokeLater(LoginKundeGUI::new);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new LoginKundeGUI(eShop);
+                }
+            });
             this.dispose();
         });
 
         mitarbeiterButton.addActionListener(e -> {
             //Öffent die Mitarbeiter Login-GUI
-            SwingUtilities.invokeLater(LoginMitarbeiterGUI::new);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new LoginMitarbeiterGUI(eShop);
+                }
+            });
             this.dispose();
         });
 
@@ -60,7 +67,7 @@ public class LoginOptionenGUI extends JFrame{
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + "eshop/ui/gui/Icon/Macker.png");
+            System.err.println("Könnte Pfard nicht finden: " + "eshop/ui/gui/Icon/Macker.png");
             return null;
         }
     }

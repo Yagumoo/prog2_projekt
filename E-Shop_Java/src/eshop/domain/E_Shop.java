@@ -46,7 +46,7 @@ public class E_Shop {
         return kundenManagement.gibAlleKunden();
     }
 
-    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException {
+    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException {
         if(mitarbeiter instanceof Mitarbeiter m){
             artikelManagement.addArtikel(artikel);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
@@ -75,7 +75,7 @@ public class E_Shop {
         return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
     }
 
-    public Kunde loginKunde(String usernameOrEmail, String password)throws LoginException {
+    public Kunde loginKunde(String usernameOrEmail, String password) throws LoginException {
         Kunde kunde = kundenManagement.loginkunde(usernameOrEmail, password);
         warenkorbManagement.warenkorbHinzufuegen(kunde);
         return kunde;
@@ -92,7 +92,7 @@ public class E_Shop {
         }
     }
 
-    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException {
+    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
         if (mitarbeiter instanceof Mitarbeiter) {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
@@ -129,7 +129,7 @@ public class E_Shop {
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException{
+    public void artikelInWarenkorbHinzufuegen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException {
         if(kunde instanceof Kunde k){
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
@@ -187,7 +187,7 @@ public class E_Shop {
         return null;
     }
 
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException {
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
         if (kunde instanceof Kunde k) {
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
