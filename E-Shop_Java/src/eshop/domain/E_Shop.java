@@ -96,15 +96,6 @@ public class E_Shop {
         if (mitarbeiter instanceof Mitarbeiter) {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
 
-            // Überprüfen, ob der Artikel ein Massengutartikel ist
-            if (artikel instanceof MassengutArtikel) {
-                MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
-                // Überprüfen, ob der neue Bestand ein Vielfaches der Massengut-Anzahl ist
-                if (neuerBestand % massengutArtikel.getAnzahlMassengut() != 0) {
-                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
-                }
-            }
-
             // Aktuellen Artikelbestand speichern
             int aktuellerBestand = artikel.getArtikelbestand();
             int differenz = neuerBestand - aktuellerBestand;
@@ -142,17 +133,14 @@ public class E_Shop {
     public String printWarenkorbArtikel(Person kunde) throws IstLeerException{
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            if(wk != null){
-                return wk.toString();
-            } else{
-                throw new IstLeerException();
-            }
+            return wk.toString();
+
         }
         return "Person ist kein Kunde";
     }
 
 
-    public double gesamtPreis(Person kunde){
+    public double gesamtPreis(Person kunde) throws IstLeerException{
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             return wk.gesamtPreis();
@@ -168,7 +156,7 @@ public class E_Shop {
     }
 
 
-    public Rechnung warenkorbKaufen(Person kunde) throws BestandNichtAusreichendException {
+    public Rechnung warenkorbKaufen(Person kunde) throws BestandNichtAusreichendException, IstLeerException {
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             artikelManagement.bestandAbbuchen(wk);
@@ -187,7 +175,7 @@ public class E_Shop {
         return null;
     }
 
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
+    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {
         if (kunde instanceof Kunde k) {
             int aktuellerBestand = artikel.getArtikelbestand();
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);

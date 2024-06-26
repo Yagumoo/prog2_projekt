@@ -53,6 +53,7 @@ public class ArtikelManagement {
             if (artikelbestand % massengutAnzahl != 0) {
                 throw new KeinMassengutException(massengutAnzahl);
             }
+
         }
             artikelListe.put(artikel.getArtikelnummer(), artikel);
 

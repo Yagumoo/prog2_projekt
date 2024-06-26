@@ -89,19 +89,29 @@ public class Warenkorb {
         warenkorbLeeren();
     }
 
-    public double gesamtPreis(){
+    public double gesamtPreis() {
         double gesamtPreis = 0;
-        for(Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()){
+
+        for (Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()) {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();
 
-            gesamtPreis += (menge * artikel.getArtikelPreis());
+            // Überprüfen, ob es sich um einen Massengutartikel handelt
+            if (artikel instanceof MassengutArtikel massengutArtikel) {
+                int einheit = massengutArtikel.getAnzahlMassengut();
+
+                // Gesamtpreis entsprechend der Gesamtmenge berechnen
+                gesamtPreis += ((double) menge / einheit) * artikel.getArtikelPreis();
+            } else {
+                // Normalen Artikel Preis berechnen
+                gesamtPreis += (menge * artikel.getArtikelPreis());
+            }
         }
-        //gesamtPreis = Math.round(gesamtPreis * 100.0) / 100.0;
 
+        // Gesamtpreis auf 2 Dezimalstellen begrenzen
         return begrenzeDezimalstellen(gesamtPreis, 2);
-
     }
+
 
     public static double begrenzeDezimalstellen(double zahl, int dezimalstellen) {
         double faktor = Math.pow(10, dezimalstellen);

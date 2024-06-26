@@ -62,7 +62,11 @@ public class WarenkorbManagement {
         warenkorb.artikelEntfernen(artikel);
     }
 
-    public Warenkorb getWarenkorb(Kunde kunde){
+    public Warenkorb getWarenkorb(Kunde kunde) throws IstLeerException{
+
+        if(warenkorbVonKunde == null){
+            throw new IstLeerException();
+        }
         return warenkorbVonKunde.get(kunde);
     }
 

@@ -15,6 +15,8 @@
 111,Duden,498,5.0
 789,RedBull,16,2.99,4
 888,Honig,4920,0.9
+89,Bier/Paulaner,800,13.99,8
 666,Brot,648,6.66
+90,Bier/Heinicke,800,12.99,8
 123,Rindfleisch,500,5.99
 444,Spielkarten,40,0.99

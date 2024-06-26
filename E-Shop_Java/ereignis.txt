@@ -27,3 +27,7 @@
 13-06-2024,Brot,6,KAUF,k,7
 26-06-2024,Energy,10,KAUF,k,8
 26-06-2024,Bier/Franziskaner,48,NEU,m,1
+26-06-2024,Bier/Paulaner,800,NEU,m,1
+26-06-2024,Bier/Paulaner,800,NEU,m,1
+26-06-2024,Bier/Paulaner,800,NEU,m,1
+26-06-2024,Bier/Heinicke,800,NEU,m,1

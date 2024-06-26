@@ -179,7 +179,7 @@ public class EShopCUI {
     public void listeVonArtikel() {
         Map<Integer, Artikel> artikel = eShop.gibAlleArtikel();
         artikel.forEach((arikelnummer, artikelbezeichnung)-> {
-            System.out.println("Gesamt Preis: "+ artikelbezeichnung);
+            System.out.println(artikelbezeichnung);
         });
     }
 
@@ -455,7 +455,7 @@ public class EShopCUI {
             // Warenkorb leeren
             // eShop.warenkorbLeeren();
 
-        } catch (BestandNichtAusreichendException e){
+        } catch (BestandNichtAusreichendException | IstLeerException e){
             System.err.println(e.getMessage());
         }
 
@@ -489,7 +489,7 @@ public class EShopCUI {
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
             System.out.println("Artikel wurde erfolgreich geaendert!");
-        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException e){
+        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException |IstLeerException e){
             System.err.println(e.getMessage());
         }
     }
