@@ -241,6 +241,7 @@ public class EShopCUI {
             printArrow();
             int artikelbestand = getIntInput();
 
+            //TODO: Richitg werfen
             if(artikelTyp.equalsIgnoreCase("M") && artikelbestand % massengutAnzahl != 0){
                 throw new KeinMassengutException(massengutAnzahl);
             }
@@ -257,7 +258,7 @@ public class EShopCUI {
             }
             eShop.addArtikel(eingeloggtePerson, artikel);
 
-        } catch (FalscheEingabeException e){
+        } catch (FalscheEingabeException | MinusZahlException e){
             System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -421,7 +422,7 @@ public class EShopCUI {
             eShop.aendereArtikelBestand(eingeloggtePerson, artikelnummer, neuerBestand);
             System.out.println("Artikelbestand erfolgreich geändert.");
 
-        } catch (FalscheEingabeException | IdNichtVorhandenException | KeinMassengutException e) {
+        } catch (FalscheEingabeException | IdNichtVorhandenException | KeinMassengutException | MinusZahlException e) {
             System.err.println("Fehler beim Ändern des Artikelbestands: " + e.getMessage());
         }
     }
@@ -435,19 +436,12 @@ public class EShopCUI {
             printArrow();
             int menge = getIntInput();
 
-            Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
 
-            if (artikel instanceof MassengutArtikel massengutArtikel) {
-                int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
-                if (menge % massengutAnzahl != 0) {
-                    throw new KeinMassengutException(massengutAnzahl);
-                }
-            }
             // Fügen Artikel dem Warenkorb hinzu
             eShop.artikelInWarenkorbHinzufuegen(eingeloggtePerson, artikelnummer, menge);
             System.out.println("Artikel erfolgreich hinzugefügt.");
 
-        } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException e){
+        } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException | MinusZahlException e){
             System.err.println(e.getMessage());
         }
     }
@@ -504,7 +498,7 @@ public class EShopCUI {
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             eShop.bestandImWarenkorbAendern(eingeloggtePerson, artikel, neuerBestand);
             System.out.println("Artikel wurde erfolgreich geaendert!");
-        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException e){
+        }catch (FalscheEingabeException  | IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException e){
             System.err.println(e.getMessage());
         }
     }

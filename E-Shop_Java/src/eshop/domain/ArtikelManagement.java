@@ -36,7 +36,11 @@ public class ArtikelManagement {
 
     }
 
-    public void addArtikel(Artikel artikel) throws DoppelteIdException {
+    public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException {
+        if(artikel.getArtikelnummer() <=0 ||artikel.getArtikelbestand() <=0 || artikel.getArtikelPreis() <0){
+            throw new MinusZahlException();
+
+        }
         if (sucheArtikel(artikel.getArtikelnummer())) {
             throw new DoppelteIdException(artikel.getArtikelnummer());
         } else {
@@ -44,12 +48,17 @@ public class ArtikelManagement {
         }
     }
 
-    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) {
+    public boolean aendereArtikelBestand(int artikelnummer, int neuerBestand) throws MinusZahlException{
 
         Artikel artikel = artikelListe.get(artikelnummer);
         if (artikel != null) {
+
             artikel.setArtikelbestand(neuerBestand);
-            return true;
+            if(neuerBestand <=0 ) {
+                throw new MinusZahlException();
+            }else {
+                return true;
+            }
         }
         return false;
     }
@@ -85,16 +94,13 @@ public class ArtikelManagement {
     }
 
     public Artikel gibArtikelPerName(String artikelbezeichnung)throws ArtikelExisitiertNichtException{
-        // TODO: Exception werfen
         if (!artikelListe.containsKey(artikelbezeichnung)) {
             throw new ArtikelExisitiertNichtException(artikelbezeichnung);
         }
         return artikelListe.get(artikelbezeichnung);
     }
 
-
     public Artikel gibArtikelPerId(int artikelnummer)throws IdNichtVorhandenException{
-        // TODO: Exception werfen
         if (!artikelListe.containsKey(artikelnummer)) {
             throw new IdNichtVorhandenException(artikelnummer);
         }

@@ -13,12 +13,12 @@ public class LoginKundeGUI extends JFrame {
     private E_Shop eShop;
     private Person eingeloggtePerson = null;
 
-    public LoginKundeGUI() {
-        eShop = new E_Shop();
+    public LoginKundeGUI(E_Shop eShop) {
+        this.eShop = eShop;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 160);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new GridBagLayout());
 
         // Laden des Bildsymbols
         ImageIcon image = loadImageIcon();
@@ -30,9 +30,6 @@ public class LoginKundeGUI extends JFrame {
     }
 
     public void showCustomerLogin() {
-        this.getContentPane().removeAll();
-
-        JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -40,36 +37,38 @@ public class LoginKundeGUI extends JFrame {
         JLabel usernameOrEmailLabel = new JLabel("Benutzername oder Email:");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(usernameOrEmailLabel, gbc);
+        this.add(usernameOrEmailLabel, gbc);
 
         JTextField usernameOrEmailTextfeld = new JTextField(20);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        panel.add(usernameOrEmailTextfeld, gbc);
+        this.add(usernameOrEmailTextfeld, gbc);
 
         JLabel passwortLabel = new JLabel("Passwort:");
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(passwortLabel, gbc);
+        this.add(passwortLabel, gbc);
 
         JPasswordField passwortTextfeld = new JPasswordField(20);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel.add(passwortTextfeld, gbc);
+        this.add(passwortTextfeld, gbc);
 
         JButton loginButton = new JButton("Einloggen");
         gbc.gridx = 1;
         gbc.gridy = 2;
-        panel.add(loginButton, gbc);
+        this.add(loginButton, gbc);
 
         JButton registerButton = new JButton("Registrieren");
         gbc.gridx = 1;
         gbc.gridy = 3;
-        panel.add(registerButton, gbc);
+        this.add(registerButton, gbc);
 
-        this.add(panel, BorderLayout.CENTER);
-        this.revalidate();
-        this.repaint();
+        JButton zurückButton = new JButton("Zurück");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        this.add(zurückButton, gbc);
+
         this.setVisible(true);
 
         // ActionListener für den Einloggen-Button
@@ -79,7 +78,12 @@ public class LoginKundeGUI extends JFrame {
                 char[] password = passwortTextfeld.getPassword();
                 eingeloggtePerson = eShop.loginKunde(usernameOrEmail, new String(password));
                 // Zeige die Kundenansicht an
-                SwingUtilities.invokeLater(EShopGUI::new);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new EShopGUI(eShop);
+                    }
+                });
                 // Schließe das Login-Fenster
                 this.dispose();
                 // Lösche das Passwort aus dem Speicher
@@ -91,9 +95,25 @@ public class LoginKundeGUI extends JFrame {
 
         // ActionListener für den Registrieren-Button
         registerButton.addActionListener(e -> {
-            SwingUtilities.invokeLater(RegistrierenKundeGUI::new); // Zeigt das Registrierungsfenster an
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new RegistrierenKundeGUI(eShop);
+                }
+            }); // Zeigt das Registrierungsfenster an
             this.dispose(); // Schließt das Login-Fenster
         });
+
+        zurückButton.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new LoginOptionenGUI(eShop);
+                }
+            });
+            this.dispose();
+        });
+
     }
 
     private ImageIcon loadImageIcon() {
@@ -101,12 +121,8 @@ public class LoginKundeGUI extends JFrame {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Couldn't find file: " + "eshop/ui/gui/Icon/Dj.png");
+            System.err.println("Könnte Pfard nicht finden: " + "eshop/ui/gui/Icon/Dj.png");
             return null;
         }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(LoginKundeGUI::new);
     }
 }

@@ -1,7 +1,6 @@
 package eshop.enitities;
 
-import eshop.domain.exceptions.IdNichtVorhandenException;
-
+import eshop.domain.exceptions.*;
 import java.sql.SQLOutput;
 import java.text.NumberFormat;
 import java.util.Map;
@@ -44,7 +43,10 @@ public class Warenkorb {
      * @param newQuantity Ist die neue Anzahl vom Artikel im Warenkorb
      *
      * */
-    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException {
+    public void bestandImWarenkorbAendern(Artikel artikel, int newQuantity) throws IdNichtVorhandenException, MinusZahlException {
+        if(newQuantity <=0 ){
+            throw new MinusZahlException();
+        }
         if (warenkorbMap.containsKey(artikel)) {
             warenkorbMap.replace(artikel, newQuantity);
         } else {
