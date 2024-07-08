@@ -53,7 +53,7 @@ public class LoginMitarbeiterGUI extends JFrame {
         gbc.gridy = 1;
         this.add(passwortLabel, gbc);
 
-        JTextField passwortTextfeld = new JTextField(20);
+        JTextField passwortTextfeld = new JPasswordField(20);
         gbc.gridx = 1;
         gbc.gridy = 1;
         this.add(passwortTextfeld, gbc);
@@ -78,7 +78,7 @@ public class LoginMitarbeiterGUI extends JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new EShopGUI(eShop);
+                        new MitarbeiterSeite(eShop);
                     }
                 });
                 this.dispose();

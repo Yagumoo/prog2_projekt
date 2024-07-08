@@ -433,7 +433,7 @@ public class EShopCUI {
 
 
             // Fügen Artikel dem Warenkorb hinzu
-            eShop.artikelInWarenkorbHinzufuegen(eingeloggtePerson, artikelnummer, menge);
+            eShop.artikelInWarenkorbHinzufügen(eingeloggtePerson, artikelnummer, menge);
             System.out.println("Artikel erfolgreich hinzugefügt.");
 
         } catch (FalscheEingabeException | KeinMassengutException |IdNichtVorhandenException | MinusZahlException |BestandNichtAusreichendException e){
