@@ -31,3 +31,13 @@
 26-06-2024,Bier/Paulaner,800,NEU,m,1
 26-06-2024,Bier/Paulaner,800,NEU,m,1
 26-06-2024,Bier/Heinicke,800,NEU,m,1
+09-07-2024,Dacg,87,NEU,m,1
+09-07-2024,Handschuhe,99,NEU,m,1
+09-07-2024,Handschuhe,99,NEU,m,1
+09-07-2024,Land,1,NEU,m,1
+09-07-2024,Dosefutter,1000,NEU,m,1
+09-07-2024,Dose,99,NEU,m,1
+09-07-2024,Bier/Heinicke,200,ERHOEHUNG,m,1
+09-07-2024,Bier/Heinicke,200,ERHOEHUNG,m,1
+09-07-2024,Bier/Heinicke,0,ERHOEHUNG,m,1
+09-07-2024,Bier/Heinicke,8,ERHOEHUNG,m,1

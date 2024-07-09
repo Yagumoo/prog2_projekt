@@ -134,7 +134,6 @@ public class E_Shop {
         if(kunde instanceof Kunde k){
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             return wk.toString();
-
         }
         return "Person ist kein Kunde";
     }
@@ -154,7 +153,6 @@ public class E_Shop {
             warenkorbManagement.warenkorbLeeren(k);
         }
     }
-
 
     public Rechnung warenkorbKaufen(Person kunde) throws BestandNichtAusreichendException, IstLeerException {
         if(kunde instanceof Kunde k){
@@ -181,7 +179,6 @@ public class E_Shop {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
 
             // Überprüfen, ob der Artikel ein Massengutartikel ist
-
 
             wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();

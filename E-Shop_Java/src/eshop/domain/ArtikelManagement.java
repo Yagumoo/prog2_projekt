@@ -98,7 +98,6 @@ public class ArtikelManagement {
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
-
         return artikelListe;
     }
 

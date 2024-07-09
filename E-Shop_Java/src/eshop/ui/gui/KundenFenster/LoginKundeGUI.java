@@ -2,6 +2,8 @@ package eshop.ui.gui.KundenFenster;
 
 import eshop.domain.E_Shop;
 import eshop.enitities.Person;
+import eshop.enitities.Kunde;
+import eshop.ui.gui.LoginOptionenGUI;
 
 import eshop.domain.exceptions.LoginException;
 import eshop.ui.gui.LoginOptionenGUI;
@@ -12,7 +14,7 @@ import java.awt.*;
 public class LoginKundeGUI extends JFrame {
 
     private E_Shop eShop;
-    private Person eingeloggtePerson = null;
+    private Kunde eingeloggteKunde = null;
 
     public LoginKundeGUI(E_Shop eShop) {
         this.eShop = eShop;
@@ -77,7 +79,7 @@ public class LoginKundeGUI extends JFrame {
             try {
                 String usernameOrEmail = usernameOrEmailTextfeld.getText();
                 char[] password = passwortTextfeld.getPassword();
-                eingeloggtePerson = eShop.loginKunde(usernameOrEmail, new String(password));
+                eingeloggteKunde = eShop.loginKunde(usernameOrEmail, new String(password));
                 // Zeige die Kundenansicht an
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override

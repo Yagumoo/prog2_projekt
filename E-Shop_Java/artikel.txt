@@ -1,11 +1,9 @@
-1,Planet,9,1.0E11
 5665,Maus,10,5.99,2
 2,Bread,56,3.0
 67,Monitor,20,700.99
 3,Water,50,3.99
 4,Bier/Franziskaner,48,13.99,12
 5,Energy,24,2.0
-999,Mensch,580,1.88
 7,Wasser/Saskia,60,2.99,6
 67686,Tisch,6,6.0
 8,Wasser/Gerolsteiner,36,0.99,6
@@ -17,6 +15,6 @@
 888,Honig,4920,0.9
 89,Bier/Paulaner,800,13.99,8
 666,Brot,648,6.66
-90,Bier/Heinicke,800,12.99,8
+90,Bier/Heinicke,1208,12.99,8
 123,Rindfleisch,500,5.99
 444,Spielkarten,40,0.99

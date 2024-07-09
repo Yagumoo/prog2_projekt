@@ -8,8 +8,6 @@ import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
-
-
 public class EShopCUI {
     /**
      *
@@ -211,7 +209,6 @@ public class EShopCUI {
             System.out.println(e.getMessage());
         }
     }
-
 
     private void artikelHinzufugen() {
         try {

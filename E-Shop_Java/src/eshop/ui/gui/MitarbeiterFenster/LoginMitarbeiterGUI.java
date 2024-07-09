@@ -3,6 +3,7 @@ package eshop.ui.gui.MitarbeiterFenster;
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.LoginException;
 import eshop.enitities.Person;
+import eshop.enitities.Mitarbeiter;
 import eshop.ui.gui.LoginOptionenGUI;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ public class LoginMitarbeiterGUI extends JFrame {
 
     boolean loginErfolgreich = false;
     private E_Shop eShop;
-    private Person eingeloggtePerson = null;
+    private Mitarbeiter eingeloggteMitarbeiter = null;
 
     public LoginMitarbeiterGUI( E_Shop eShop) {
         this.eShop = eShop;
@@ -71,12 +72,12 @@ public class LoginMitarbeiterGUI extends JFrame {
         // ActionListener für den Einloggen-Button
         loginButton.addActionListener(e -> {
             try {
-                eingeloggtePerson = eShop.loginMitarbeiter(usernameOrEmailTextfeld.getText(), passwortTextfeld.getText());
+                eingeloggteMitarbeiter = eShop.loginMitarbeiter(usernameOrEmailTextfeld.getText(), passwortTextfeld.getText());
                 //showCustomerPage();
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new MitarbeiterSeite(eShop);
+                        new MitarbeiterTabs(eShop, eingeloggteMitarbeiter);
                     }
                 });
                 this.dispose();

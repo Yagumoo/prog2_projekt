@@ -29,9 +29,6 @@ public class WarenkorbGUI extends JPanel {
         artikelTabelle();
     }
 
-
-
-
     private void initComponents() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));

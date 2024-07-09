@@ -19,7 +19,7 @@ public class KundenSeite extends JPanel {
 
     private E_Shop eShop;
     private JTable artikelTabelle;
-    private Person eingelogterKunde;
+    private Person eingelogterKunde = null;
 
     public KundenSeite(E_Shop eShop) {
         this.eShop = eShop;
@@ -104,7 +104,8 @@ public class KundenSeite extends JPanel {
 
         logoutButton.addActionListener(e -> {
             SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
-            this.setVisible(false); // Schließt das aktuelle Fenster
+            //this.setVisible(false); // Schließt das aktuelle Fenster
+            SwingUtilities.getWindowAncestor(this).dispose();
         });
 
         hinzufügenButton.addActionListener(e -> {
@@ -112,13 +113,10 @@ public class KundenSeite extends JPanel {
                 String nummerText = nummerFeld.getText();
                 String bestandText = bestandFeld.getText();
 
+                int nummer = Integer.parseInt(nummerText);
+                int bestand = Integer.parseInt(bestandText);
 
-                int artikelnummer = Integer.parseInt(nummerText);
-                int menge = Integer.parseInt(bestandText);
-
-
-
-                eShop.artikelInWarenkorbHinzufügen(eingelogterKunde, artikelnummer, menge);
+                eShop.artikelInWarenkorbHinzufügen(eingelogterKunde, nummer, bestand);
                 artikelTabelle();  // Tabelle aktualisieren
 
             } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException ex) {
@@ -137,7 +135,7 @@ public class KundenSeite extends JPanel {
 
     //Artikelliste asugeben lassen
     private void artikelTabelle() {
-        String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Bestand", "Preis", "Verpackungsgröße"};
+        String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Preis", "Verpackungsgröße"};
         DefaultTableModel tableModel = new DefaultTableModel(spaltenNamen, 0);
         artikelTabelle = new JTable(tableModel);
 
@@ -149,7 +147,6 @@ public class KundenSeite extends JPanel {
                 Object[] daten = {
                         artikel.getArtikelnummer(),
                         artikel.getArtikelbezeichnung(),
-                        artikel.getArtikelbestand(),
                         artikel.getArtikelPreis(),
                         massengutArtikel.getAnzahlMassengut()
                 };
@@ -159,7 +156,6 @@ public class KundenSeite extends JPanel {
                 Object[] daten = {
                         artikel.getArtikelnummer(),
                         artikel.getArtikelbezeichnung(),
-                        artikel.getArtikelbestand(),
                         artikel.getArtikelPreis()
                 };
                 tableModel.addRow(daten);
