@@ -1,4 +1,4 @@
-package eshop.ui.gui;
+package eshop.ui.gui.KundenFenster;
 
 import eshop.domain.E_Shop;
 import eshop.enitities.Mitarbeiter;
@@ -21,12 +21,10 @@ public class KundenTabs extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
 
         // Erstellen und Hinzufügen der Tabs
-        EShopGUI mitarbeiterSeite = new EShopGUI(eShop);
         KundenSeite kundenSeite = new KundenSeite(eShop);
         WarenkorbGUI warenkorbGUI = new WarenkorbGUI(eShop);
 
-        tabbedPane.addTab("Artikel in Warenkorb Hinzufügen", mitarbeiterSeite);
-        tabbedPane.addTab("Kunden", kundenSeite);
+        tabbedPane.addTab("Artikel in Warenkorb Hinzufügen", kundenSeite);
         tabbedPane.addTab("Warenkorb", warenkorbGUI);
         // Fügen Sie hier weitere Tabs hinzu, wenn benötigt.
 

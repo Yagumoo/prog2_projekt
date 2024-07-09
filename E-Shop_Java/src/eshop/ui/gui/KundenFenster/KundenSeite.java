@@ -1,4 +1,4 @@
-package eshop.ui.gui;
+package eshop.ui.gui.KundenFenster;
 
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.BestandNichtAusreichendException;
@@ -8,19 +8,20 @@ import eshop.domain.exceptions.MinusZahlException;
 import eshop.enitities.Artikel;
 import eshop.enitities.MassengutArtikel;
 import eshop.enitities.Person;
+import eshop.ui.gui.LoginOptionenGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Map;
 
-public class EShopGUI extends JPanel {
+public class KundenSeite extends JPanel {
 
     private E_Shop eShop;
     private JTable artikelTabelle;
     private Person eingelogterKunde;
 
-    public EShopGUI(E_Shop eShop) {
+    public KundenSeite(E_Shop eShop) {
         this.eShop = eShop;
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(123, 50, 250));

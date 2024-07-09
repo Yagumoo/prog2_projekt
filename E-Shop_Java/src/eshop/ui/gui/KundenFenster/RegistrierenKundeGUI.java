@@ -1,12 +1,12 @@
-package eshop.ui.gui;
+package eshop.ui.gui.KundenFenster;
 
 import eshop.domain.E_Shop;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+
 import eshop.domain.exceptions.*;
-import java.awt.event.ActionListener;
+import eshop.ui.gui.KundenFenster.LoginKundeGUI;
 
 public class RegistrierenKundeGUI extends JFrame {
 

@@ -1,10 +1,11 @@
-package eshop.ui.gui;
+package eshop.ui.gui.KundenFenster;
 
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.IstLeerException;
 import eshop.enitities.Artikel;
 import eshop.enitities.Person;
 import eshop.enitities.Kunde;
+import eshop.ui.gui.LoginOptionenGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

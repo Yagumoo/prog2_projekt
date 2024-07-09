@@ -1,7 +1,8 @@
-package eshop.ui.gui;
+package eshop.ui.gui.MitarbeiterFenster;
 
 import eshop.domain.E_Shop;
 import eshop.enitities.*;
+import eshop.ui.gui.LoginOptionenGUI;
 
 import javax.swing.*;
 import javax.swing.ImageIcon;
