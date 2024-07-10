@@ -41,3 +41,28 @@
 09-07-2024,Bier/Heinicke,200,ERHOEHUNG,m,1
 09-07-2024,Bier/Heinicke,0,ERHOEHUNG,m,1
 09-07-2024,Bier/Heinicke,8,ERHOEHUNG,m,1
+10-07-2024,Wasser/Saskia,3000,NEU,m,1
+10-07-2024,Bier/Desperados,2000,NEU,m,1
+10-07-2024,Waldhonig,666,NEU,m,1
+10-07-2024,Elgato/Streamdeck,100,NEU,m,1
+10-07-2024,Elgato/Facecam,100,NEU,m,1
+10-07-2024,Handy/Samsung S21 Ultra,100,NEU,m,1
+10-07-2024,Handy/Samsung S21 Ultra,100,NEU,m,1
+10-07-2024,Schweinenacken,500,NEU,m,1
+10-07-2024,MioMio/ Mate,3000,NEU,m,1
+10-07-2024,MioMio/ Mate Ginger,3000,NEU,m,1
+10-07-2024,MioMio/ Cola,3000,NEU,m,1
+10-07-2024,MioMio/ Orange+,3000,NEU,m,1
+10-07-2024,Coca Cola,3000,NEU,m,1
+10-07-2024,Coca Cola Zero,3000,NEU,m,1
+10-07-2024,Coca Cola Light,3000,NEU,m,1
+10-07-2024,Pepsi Lime,3000,NEU,m,1
+10-07-2024,Pepsi ,3000,NEU,m,1
+10-07-2024,Pepsi Zero,3000,NEU,m,1
+10-07-2024,Englisch Duden,368,NEU,m,1
+10-07-2024,Deutsch Duden,472,NEU,m,1
+10-07-2024,Papier,480,NEU,m,1
+10-07-2024,Manga/ One Piece,50000,NEU,m,1
+10-07-2024,Energy/RedBull,50000,NEU,m,1
+10-07-2024,Energy/Monster,2000,NEU,m,1
+10-07-2024,Energy/RedBull,2000,NEU,m,1

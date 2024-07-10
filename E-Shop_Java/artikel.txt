@@ -1,20 +1,22 @@
-5665,Maus,10,5.99,2
-2,Bread,56,3.0
-67,Monitor,20,700.99
-3,Water,50,3.99
-4,Bier/Franziskaner,48,13.99,12
-5,Energy,24,2.0
-7,Wasser/Saskia,60,2.99,6
-67686,Tisch,6,6.0
-8,Wasser/Gerolsteiner,36,0.99,6
-9,Fenster,30,100.0,5
-12,Bier/Becks,192,12.99,24
-333,Stuhl,42,34.0
-111,Duden,498,5.0
-789,RedBull,16,2.99,4
-888,Honig,4920,0.9
-89,Bier/Paulaner,800,13.99,8
-666,Brot,648,6.66
-90,Bier/Heinicke,1208,12.99,8
-123,Rindfleisch,500,5.99
-444,Spielkarten,40,0.99
+1,Wasser/Saskia,3000,4.99,6
+2,Bier/Desperados,2000,11.99,4
+3,Elgato/Streamdeck,100,149.99,1
+4,Elgato/Facecam,100,149.99,1
+5,Handy/Samsung S21 Ultra,100,1199.99,1
+6,Schweinenacken,500,11.79,2
+7,MioMio/ Mate,3000,8.69,6
+999,Energy/RedBull,2000,2.99,4
+8,MioMio/ Mate Ginger,3000,8.69,6
+9,MioMio/ Cola,3000,8.69,6
+10,MioMio/ Orange+,3000,8.69,6
+11,Coca Cola,3000,4.68,6
+12,Coca Cola Zero,3000,6.68,6
+13,Coca Cola Light,3000,5.68,6
+14,Pepsi Lime,3000,3.68,6
+15,Pepsi ,3000,3.68,6
+16,Pepsi Zero,3000,3.68,6
+17,Englisch Duden,368,22.38,1
+18,Deutsch Duden,472,12.38,1
+19,Papier,480,15.38,24
+20,Manga/ One Piece,50000,4.87,1
+666,Energy/Monster,2000,2.99,4
