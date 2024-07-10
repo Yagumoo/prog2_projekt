@@ -1,11 +1,10 @@
-1,Wasser/Saskia,3000,4.99,6
+1,Wasser/Saskia,2988,4.99,6
 2,Bier/Desperados,2000,11.99,4
 3,Elgato/Streamdeck,100,149.99,1
 4,Elgato/Facecam,100,149.99,1
 5,Handy/Samsung S21 Ultra,100,1199.99,1
 6,Schweinenacken,500,11.79,2
 7,MioMio/ Mate,3000,8.69,6
-999,Energy/RedBull,2000,2.99,4
 8,MioMio/ Mate Ginger,3000,8.69,6
 9,MioMio/ Cola,3000,8.69,6
 10,MioMio/ Orange+,3000,8.69,6
@@ -19,4 +18,5 @@
 18,Deutsch Duden,472,12.38,1
 19,Papier,480,15.38,24
 20,Manga/ One Piece,50000,4.87,1
+21,Energy/RedBull Lila,24,4.99,4
 666,Energy/Monster,2000,2.99,4

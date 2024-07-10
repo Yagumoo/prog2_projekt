@@ -6,6 +6,7 @@ import eshop.domain.exceptions.IdNichtVorhandenException;
 import eshop.domain.exceptions.KeinMassengutException;
 import eshop.domain.exceptions.MinusZahlException;
 import eshop.enitities.Artikel;
+import eshop.enitities.Kunde;
 import eshop.enitities.MassengutArtikel;
 import eshop.enitities.Person;
 import eshop.ui.gui.LoginOptionenGUI;
@@ -19,18 +20,36 @@ public class KundenSeite extends JPanel {
 
     private E_Shop eShop;
     private JTable artikelTabelle;
-    private Person eingelogterKunde = null;
+    private Kunde eingelogterKunde;
+    private DefaultTableModel tableModel;
 
-    public KundenSeite(E_Shop eShop) {
+    public KundenSeite(E_Shop eShop, Kunde eingelogterKunde) {
         this.eShop = eShop;
+        this.eingelogterKunde = eingelogterKunde;
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(123, 50, 250));
 
-        Mitarbeiterseite();
-        artikelTabelle();
+        // Load image icon (if needed)
+        ImageIcon image = loadImageIcon();
+        if (image != null) {
+            // Note: You cannot set an icon for a JPanel, only for a JFrame
+        }
+
+        Kundenseite();
+        initializeTable();
     }
 
-    private void Mitarbeiterseite() {
+    private void initializeTable() {
+        String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Preis", "Verpackungsgröße"};
+        tableModel = new DefaultTableModel(spaltenNamen, 0);
+        artikelTabelle = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(artikelTabelle);
+        this.add(scrollPane, BorderLayout.CENTER);
+
+        updateTabelle();  // Initiales Update der Tabelle
+    }
+
+    private void Kundenseite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
         JPanel panelSouth = new JPanel();
@@ -103,6 +122,7 @@ public class KundenSeite extends JPanel {
         panelSouth.add(logoutButton);
 
         logoutButton.addActionListener(e -> {
+            eingelogterKunde = null;
             SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
             //this.setVisible(false); // Schließt das aktuelle Fenster
             SwingUtilities.getWindowAncestor(this).dispose();
@@ -117,7 +137,7 @@ public class KundenSeite extends JPanel {
                 int bestand = Integer.parseInt(bestandText);
 
                 eShop.artikelInWarenkorbHinzufügen(eingelogterKunde, nummer, bestand);
-                artikelTabelle();  // Tabelle aktualisieren
+                updateTabelle();  // Tabelle aktualisieren
 
             } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
@@ -128,30 +148,25 @@ public class KundenSeite extends JPanel {
 
         entfernenButton.addActionListener(e -> {
             eShop.warenkorbLeeren(eingelogterKunde);
-            artikelTabelle();  // Tabelle aktualisieren
+            updateTabelle();  // Tabelle aktualisieren
         });
     }
 
 
     //Artikelliste asugeben lassen
-    private void artikelTabelle() {
-        String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Preis", "Verpackungsgröße"};
-        DefaultTableModel tableModel = new DefaultTableModel(spaltenNamen, 0);
-        artikelTabelle = new JTable(tableModel);
-
-
+    public void updateTabelle() {
+        tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
         for (Map.Entry<Integer, Artikel> eintrag : artikelMap.entrySet()) {
             Artikel artikel = eintrag.getValue();
-            if(artikel instanceof MassengutArtikel massengutArtikel){
+            if (artikel instanceof MassengutArtikel massengutArtikel) {
                 Object[] daten = {
                         artikel.getArtikelnummer(),
                         artikel.getArtikelbezeichnung(),
                         artikel.getArtikelPreis(),
-                        massengutArtikel.getAnzahlMassengut()
+                        massengutArtikel.getAnzahlMassengut()  // Hier holen wir die Massengut-Anzahl ab
                 };
                 tableModel.addRow(daten);
-
             } else {
                 Object[] daten = {
                         artikel.getArtikelnummer(),
@@ -160,10 +175,16 @@ public class KundenSeite extends JPanel {
                 };
                 tableModel.addRow(daten);
             }
-
         }
+    }
 
-        JScrollPane scrollPane = new JScrollPane(artikelTabelle);
-        this.add(scrollPane, BorderLayout.CENTER);
+    private ImageIcon loadImageIcon() {
+        java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Icon/Mann.png");
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        } else {
+            System.err.println("Couldn't find file: " + "eshop/ui/gui/Icon/Mann.png");
+            return null;
+        }
     }
 }

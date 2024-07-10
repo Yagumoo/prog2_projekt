@@ -84,7 +84,7 @@ public class LoginKundeGUI extends JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new KundenTabs(eShop);
+                        new KundenTabs(eShop, eingeloggteKunde);
                     }
                 });
                 // Schließe das Login-Fenster

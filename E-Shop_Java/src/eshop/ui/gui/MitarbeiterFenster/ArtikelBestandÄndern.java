@@ -17,7 +17,7 @@ import java.util.Map;
 public class ArtikelBestandÄndern extends JPanel {
 
     private final E_Shop eShop;
-    private final Mitarbeiter eingeloggterMitarbeiter;
+    private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
@@ -88,6 +88,7 @@ public class ArtikelBestandÄndern extends JPanel {
         panelSouth.add(logoutButton);
 
         logoutButton.addActionListener(e -> {
+            eingeloggterMitarbeiter = null;
             SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
             // Schließen des aktuellen Fensters
             SwingUtilities.getWindowAncestor(this).dispose();

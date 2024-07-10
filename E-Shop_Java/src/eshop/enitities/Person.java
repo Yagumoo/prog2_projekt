@@ -93,6 +93,10 @@ public abstract class Person {
       this.password = password;
     }
 
+  public boolean vergleich(String filter) {
+    return username != null && username.equalsIgnoreCase(filter);  // Überprüft den Username
+  }
+
 
     public boolean checkPasswort(String password) {
       return this.password.equals(password);

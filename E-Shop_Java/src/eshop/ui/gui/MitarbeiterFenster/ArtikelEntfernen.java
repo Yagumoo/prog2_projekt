@@ -85,6 +85,7 @@ public class ArtikelEntfernen extends JPanel {
         panelSouth.add(logoutButton);
 
         logoutButton.addActionListener(e -> {
+            eingeloggterMitarbeiter = null;
             SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
             // Close the current window
             SwingUtilities.getWindowAncestor(this).dispose();
