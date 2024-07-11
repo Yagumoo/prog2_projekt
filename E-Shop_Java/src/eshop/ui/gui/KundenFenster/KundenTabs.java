@@ -45,6 +45,4 @@ public class KundenTabs extends JFrame {
         this.add(tabbedPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
-
-
 }

@@ -171,7 +171,7 @@ public class EreignisListeGUI extends JPanel {
                 .filter(ereignis -> (artikelFilter == null || artikelFilter.isEmpty() || ereignis.getArtikel().equalsIgnoreCase(artikelFilter)) &&
                         (usernameFilter == null || usernameFilter.isEmpty() || (ereignis.getKundeOderMitarbeiter() != null && ereignis.getKundeOderMitarbeiter().vergleich(usernameFilter))) &&
                         (typFilter == null || typFilter.isEmpty() || ereignis.getTyp().toString().equalsIgnoreCase(typFilter)))
-                .collect(Collectors.toList());
+                .toList();
 
         // Daten zur Tabelle hinzufügen
         for (Ereignis ereignis : gefilterteEreignisse) {
