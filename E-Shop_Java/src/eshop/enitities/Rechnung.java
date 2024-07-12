@@ -26,12 +26,17 @@ public class Rechnung {
         this.warenkorbKopie = new HashMap<>();
         this.warenkorbKopie.putAll(warenkorb.getWarenkorbMap());
     }
+
     public Kunde getKunde(){
         return kunde;
     }
 
     public Warenkorb getWarenkorb() {
         return warenkorb;
+    }
+
+    public Map<Artikel, Integer> getWarenkorbKopie(){
+        return warenkorbKopie;
     }
 
     @Override

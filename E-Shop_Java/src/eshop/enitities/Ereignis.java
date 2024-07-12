@@ -37,7 +37,6 @@ public class Ereignis {
         return datum;
     }
 
-
     public String getArtikel() {
         return artikelbezeichnung;
     }
@@ -45,7 +44,6 @@ public class Ereignis {
     public void setArtikel(Artikel artikelbezeichnung) {
         this.artikelbezeichnung = artikelbezeichnung.getArtikelbezeichnung();
     }
-
 
     public Person getKundeOderMitarbeiter() {
         return kundeOderMitarbeiter;

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 
 public class WarenkorbManagement {
+    //TODO: Gucken
     private Map<Artikel, Integer> warenkorbMap;
     private Map<Kunde, Warenkorb> warenkorbVonKunde;
     private Rechnung rechnung;
@@ -21,14 +22,8 @@ public class WarenkorbManagement {
         warenkorb.warenkorbLeeren();
     }
 
-    public Rechnung rechnungErstellen(Kunde kunde){
-        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
-        return new Rechnung(warenkorb, kunde);
-    }
-
     public void artikelInWarenkorbHinzufuegen(Kunde kunde, Artikel artikel,int menge) throws MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
         //Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
-
         if (artikel instanceof MassengutArtikel massengutArtikel) {
             int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
             if (menge % massengutAnzahl != 0) {
@@ -63,7 +58,6 @@ public class WarenkorbManagement {
     }
 
     public Warenkorb getWarenkorb(Kunde kunde) throws IstLeerException{
-
         if(warenkorbVonKunde == null){
             throw new IstLeerException();
         }
@@ -79,10 +73,25 @@ public class WarenkorbManagement {
         warenkorbVonKunde.remove(kunde);
     }
 
+    //holt sich den Warenkorb für Gui zum kaufen
+    public Warenkorb getWarenkorbKaufen(Kunde kunde) throws IstLeerException {
+        Warenkorb wk = warenkorbVonKunde.get(kunde);
+        Map<Artikel, Integer> wkMap = wk.getWarenkorbMap();
+        if(wkMap.isEmpty()){
+            throw new IstLeerException();
+        }
+        return warenkorbVonKunde.get(kunde);
+    }
 
-    public Rechnung warenkorbKaufen(Kunde kunde) {
+    //TODO: Gucken
+    public Rechnung WarenkorbKaufen(Kunde kunde){
         warenkorbVonKunde.get(kunde);
         return rechnungErstellen(kunde);
+    }
+
+    public Rechnung rechnungErstellen(Kunde kunde){
+        Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        return new Rechnung(warenkorb, kunde);
     }
 
 }

@@ -35,7 +35,7 @@ public class KundenSeite extends JPanel {
             // Note: You cannot set an icon for a JPanel, only for a JFrame
         }
 
-        Kundenseite();
+        kundenseite();
         initializeTable();
     }
 
@@ -49,7 +49,7 @@ public class KundenSeite extends JPanel {
         updateTabelle();  // Initiales Update der Tabelle
     }
 
-    private void Kundenseite() {
+    private void kundenseite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
         JPanel panelSouth = new JPanel();
@@ -63,13 +63,13 @@ public class KundenSeite extends JPanel {
         westDowngbc.insets = new Insets(10, 10, 10, 10);
         westDowngbc.fill = GridBagConstraints.VERTICAL;
 
-        JPanel panelCenter = new JPanel(new BorderLayout());
+        //JPanel panelCenter = new JPanel(new BorderLayout());
 
         this.add(panelNord, BorderLayout.NORTH);
         this.add(panelEast, BorderLayout.EAST);
         this.add(panelSouth, BorderLayout.SOUTH);
         this.add(panelWestup, BorderLayout.WEST);
-        this.add(panelCenter, BorderLayout.CENTER);
+        //this.add(panelCenter, BorderLayout.CENTER);
 
         // Alles über Artikelhinzufügen
         // Im Norden der Suchbereich

@@ -11,7 +11,6 @@ import java.util.List;
 import java.io.IOException;
 
 
-
 public class E_Shop {
 
     private final ArtikelManagement artikelManagement; // = new ArtikelManagement();
@@ -38,16 +37,16 @@ public class E_Shop {
         return artikelManagement.gibAlleArtikel();
     }
 
-    public  Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
+    public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
         return mitarbeiterManagement.gibAlleMitarbeiter();
     }
 
-    public  Map<Integer, Kunde> gibAlleKunden() {
+    public Map<Integer, Kunde> gibAlleKunden() {
         return kundenManagement.gibAlleKunden();
     }
 
     public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
-        if(mitarbeiter instanceof Mitarbeiter m){
+        if (mitarbeiter instanceof Mitarbeiter m) {
             artikelManagement.addArtikel(artikel);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
             Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), m, Ereignis.EreignisTyp.NEU);
@@ -55,12 +54,12 @@ public class E_Shop {
         }
     }
 
-    public List<Ereignis> getEreignisListe(){
+    public List<Ereignis> getEreignisListe() {
         return ereignisManagement.getEreignisse();
     }
 
     public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
-        if(mitarbeiter instanceof Mitarbeiter){
+        if (mitarbeiter instanceof Mitarbeiter) {
             mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
         }
@@ -81,12 +80,12 @@ public class E_Shop {
         return kunde;
     }
 
-    public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException{
+    public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
 
     public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
-        if(mitarbeiter instanceof Mitarbeiter){
+        if (mitarbeiter instanceof Mitarbeiter) {
             sucheArtikelMitNummer(artikelnummer);
             artikelManagement.loescheArtikel(artikelnummer);
         }
@@ -121,7 +120,7 @@ public class E_Shop {
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufügen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
-        if(kunde instanceof Kunde k){
+        if (kunde instanceof Kunde k) {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
@@ -129,13 +128,19 @@ public class E_Shop {
         }
     }
 
-    public Warenkorb getWarenkorb(Kunde kunde) throws IstLeerException {
-        return warenkorbManagement.getWarenkorb(kunde);
+
+    public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException {
+        if (kunde instanceof Kunde k) {
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            return wk.getWarenkorbMap();
+        } else {
+            throw new IstLeerException();
+        }
     }
 
 
-    public String printWarenkorbArtikel(Person kunde) throws IstLeerException{
-        if(kunde instanceof Kunde k){
+    public String printWarenkorbArtikel(Person kunde) throws IstLeerException {
+        if (kunde instanceof Kunde k) {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             return wk.toString();
         }
@@ -143,8 +148,8 @@ public class E_Shop {
     }
 
 
-    public double gesamtPreis(Person kunde) throws IstLeerException{
-        if(kunde instanceof Kunde k){
+    public double gesamtPreis(Person kunde) throws IstLeerException {
+        if (kunde instanceof Kunde k) {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
             return wk.gesamtPreis();
         }
@@ -153,13 +158,13 @@ public class E_Shop {
 
 
     public void warenkorbLeeren(Person kunde) {
-        if(kunde instanceof Kunde k){
+        if (kunde instanceof Kunde k) {
             warenkorbManagement.warenkorbLeeren(k);
         }
     }
 
     public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
-        Warenkorb wk = warenkorbManagement.getWarenkorb(kunde);
+        Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
         artikelManagement.bestandAbbuchen(wk);
 
         for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
@@ -174,8 +179,6 @@ public class E_Shop {
 
         return rechnung;
     }
-
-
 
 
     public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {

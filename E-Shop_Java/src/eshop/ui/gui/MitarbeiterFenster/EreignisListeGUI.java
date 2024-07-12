@@ -221,29 +221,6 @@ public class EreignisListeGUI extends JPanel {
         }
     }
 
-    // Überprüfen, welcher Filter fehlt und den entsprechenden Filternamen zurückgeben
-    private String checkMissingFilters(String artikelFilter, String usernameFilter, String typFilter) {
-        if (artikelFilter == null && usernameFilter == null && typFilter == null) {
-            return "Artikel, Person oder Ereignistyp";
-        } else if (artikelFilter == null && usernameFilter == null) {
-            return "Artikel oder Person";
-        } else if (artikelFilter == null && typFilter == null) {
-            return "Artikel oder Ereignistyp";
-        } else if (usernameFilter == null && typFilter == null) {
-            return "Person oder Ereignistyp";
-        } else if (artikelFilter == null) {
-            return "Artikel";
-        } else if (usernameFilter == null) {
-            return "Person";
-        } else if (typFilter == null) {
-            return "Ereignistyp";
-        }
-        return null;
-    }
-
-
-
-
 
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Icon/Mann.png");

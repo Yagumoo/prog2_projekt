@@ -9,7 +9,6 @@ import eshop.enitities.MassengutArtikel;
 import eshop.enitities.Mitarbeiter;
 import eshop.ui.gui.LoginOptionenGUI;
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -36,12 +35,10 @@ public class MitarbeiterSeite extends JPanel {
         //Mitarbeiter Textfelder erstellen
         mitarbeiterSeite();
         //Tabelle erstellen
-        initializeTable();
-
-
+        TabelleErstellen();
     }
 
-    private void initializeTable() {
+    private void TabelleErstellen() {
         String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Bestand", "Preis", "Verpackungsgröße"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
         artikelTabelle = new JTable(tableModel);
@@ -74,13 +71,13 @@ public class MitarbeiterSeite extends JPanel {
         this.add(panelCenter, BorderLayout.CENTER);
 
         // Search area in the north
-        JLabel suchLabel = new JLabel("Suchbegriff: ");
-        JTextField suchFeld = new JTextField(15);
-        JButton suchButton = new JButton("Suchen");
+        JLabel suchLabel = new JLabel("Sortieren nach: ");
+        JButton sortByNumberButton = new JButton("Artikelnummer");
+        JButton sortByNameButton = new JButton("Bezeichnung");
 
         panelNord.add(suchLabel);
-        panelNord.add(suchFeld);
-        panelNord.add(suchButton);
+        panelNord.add(sortByNumberButton);
+        panelNord.add(sortByNameButton);
 
         // Add an article to the inventory
         JLabel überschriftLabel = new JLabel("Artikel zum Lager hinzufügen");
@@ -204,12 +201,21 @@ public class MitarbeiterSeite extends JPanel {
                 eShop.addArtikel(eingeloggterMitarbeiter, artikel);
                 updateTabelle();  // Aktualisieren Sie die Tabelle nach dem Hinzufügen eines Artikels
 
-
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer, Menge oder Preis ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (DoppelteIdException | MinusZahlException | KeinMassengutException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        sortByNumberButton.addActionListener(e -> {
+            // Sortiere die Tabelle nach Artikelnummer
+            updateTabelleSortedByNumber();
+        });
+
+        sortByNameButton.addActionListener(e -> {
+            // Sortiere die Tabelle nach Artikelbezeichnung
+            updateTabelleSortedByName();
         });
     }
 
@@ -239,6 +245,62 @@ public class MitarbeiterSeite extends JPanel {
         }
     }
 
+    public void updateTabelleSortedByNumber() {
+        tableModel.setRowCount(0); // Bestehende Daten löschen
+        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        artikelMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(eintrag -> {
+                    Artikel artikel = eintrag.getValue();
+                    if (artikel instanceof MassengutArtikel massengutArtikel) {
+                        Object[] daten = {
+                                artikel.getArtikelnummer(),
+                                artikel.getArtikelbezeichnung(),
+                                artikel.getArtikelbestand(),
+                                artikel.getArtikelPreis(),
+                                massengutArtikel.getAnzahlMassengut()  // Hier holen wir die Massengut-Anzahl ab
+                        };
+                        tableModel.addRow(daten);
+                    } else {
+                        Object[] daten = {
+                                artikel.getArtikelnummer(),
+                                artikel.getArtikelbezeichnung(),
+                                artikel.getArtikelbestand(),
+                                artikel.getArtikelPreis()
+                        };
+                        tableModel.addRow(daten);
+                    }
+                });
+    }
+
+    public void updateTabelleSortedByName() {
+        tableModel.setRowCount(0); // Bestehende Daten löschen
+        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        artikelMap.entrySet().stream()
+                .sorted((a1, a2) -> a1.getValue().getArtikelbezeichnung().compareTo(a2.getValue().getArtikelbezeichnung()))
+                .forEach(eintrag -> {
+                    Artikel artikel = eintrag.getValue();
+                    if (artikel instanceof MassengutArtikel massengutArtikel) {
+                        Object[] daten = {
+                                artikel.getArtikelnummer(),
+                                artikel.getArtikelbezeichnung(),
+                                artikel.getArtikelbestand(),
+                                artikel.getArtikelPreis(),
+                                massengutArtikel.getAnzahlMassengut()  // Hier holen wir die Massengut-Anzahl ab
+                        };
+                        tableModel.addRow(daten);
+                    } else {
+                        Object[] daten = {
+                                artikel.getArtikelnummer(),
+                                artikel.getArtikelbezeichnung(),
+                                artikel.getArtikelbestand(),
+                                artikel.getArtikelPreis()
+                        };
+                        tableModel.addRow(daten);
+                    }
+                });
+    }
+
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/ui/gui/Icon/Mann.png");
         if (imgURL != null) {
@@ -249,8 +311,3 @@ public class MitarbeiterSeite extends JPanel {
         }
     }
 }
-
-
-
-
-

@@ -439,9 +439,7 @@ public class EShopCUI {
     }
 
     private void warenkorbKaufen(){
-
         try {
-
             // Artikel im Warenkorb kaufen
             //eShop.ListeVonWarenkorb();
             Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingeloggtePerson);
