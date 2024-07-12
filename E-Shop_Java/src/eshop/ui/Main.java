@@ -1,11 +1,6 @@
 package eshop.ui;
 
 
-import eshop.domain.E_Shop;
-import eshop.ui.gui.KundenFenster.KundenSeite;
-
-import javax.swing.SwingUtilities;
-
 public class Main {
     public static void main(String[] args) {
         /*

@@ -1,8 +1,8 @@
 package eshop.ui.cui;
 
-import eshop.domain.E_Shop;
-import eshop.domain.exceptions.*;
-import eshop.enitities.*;
+import eshop.common.enitities.*;
+import eshop.common.exceptions.*;
+import eshop.server.domain.E_Shop;
 
 import java.util.InputMismatchException;
 import java.util.Map;
