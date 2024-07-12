@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WarenkorbGUI extends JPanel {
@@ -155,7 +156,8 @@ public class WarenkorbGUI extends JPanel {
 
         kaufButton.addActionListener(e -> {
             try {
-                eShop.warenkorbKaufen(eingelogterKunde);
+                Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingelogterKunde);
+                zeigeRechnungPopup(rechnung.getKunde());
             } catch (BestandNichtAusreichendException | IstLeerException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
@@ -219,6 +221,55 @@ public class WarenkorbGUI extends JPanel {
     }
 
 
+    private void zeigeRechnungPopup(Kunde kunde) {
+        try {
+            // Erstellen Sie die Rechnungsdetails
+            StringBuilder rechnungsDetails = new StringBuilder();
+            rechnungsDetails.append("Rechnung\n");
+            rechnungsDetails.append("==============================\n");
+            rechnungsDetails.append("Kunde: ").append(kunde.getVorname()).append(" ").append(kunde.getNachname()).append("\n");
+            rechnungsDetails.append("Artikel\n");
+
+            double gesamtRechnungspreis = 0.0;
+
+            // Hier die Artikel-Daten direkt aus der Tabelle holen
+            for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
+                // Lese die Daten aus der Zeile
+                Object artikelnummerObj = tableModel.getValueAt(i, 0);
+                Object bezeichnungObj = tableModel.getValueAt(i, 1);
+                Object preisObj = tableModel.getValueAt(i, 2);
+                Object mengeObj = tableModel.getValueAt(i, 3);
+
+                // Überprüfe, ob die Objekte null sind und konvertiere sie sicher
+                if (artikelnummerObj == null || bezeichnungObj == null || preisObj == null || mengeObj == null) {
+                    continue; // Überspringe diese Zeile, wenn ein Wert null ist
+                }
+
+                String bezeichnung = bezeichnungObj.toString();
+                double preis = ((Number) preisObj).doubleValue(); // Sicherer Weg, um double-Wert zu erhalten
+                int menge = ((Number) mengeObj).intValue(); // Sicherer Weg, um int-Wert zu erhalten
+
+                gesamtRechnungspreis += eShop.gesamtPreis(kunde);
+
+                rechnungsDetails.append(bezeichnung)
+                        .append(" - Menge: ").append(menge)
+                        .append(" - Einzelpreis: ").append(preis)
+                        .append("\n");
+            }
+
+            // Gesamtpreis der Rechnung mit der Methode eShop.gesamtPreis(kunde) berechnen
+            //gesamtRechnungspreis = eShop.gesamtPreis(kunde);
+
+            rechnungsDetails.append("\nGesamtbetrag: ").append(gesamtRechnungspreis).append(" Euro\n");
+            rechnungsDetails.append("==============================\n");
+            rechnungsDetails.append("Vielen Dank für Ihren Einkauf!");
+
+            // Zeigen Sie die Rechnung in einem Popup an
+            JOptionPane.showMessageDialog(this, rechnungsDetails.toString(), "Rechnung", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IstLeerException e) {
+            JOptionPane.showMessageDialog(this, "Ihr Warenkorb ist leer.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
 
 }

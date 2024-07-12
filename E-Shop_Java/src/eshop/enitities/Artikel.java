@@ -20,6 +20,7 @@ public class Artikel{
 
     }
 
+
     public int getArtikelnummer() {
 
         return artikelnummer;

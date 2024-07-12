@@ -1,9 +1,9 @@
-1,Wasser/Saskia,2988,4.99,6
-2,Bier/Desperados,2000,11.99,4
-3,Elgato/Streamdeck,100,149.99,1
+1,Wasser/Saskia,2844,4.99,6
+2,Bier/Desperados,1948,11.99,4
+3,Elgato/Streamdeck,97,149.99,1
 4,Elgato/Facecam,100,149.99,1
-5,Handy/Samsung S21 Ultra,100,1199.99,1
-6,Schweinenacken,500,11.79,2
+5,Handy/Samsung S21 Ultra,99,1199.99,1
+6,Schweinenacken,494,11.79,2
 7,MioMio/ Mate,3000,8.69,6
 8,MioMio/ Mate Ginger,3000,8.69,6
 9,MioMio/ Cola,3000,8.69,6
@@ -11,12 +11,12 @@
 11,Coca Cola,3000,4.68,6
 12,Coca Cola Zero,3000,6.68,6
 13,Coca Cola Light,3000,5.68,6
-14,Pepsi Lime,3000,3.68,6
-15,Pepsi ,3000,3.68,6
-16,Pepsi Zero,3000,3.68,6
-17,Englisch Duden,368,22.38,1
-18,Deutsch Duden,472,12.38,1
+14,Pepsi Lime,2988,3.68,6
+15,Pepsi ,2994,3.68,6
+16,Pepsi Zero,2994,3.68,6
+17,Englisch Duden,367,22.38,1
+18,Deutsch Duden,470,12.38,1
 19,Papier,480,15.38,24
-20,Manga/ One Piece,50000,4.87,1
-21,Energy/RedBull Lila,24,4.99,4
-666,Energy/Monster,2000,2.99,4
+20,Manga/ One Piece,49997,4.87,1
+21,Energy/RedBull Lila,8,4.99,4
+666,Energy/Monster,1976,2.99,4

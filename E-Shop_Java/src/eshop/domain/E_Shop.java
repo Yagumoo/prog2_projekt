@@ -129,6 +129,10 @@ public class E_Shop {
         }
     }
 
+    public Warenkorb getWarenkorb(Kunde kunde) throws IstLeerException {
+        return warenkorbManagement.getWarenkorb(kunde);
+    }
+
 
     public String printWarenkorbArtikel(Person kunde) throws IstLeerException{
         if(kunde instanceof Kunde k){
@@ -154,24 +158,25 @@ public class E_Shop {
         }
     }
 
-    public Rechnung warenkorbKaufen(Person kunde) throws BestandNichtAusreichendException, IstLeerException {
-        if(kunde instanceof Kunde k){
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            artikelManagement.bestandAbbuchen(wk);
+    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
+        Warenkorb wk = warenkorbManagement.getWarenkorb(kunde);
+        artikelManagement.bestandAbbuchen(wk);
 
-            for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
-                Artikel artikel = entry.getKey();
-                int menge = entry.getValue();
-                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, k, Ereignis.EreignisTyp.KAUF);
-                ereignisManagement.addEreignis(neuesEreignis);
-            }
-            Rechnung rechnung = new Rechnung(wk, k);
-            warenkorbManagement.warenkorbKaufen(k);
-            warenkorbLeeren(k);
-            return rechnung;
+        for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunde, Ereignis.EreignisTyp.KAUF);
+            ereignisManagement.addEreignis(neuesEreignis);
         }
-        return null;
+
+        Rechnung rechnung = new Rechnung(wk, kunde);
+        warenkorbLeeren(kunde);
+
+        return rechnung;
     }
+
+
+
 
     public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {
         if (kunde instanceof Kunde k) {

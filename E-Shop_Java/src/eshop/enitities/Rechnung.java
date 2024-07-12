@@ -30,6 +30,10 @@ public class Rechnung {
         return kunde;
     }
 
+    public Warenkorb getWarenkorb() {
+        return warenkorb;
+    }
+
     @Override
     public String toString() {
         String rechnung = "Rechnung für Kunde: " + kunde.getVorname() + " " + kunde.getNachname() +"\n" +

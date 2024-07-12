@@ -126,37 +126,66 @@ public class EreignisListeGUI extends JPanel {
         });
 
         artikelButton.addActionListener(e -> {
-            String artikelFilter = JOptionPane.showInputDialog(this, "Artikelbezeichnung eingeben:");
-            updateTabelle(artikelFilter, null, null);  // Filter by article
+            try {
+                String artikelFilter = JOptionPane.showInputDialog(this, "Artikelbezeichnung eingeben:");
+                if (artikelFilter == null || artikelFilter.trim().isEmpty()) {
+                    throw new FilterException("Artikelbezeichnung darf nicht leer sein.");
+                }
+                updateTabelle(artikelFilter, null, null);  // Filter by article
+            } catch (FilterException | WertNichtGefundenException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         personButton.addActionListener(e -> {
-            String usernameFilter = JOptionPane.showInputDialog(this, "Username der Person eingeben:");
-            if (usernameFilter != null && !usernameFilter.trim().isEmpty()) {
+            try {
+                String usernameFilter = JOptionPane.showInputDialog(this, "Username der Person eingeben:");
+                if (usernameFilter == null || usernameFilter.trim().isEmpty()) {
+                    throw new FilterException("Bitte einen gültigen Username eingeben.");
+                }
                 updateTabelle(null, usernameFilter, null);  // Filter by username
-            } else {
-                JOptionPane.showMessageDialog(this, "Bitte einen gültigen Username eingeben.");
+            } catch (FilterException | WertNichtGefundenException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
 
         typButton.addActionListener(e -> {
-            String typFilter = JOptionPane.showInputDialog(this, "Ereignistyp eingeben:");
-            updateTabelle(null, null, typFilter);  // Filter by event type
+            try {
+                String typFilter = JOptionPane.showInputDialog(this, "Ereignistyp eingeben:");
+                if (typFilter == null || typFilter.trim().isEmpty()) {
+                    throw new FilterException("Ereignistyp darf nicht leer sein.");
+                }
+                updateTabelle(null, null, typFilter);  // Filter by event type
+            } catch (FilterException | WertNichtGefundenException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         suchButton.addActionListener(e -> {
-            String suchBegriff = suchFeld.getText();
-            updateTabelle(suchBegriff, null, null);  // Search by general term (acts as a filter for article name)
+            try {
+                String suchBegriff = suchFeld.getText();
+                if (suchBegriff == null || suchBegriff.trim().isEmpty()) {
+                    throw new FilterException("Suchbegriff darf nicht leer sein.");
+                }
+                updateTabelle(suchBegriff, null, null);  // Search by general term (acts as a filter for article name)
+            } catch (FilterException | WertNichtGefundenException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
     }
 
     public void updateTabelle() {
-        updateTabelle(null, null, null);  // Keine Filter anwenden
+        try {
+            updateTabelle(null, null, null);  // Keine Filter anwenden
+        } catch (WertNichtGefundenException ex){
+            //kann leer bleieben, eil hier kein Filter angewendet wird
+        }
+
     }
 
-    public void updateTabelle(String artikelFilter, String usernameFilter, String typFilter) {
+    public void updateTabelle(String artikelFilter, String usernameFilter, String typFilter) throws WertNichtGefundenException {
 
         tableModel.setRowCount(0); // Bestehende Daten löschen
 
@@ -172,6 +201,10 @@ public class EreignisListeGUI extends JPanel {
                         (usernameFilter == null || usernameFilter.isEmpty() || (ereignis.getKundeOderMitarbeiter() != null && ereignis.getKundeOderMitarbeiter().vergleich(usernameFilter))) &&
                         (typFilter == null || typFilter.isEmpty() || ereignis.getTyp().toString().equalsIgnoreCase(typFilter)))
                 .toList();
+
+        if(gefilterteEreignisse.isEmpty()){
+            throw new WertNichtGefundenException("Kein Ereignis gefunden, das den Filterkriterien entspricht. Bitte die exakte Artikelbeschreibung, den Username oder Ereignistyp angeben.");
+        }
 
         // Daten zur Tabelle hinzufügen
         for (Ereignis ereignis : gefilterteEreignisse) {

@@ -444,7 +444,7 @@ public class EShopCUI {
 
             // Artikel im Warenkorb kaufen
             //eShop.ListeVonWarenkorb();
-            Rechnung rechnung = eShop.warenkorbKaufen(eingeloggtePerson);
+            Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingeloggtePerson);
 
             System.out.println(rechnung);
 

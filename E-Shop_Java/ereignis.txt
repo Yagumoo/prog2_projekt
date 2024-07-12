@@ -68,3 +68,58 @@
 10-07-2024,Energy/RedBull,2000,NEU,m,1
 10-07-2024,Wasser/Saskia,12,KAUF,k,9
 10-07-2024,Energy/RedBull Lila,24,NEU,m,7
+12-07-2024,Energy/Monster,8,KAUF,k,9
+12-07-2024,Handy/Samsung S21 Ultra,1,KAUF,k,9
+12-07-2024,Energy/Monster,8,KAUF,k,9
+12-07-2024,Energy/Monster,8,KAUF,k,9
+12-07-2024,Pepsi Lime,6,KAUF,k,9
+12-07-2024,Manga/ One Piece,1,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,12,KAUF,k,9
+12-07-2024,Englisch Duden,1,KAUF,k,9
+12-07-2024,Deutsch Duden,1,KAUF,k,9
+12-07-2024,Elgato/Streamdeck,1,KAUF,k,9
+12-07-2024,Elgato/Streamdeck,1,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Schweinenacken,2,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Bier/Desperados,4,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Bier/Desperados,4,KAUF,k,9
+12-07-2024,Pepsi Zero,6,KAUF,k,12
+12-07-2024,Energy/RedBull Lila,8,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Bier/Desperados,4,KAUF,k,12
+12-07-2024,Bier/Desperados,8,KAUF,k,12
+12-07-2024,Manga/ One Piece,1,KAUF,k,12
+12-07-2024,Pepsi Lime,6,KAUF,k,12
+12-07-2024,Elgato/Streamdeck,1,KAUF,k,12
+12-07-2024,Schweinenacken,2,KAUF,k,12
+12-07-2024,Energy/RedBull Lila,8,KAUF,k,12
+12-07-2024,Pepsi ,6,KAUF,k,12
+12-07-2024,Bier/Desperados,8,KAUF,k,12
+12-07-2024,Schweinenacken,2,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Manga/ One Piece,1,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Bier/Desperados,8,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Deutsch Duden,1,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Bier/Desperados,4,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Bier/Desperados,4,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
+12-07-2024,Bier/Desperados,4,KAUF,k,9
+12-07-2024,Bier/Desperados,4,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,12
+12-07-2024,Wasser/Saskia,6,KAUF,k,9
