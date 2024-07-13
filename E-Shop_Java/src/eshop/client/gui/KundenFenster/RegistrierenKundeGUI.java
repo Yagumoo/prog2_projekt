@@ -1,5 +1,7 @@
 package eshop.client.gui.KundenFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
+import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.DoppelteIdException;
 import eshop.common.exceptions.EmailExistiertException;
 import eshop.common.exceptions.UsernameExistiertException;
@@ -11,9 +13,9 @@ import java.awt.*;
 public class RegistrierenKundeGUI extends JFrame {
 
     boolean loginErfolgreich = false;
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
 
-    public RegistrierenKundeGUI(E_Shop eShop) {
+    public RegistrierenKundeGUI(Eshopclientsite eShop) {
         this.eShop = eShop;
         this.setTitle("Registrieren");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,6 +62,8 @@ public class RegistrierenKundeGUI extends JFrame {
 
         JButton registerButton = new JButton("Registrieren");
 
+        JButton zurückButton = new JButton("Zurück");
+
         this.add(vornameLabel);
         this.add(vornameField);
 
@@ -87,7 +91,7 @@ public class RegistrierenKundeGUI extends JFrame {
         this.add(strassenNummerLabel);
         this.add(strassenNummerField);
 
-        this.add(new JLabel());
+        this.add(zurückButton);
         this.add(registerButton);
 
         registerButton.addActionListener(e -> {
@@ -115,6 +119,16 @@ public class RegistrierenKundeGUI extends JFrame {
             } catch (DoppelteIdException | UsernameExistiertException | EmailExistiertException ex) {
                 JOptionPane.showMessageDialog(null, "Benutzername oder E-Mail bereits registriert!", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
+        });
+
+        zurückButton.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new LoginKundeGUI(eShop);
+                }
+            });
+            this.dispose();
         });
 
         this.setVisible(true);

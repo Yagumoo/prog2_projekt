@@ -1,5 +1,6 @@
 package eshop.client.gui.KundenFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.Kunde;
@@ -10,16 +11,17 @@ import eshop.server.domain.E_Shop;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Date;
 import java.util.Map;
 
 public class WarenkorbGUI extends JPanel {
 
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
     private JTable artikelTabelle;
     private Kunde eingelogterKunde;
     private DefaultTableModel tableModel;
 
-    public WarenkorbGUI(E_Shop eShop, Kunde eingelogterKunde) {
+    public WarenkorbGUI(Eshopclientsite eShop, Kunde eingelogterKunde) {
         this.eShop = eShop;
         this.eingelogterKunde = eingelogterKunde;
         this.setLayout(new BorderLayout());
@@ -229,6 +231,9 @@ public class WarenkorbGUI extends JPanel {
             }
 
             rechnungsDetails.append("==============================\n");
+            rechnungsDetails.append("Datum: "+ rechnung.getDatum() +"\n");
+            //Date datumJetzt = new Date();
+            //rechnungsDetails.append(datumJetzt.getDay()+ "-"+datumJetzt.getMonth()+"-"+datumJetzt.getYear()+"\n");
             rechnungsDetails.append("Vielen Dank für Ihren Einkauf!");
             // Zeigen Sie die Rechnung in einem Popup an
             JOptionPane.showMessageDialog(this, rechnungsDetails.toString(), "Rechnung", JOptionPane.INFORMATION_MESSAGE);

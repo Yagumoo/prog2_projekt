@@ -1,57 +1,118 @@
-package eshop.server.domain;
-
+package eshop.client.clientServerVerbindung;
 
 import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
-import eshop.server.persistence.filePersistenceManager;
+import eshop.server.serverClientVerbindung.Server;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
-import java.io.IOException;
+import java.util.Map;
+import java.net.*;
+import java.io.*;
 
+public class Eshopclientsite {
+    private Socket clientSocket;
+    private PrintStream out;
+    private BufferedReader in;
 
-public class E_Shop {
+    public Eshopclientsite(String ip, int port){
+        try {
+            clientSocket = new Socket(ip, port);
+        } catch (IOException e){
+            System.err.println("Error beim Verbindungsaufbau" + e);
+        }
 
-    private final ArtikelManagement artikelManagement; // = new ArtikelManagement();
-    private final MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
-    private final KundenManagement kundenManagement; //= new KundenManagement();
-    private final WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
-    private final EreignisManagement ereignisManagement;//= new EreignisManagement();
-    private final filePersistenceManager fpm; //  = new filePersistenceManager();
-    // => WarenkorbManagement
-    //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
+        try {
+            // erstellt Input/Output Streams um Daten vom Server zu lesen/schreiben
+            out = new PrintStream(clientSocket.getOutputStream());
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (IOException e) {
+            System.err.println("Error beim erstellen von In und Out-Streams");
+        }
 
-    public E_Shop() {
-        fpm = new filePersistenceManager();
-        artikelManagement = new ArtikelManagement(fpm);
-        mitarbeiterManagement = new MitarbeiterManagement(fpm);
-        kundenManagement = new KundenManagement(fpm);
-        warenkorbManagement = new WarenkorbManagement();
-        ereignisManagement = new EreignisManagement(fpm, kundenManagement.gibAlleKunden(), mitarbeiterManagement.gibAlleMitarbeiter());
-
-        Runtime.getRuntime().addShutdownHook(new Thread(this::speicherAlleListen));
+        out.println("Moin Moin hier ist der Client mit der IP: " + ip +" und Port: "+ port);
     }
 
     public Map<Integer, Artikel> gibAlleArtikel() {
-        return artikelManagement.gibAlleArtikel();
+        Map<Integer, Artikel> alleArtikel = new HashMap<Integer, Artikel>();
+        out.println("gibAlleArtikel");
+        try {
+            int anzahlArtikelMap = Integer.parseInt(in.readLine());
+            for(int i = 0; i < anzahlArtikelMap; i++){
+                int nummer = Integer.parseInt(in.readLine());
+                String bezeichnung = in.readLine();
+                int bestand = Integer.parseInt(in.readLine());
+                double preis = Double.parseDouble(in.readLine());
+                Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
+                alleArtikel.put(nummer, artikel);
+            }
+        } catch (IOException e){
+            System.err.println("Error beim Artikel erstellen" + e);
+        }
+        out.println("gibAlleMassengutartikel");
+        try {
+            int anzahlArtikelMap = Integer.parseInt(in.readLine());
+            for(int i = 0; i < anzahlArtikelMap; i++) {
+                int nummer = Integer.parseInt(in.readLine());
+                String bezeichnung = in.readLine();
+                int bestand = Integer.parseInt(in.readLine());
+                double preis = Double.parseDouble(in.readLine());
+                int massengutAnzahl = Integer.parseInt(in.readLine());
+                MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massengutAnzahl);
+                alleArtikel.put(nummer, massengutArtikel);
+            }
+        } catch (IOException e){
+            System.err.println("Error beim lesen vom Server bei = gibAlleMassengutartikel" + e);
+        }
+        return alleArtikel;
     }
 
     public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
-        return mitarbeiterManagement.gibAlleMitarbeiter();
+        Map<Integer, Mitarbeiter> alleMitarbeiter = new HashMap<Integer, Mitarbeiter>();
+        out.println("gibAlleMitarbeiter");
+        try {
+            int anzahlMitarbeiterMap = Integer.parseInt(in.readLine());
+            for(int i = 0; i < anzahlMitarbeiterMap; i++){
+                int id = Integer.parseInt(in.readLine());
+                String vorname = in.readLine();
+                String nachname = in.readLine();
+                String email = in.readLine();
+                String username = in.readLine();
+                String passwort = in.readLine();
+                //TODO: Richtige übergabe der ID
+                Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort);
+                mitarbeiter.setId(id);
+                Person.idzeahler--;
+                alleMitarbeiter.put(mitarbeiter.getId(), mitarbeiter);
+            }
+        } catch (IOException e){
+            System.err.println("Error beim lesen vom Server bei = gibAlleMitarbeiter" + e);
+        }
+        return alleMitarbeiter;
     }
 
-    public Map<Integer, Kunde> gibAlleKunden() {
-        return kundenManagement.gibAlleKunden();
-    }
+//    public Map<Integer, Kunde> gibAlleKunden() {
+//        return kundenManagement.gibAlleKunden();
+//    }
 
     public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
-        if (mitarbeiter instanceof Mitarbeiter m) {
-            artikelManagement.addArtikel(artikel);
-            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), m, Ereignis.EreignisTyp.NEU);
-            ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
-        }
+        out.println("addArtikel");
+        out.println(mitarbeiter.getId());
+        out.println(artikel.getArtikelnummer());
+        out.println(artikel.getArtikelbezeichnung());
+        out.println(artikel.getArtikelPreis());
+        out.println(artikel.getArtikelbestand());
+    }
+
+    public void addMassengutartikel(Person mitarbeiter, MassengutArtikel massengutArtikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
+        out.println("addMassengutartikel");
+        out.println(mitarbeiter.getId());
+        out.println(massengutArtikel.getArtikelnummer());
+        out.println(massengutArtikel.getArtikelbezeichnung());
+        out.println(massengutArtikel.getArtikelPreis());
+        out.println(massengutArtikel.getArtikelbestand());
+        out.println(massengutArtikel.getAnzahlMassengut());
     }
 
     public List<Ereignis> getEreignisListe() {
@@ -80,10 +141,6 @@ public class E_Shop {
         return kunde;
     }
 
-    public Mitarbeiter sucheMirarbeiterMitNummer(int id) throws IdNichtVorhandenException {
-        return mitarbeiterManagement.gibMitarbeiterPerID(id);
-    }
-
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }
@@ -96,31 +153,12 @@ public class E_Shop {
     }
 
     public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
-        if (mitarbeiter instanceof Mitarbeiter) {
-            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
+        out.println("aendereArtikelBestand");
+        out.println(mitarbeiter.getId());
+        out.println(artikelnummer);
+        out.println(neuerBestand);
 
-            // Aktuellen Artikelbestand speichern
-            int aktuellerBestand = artikel.getArtikelbestand();
-            int differenz = neuerBestand - aktuellerBestand;
-
-            // Ändern des Artikelbestands und das Ergebnis der Operation speichern
-            boolean bestandGeaendert = artikelManagement.aendereArtikelBestand(artikelnummer, neuerBestand);
-
-            if (bestandGeaendert) {
-                Ereignis.EreignisTyp ereignisTyp;
-                if (differenz < 0) {
-                    ereignisTyp = Ereignis.EreignisTyp.REDUZIERUNG;
-                } else {
-                    ereignisTyp = Ereignis.EreignisTyp.ERHOEHUNG;
-                }
-
-                // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
-                ereignisManagement.addEreignis(neuesEreignis);
-            }
-        }
     }
-
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
@@ -143,7 +181,7 @@ public class E_Shop {
         }
     }
 
-
+/*
     public String printWarenkorbArtikel(Person kunde) throws IstLeerException {
         if (kunde instanceof Kunde k) {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
@@ -151,6 +189,8 @@ public class E_Shop {
         }
         return "Person ist kein Kunde";
     }
+
+ */
 
 
     public double gesamtPreis(Person kunde) throws IstLeerException {
@@ -167,7 +207,6 @@ public class E_Shop {
             warenkorbManagement.warenkorbLeeren(k);
         }
     }
-
 
     public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
         Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
@@ -210,26 +249,8 @@ public class E_Shop {
         }
     }
 
-    public void speicherAlleListen() {
-        try {
-            fpm.speicherArtikelListe("artikel.txt", artikelManagement.gibAlleArtikel());
-            System.out.println("Artikelliste gespeichert");
-
-            fpm.speicherKundenListe("kunden.txt", kundenManagement.gibAlleKunden());
-            System.out.println("Kundenliste gespeichert");
-
-            fpm.speicherMitarbeiterListe("mitarbeiter.txt", mitarbeiterManagement.gibAlleMitarbeiter());
-            System.out.println("Mitarbeiterliste gespeichert");
-
-            fpm.speicherEreignisListe("ereignis.txt", ereignisManagement.getEreignisse());
-            System.out.println("Ereignisliste gespeichert");
-
-            System.out.println("Alle Listen wurden erfolgreich gespeichert.");
-        } catch (IOException e) {
-            System.err.println("Fehler beim Speichern der Listen: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 }
+
+
 
 

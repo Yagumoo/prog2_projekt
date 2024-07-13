@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Mitarbeiter;
 
@@ -11,7 +12,7 @@ import java.awt.*;
 
 public class MitarbeiterTabs extends JFrame {
 
-    public MitarbeiterTabs(E_Shop eShop, Mitarbeiter eingeloggteMitarbeiter)  {
+    public MitarbeiterTabs(Eshopclientsite eShop, Mitarbeiter eingeloggteMitarbeiter)  {
         this.setTitle("E-Shop");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(820, 620);

@@ -149,7 +149,10 @@
 12-07-2024,Wasser/Saskia,12,KAUF,k,9
 12-07-2024,Elgato/Facecam,3,KAUF,k,9
 12-07-2024,Handy/Samsung S21 Ultra,1,KAUF,k,9
-12-07-2024,Wasser/Saskia,6,KAUF,k,9
-12-07-2024,Manga/ One Piece,5,KAUF,k,9
-12-07-2024,Coca Cola Light,12,KAUF,k,9
-12-07-2024,Energy/RedBull,200,NEU,m,1
+13-07-2024,Wasser/Saskia,420,ERHOEHUNG,m,1
+13-07-2024,Wasser/Saskia,12,KAUF,k,9
+13-07-2024,Wasser/Saskia,12,KAUF,k,9
+13-07-2024,Wasser/Saskia,6,KAUF,k,13
+13-07-2024,Wasser/Saskia,198,KAUF,k,9
+13-07-2024,Wasser/Saskia,12,KAUF,k,9
+13-07-2024,Wasser/Saskia,12,KAUF,k,9

@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.FilterException;
 import eshop.common.exceptions.WertNichtGefundenException;
@@ -16,12 +17,12 @@ import java.util.List;
 
 public class EreignisListeGUI extends JPanel {
 
-    private final E_Shop eShop;
+    private final Eshopclientsite eShop;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public EreignisListeGUI(E_Shop eShop, Mitarbeiter eingeloggterMitarbeiter) {
+    public EreignisListeGUI(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShop = eShop;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));

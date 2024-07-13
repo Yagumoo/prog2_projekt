@@ -28,7 +28,7 @@ public class EShopCUI {
     private void KundeOderMitarbeiter() {
 
         try {
-            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? \n Programm beenden mit B \n");
+            System.out.println("Sind Sie ein Kunde 'K' oder ein Mitarbeiter 'M'? \nProgramm beenden mit B \n");
             String input = getStringInput();
 
             if(input.equalsIgnoreCase("k")){

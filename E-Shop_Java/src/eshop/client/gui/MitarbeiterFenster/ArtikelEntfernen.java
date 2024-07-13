@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.IdNichtVorhandenException;
@@ -14,12 +15,12 @@ import java.util.Map;
 
 public class ArtikelEntfernen extends JPanel {
 
-    private final E_Shop eShop;
+    private final Eshopclientsite eShop;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public ArtikelEntfernen(E_Shop eShop, Mitarbeiter eingeloggterMitarbeiter) {
+    public ArtikelEntfernen(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShop = eShop;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));

@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.LoginException;
@@ -12,10 +13,10 @@ import java.awt.*;
 public class LoginMitarbeiterGUI extends JFrame {
 
     boolean loginErfolgreich = false;
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
     private Mitarbeiter eingeloggteMitarbeiter = null;
 
-    public LoginMitarbeiterGUI( E_Shop eShop) {
+    public LoginMitarbeiterGUI(Eshopclientsite eShop) {
         this.eShop = eShop;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

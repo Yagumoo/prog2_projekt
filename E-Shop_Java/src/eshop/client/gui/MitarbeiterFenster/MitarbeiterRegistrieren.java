@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.DoppelteIdException;
 import eshop.common.exceptions.EmailExistiertException;
@@ -15,12 +16,12 @@ import java.util.Map;
 
 public class MitarbeiterRegistrieren extends JPanel {
 
-    private final E_Shop eShop;
+    private final Eshopclientsite eShop;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable mitarbeiterTabelle;
     private DefaultTableModel tableModel;
 
-    public MitarbeiterRegistrieren(E_Shop eShop, Mitarbeiter eingeloggterMitarbeiter) {
+    public MitarbeiterRegistrieren(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShop = eShop;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));

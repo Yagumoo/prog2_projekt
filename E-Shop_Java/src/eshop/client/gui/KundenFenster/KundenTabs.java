@@ -1,5 +1,6 @@
 package eshop.client.gui.KundenFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Kunde;
 
@@ -10,10 +11,10 @@ import java.awt.*;
 
 public class KundenTabs extends JFrame {
 
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
     private Kunde aktuellerKunde;
 
-    public KundenTabs(E_Shop eShop, Kunde eingeloggteKunde) {
+    public KundenTabs(Eshopclientsite eShop, Kunde eingeloggteKunde) {
         this.eShop = eShop;
         this.setTitle("E-Shop");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

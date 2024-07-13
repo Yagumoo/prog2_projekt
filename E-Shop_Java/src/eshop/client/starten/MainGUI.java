@@ -1,12 +1,12 @@
 package eshop.client.starten;
 
-import eshop.server.domain.E_Shop;
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 
 import javax.swing.*;
 
 
 public class MainGUI {
-    private E_Shop eShop = new E_Shop();
+    private Eshopclientsite eShop  = new Eshopclientsite("localhost", 8000);
 
     public static void main(String[] args) {
         //SwingUtilities.invokeLater(LoginOptionenGUI::new);//Lambda wurde durch :: ersetzt

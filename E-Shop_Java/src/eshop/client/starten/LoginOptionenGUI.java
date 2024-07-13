@@ -1,5 +1,6 @@
 package eshop.client.starten;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.server.domain.E_Shop;
 import eshop.client.gui.KundenFenster.LoginKundeGUI;
 import eshop.client.gui.MitarbeiterFenster.LoginMitarbeiterGUI;
@@ -9,9 +10,9 @@ import javax.swing.ImageIcon;
 import java.awt.*;
 
 public class LoginOptionenGUI extends JFrame{
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
 
-    public LoginOptionenGUI(E_Shop eShop) {
+    public LoginOptionenGUI(Eshopclientsite eShop) {
         this.eShop = eShop;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

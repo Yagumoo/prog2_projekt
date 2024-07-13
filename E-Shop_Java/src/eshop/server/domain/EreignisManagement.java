@@ -35,4 +35,6 @@ public class EreignisManagement {
     public void addEreignis(Ereignis ereignis){
         ereignisListe.add(ereignis);
     }
+
+    //TODO: 30 Tage aufgabe
 }

@@ -37,10 +37,11 @@ public class ArtikelManagement {
     }
 
     public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
-        if(artikel.getArtikelnummer() <=0 ||artikel.getArtikelbestand() <=0 || artikel.getArtikelPreis() <0){
+        if(artikel.getArtikelnummer() <=0 || artikel.getArtikelbestand() <=0 || artikel.getArtikelPreis() <0){
             throw new MinusZahlException();
 
         }
+        //TODO: angucken
         if (sucheArtikel(artikel.getArtikelnummer())) {
             throw new DoppelteIdException(artikel.getArtikelnummer());
         }
@@ -55,7 +56,7 @@ public class ArtikelManagement {
             }
 
         }
-            artikelListe.put(artikel.getArtikelnummer(), artikel);
+        artikelListe.put(artikel.getArtikelnummer(), artikel);
 
     }
 
@@ -115,7 +116,7 @@ public class ArtikelManagement {
         return artikelListe.get(artikelbezeichnung);
     }
 
-    public Artikel gibArtikelPerId(int artikelnummer)throws IdNichtVorhandenException{
+    public Artikel gibArtikelPerId(int artikelnummer) throws IdNichtVorhandenException{
         if (!artikelListe.containsKey(artikelnummer)) {
             throw new IdNichtVorhandenException(artikelnummer);
         }

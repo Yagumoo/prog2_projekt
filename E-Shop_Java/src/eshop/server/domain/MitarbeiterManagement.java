@@ -6,10 +6,7 @@ import eshop.common.enitities.Person;
 import java.util.Map;
 import java.util.HashMap;
 
-import eshop.common.exceptions.DoppelteIdException;
-import eshop.common.exceptions.EmailExistiertException;
-import eshop.common.exceptions.LoginException;
-import eshop.common.exceptions.UsernameExistiertException;
+import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 
 public class MitarbeiterManagement {
@@ -83,11 +80,16 @@ public class MitarbeiterManagement {
         this.eingeloggterMitarbeiter = mitarbeiter;
     }
 
-    public Person getEingeloggterMitarbeiter() {
-        return eingeloggterMitarbeiter;
+    public Mitarbeiter gibMitarbeiterPerID(int id) throws IdNichtVorhandenException{
+        if(!mitarbeiterListe.containsKey(id)){
+            throw new IdNichtVorhandenException(id);
+        } else {
+            return mitarbeiterListe.get(id);
+        }
+
     }
 
-    public  boolean sucheMitarbeiter(int id){
+    public boolean sucheMitarbeiter(int id){
         return  mitarbeiterListe.containsKey(id);
     }
 

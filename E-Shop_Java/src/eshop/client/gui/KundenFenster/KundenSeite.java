@@ -1,5 +1,6 @@
 package eshop.client.gui.KundenFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.BestandNichtAusreichendException;
@@ -17,12 +18,12 @@ import java.util.Map;
 
 public class KundenSeite extends JPanel {
 
-    private E_Shop eShop;
+    private Eshopclientsite eShop;
     private JTable artikelTabelle;
     private Kunde eingelogterKunde;
     private DefaultTableModel tableModel;
 
-    public KundenSeite(E_Shop eShop, Kunde eingelogterKunde) {
+    public KundenSeite(Eshopclientsite eShop, Kunde eingelogterKunde) {
         this.eShop = eShop;
         this.eingelogterKunde = eingelogterKunde;
         this.setLayout(new BorderLayout());

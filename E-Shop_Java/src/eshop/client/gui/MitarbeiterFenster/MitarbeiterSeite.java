@@ -1,5 +1,6 @@
 package eshop.client.gui.MitarbeiterFenster;
 
+import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.DoppelteIdException;
@@ -16,12 +17,12 @@ import java.util.Map;
 
 public class MitarbeiterSeite extends JPanel {
 
-    private final E_Shop eShop;
+    private final Eshopclientsite eShop;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public MitarbeiterSeite(E_Shop eShop, Mitarbeiter eingeloggterMitarbeiter) {
+    public MitarbeiterSeite(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShop = eShop;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));
@@ -189,16 +190,17 @@ public class MitarbeiterSeite extends JPanel {
                 int id = Integer.parseInt(ID);
                 int menge = Integer.parseInt(Menge);
                 double preis = Double.parseDouble(Preis);
-
-                Artikel artikel;
-                if (!Paketgröße.isEmpty()) {
-                    int paketgröße = Integer.parseInt(Paketgröße);
-                    artikel = new MassengutArtikel(id, Bezeichnung, menge, preis, paketgröße);
+                int paketgröße = Integer.parseInt(Paketgröße);
+                //TODO: gucken ob geht => (paketgröße != 1)
+                if (!Paketgröße.isEmpty() || paketgröße != 1) {
+                    //int paketgröße = Integer.parseInt(Paketgröße);
+                    MassengutArtikel massengutArtikel = new MassengutArtikel(id, Bezeichnung, menge, preis, paketgröße);
+                    eShop.addMassengutartikel(eingeloggterMitarbeiter, massengutArtikel);
                 } else {
-                    artikel = new Artikel(id, Bezeichnung, menge, preis);
+                    Artikel artikel = new Artikel(id, Bezeichnung, menge, preis);
+                    eShop.addArtikel(eingeloggterMitarbeiter, artikel);
                 }
 
-                eShop.addArtikel(eingeloggterMitarbeiter, artikel);
                 updateTabelle();  // Aktualisieren Sie die Tabelle nach dem Hinzufügen eines Artikels
 
             } catch (NumberFormatException ex) {
