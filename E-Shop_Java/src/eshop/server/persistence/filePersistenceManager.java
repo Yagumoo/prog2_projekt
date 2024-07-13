@@ -178,8 +178,8 @@ public class filePersistenceManager {
                         parts[1], // nachname
                         parts[2], // email
                         parts[3], // username
-                        parts[4] // password
-                        //id // id
+                        parts[4], // password
+                        id        // id
                         );
                 mitarbeiterListe.put(id, mitarbeiter);
             }

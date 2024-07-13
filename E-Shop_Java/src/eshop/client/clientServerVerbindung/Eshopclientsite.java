@@ -4,6 +4,7 @@ import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
 import eshop.server.serverClientVerbindung.Server;
 
+import javax.swing.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -81,9 +82,7 @@ public class Eshopclientsite {
                 String username = in.readLine();
                 String passwort = in.readLine();
                 //TODO: Richtige übergabe der ID
-                Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort);
-                mitarbeiter.setId(id);
-                Person.idzeahler--;
+                Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
                 alleMitarbeiter.put(mitarbeiter.getId(), mitarbeiter);
             }
         } catch (IOException e){
@@ -103,6 +102,21 @@ public class Eshopclientsite {
         out.println(artikel.getArtikelbezeichnung());
         out.println(artikel.getArtikelPreis());
         out.println(artikel.getArtikelbestand());
+
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "505":
+                    throw new DoppelteIdException(mitarbeiter.getId());
+                case "606":
+                    throw new MinusZahlException();
+                case "707":
+                    throw new KeinMassengutException(artikel.getArtikelbestand());
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+        }
     }
 
     public void addMassengutartikel(Person mitarbeiter, MassengutArtikel massengutArtikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
@@ -113,6 +127,21 @@ public class Eshopclientsite {
         out.println(massengutArtikel.getArtikelPreis());
         out.println(massengutArtikel.getArtikelbestand());
         out.println(massengutArtikel.getAnzahlMassengut());
+
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "606":
+                    throw new DoppelteIdException(mitarbeiter.getId());
+                case "707":
+                    throw new MinusZahlException();
+                case "808":
+                    throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+        }
     }
 
     public List<Ereignis> getEreignisListe() {
@@ -157,6 +186,20 @@ public class Eshopclientsite {
         out.println(mitarbeiter.getId());
         out.println(artikelnummer);
         out.println(neuerBestand);
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "505":
+                    throw new IdNichtVorhandenException(mitarbeiter.getId());
+                case "606":
+                    throw new KeinMassengutException(neuerBestand);
+                case "707":
+                    throw new MinusZahlException();
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+        }
 
     }
 
@@ -250,7 +293,3 @@ public class Eshopclientsite {
     }
 
 }
-
-
-
-

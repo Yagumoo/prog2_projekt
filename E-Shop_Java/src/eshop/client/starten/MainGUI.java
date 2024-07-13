@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 public class MainGUI {
-    private Eshopclientsite eShop  = new Eshopclientsite("localhost", 8000);
+    private Eshopclientsite eShop  = new Eshopclientsite("localhost", 1028);
 
     public static void main(String[] args) {
         //SwingUtilities.invokeLater(LoginOptionenGUI::new);//Lambda wurde durch :: ersetzt
@@ -19,5 +19,7 @@ public class MainGUI {
             }
         });
     }
+
+
 
 }
