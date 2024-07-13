@@ -29,6 +29,7 @@ public abstract class Person {
     this.vorname = vorname;
     this.nachname = nachname;
     this.email = email;
+    //TODO: Richtige ID vergabe
     if(id > idzeahler) {
       idzeahler = id + 1;
     }

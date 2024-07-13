@@ -4,6 +4,7 @@ import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.DoppelteIdException;
 import eshop.common.exceptions.EmailExistiertException;
+import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.UsernameExistiertException;
 import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Mitarbeiter;
@@ -159,7 +160,7 @@ public class MitarbeiterRegistrieren extends JPanel {
                 updateTabelle();
 
 
-            } catch (DoppelteIdException | UsernameExistiertException | EmailExistiertException ex) {
+            } catch (DoppelteIdException | UsernameExistiertException | EmailExistiertException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });

@@ -23,6 +23,15 @@ public class Kunde extends Person {
         this.strassenNummer = strassenNummer;
     }
 
+    public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
+        super(vorname, nachname, email, username, password, id);
+        this.ort = ort;
+        this.plz = plz;
+        this.strasse = strasse;
+        this.strassenNummer = strassenNummer;
+    }
+
+
     // Getter und Setter für PLZ
     public int getPlz() {
 

@@ -115,7 +115,7 @@ public class Eshopclientsite {
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
-            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+            System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
         }
     }
 
@@ -140,7 +140,7 @@ public class Eshopclientsite {
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
-            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+            System.err.println("Fehler beim lesen vom Server = addMassengutartikel" + e);
         }
     }
 
@@ -148,26 +148,124 @@ public class Eshopclientsite {
         return ereignisManagement.getEreignisse();
     }
 
-    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
-        if (mitarbeiter instanceof Mitarbeiter) {
-            mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
-            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
+    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException, IdNichtVorhandenException {
+        out.println("addMitarbeiter");
+        out.println(mitarbeiter.getId());
+        out.println(vorname);
+        out.println(nachname);
+        out.println(email);
+        out.println(username);
+        out.println(password);
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "505":
+                    //throw new DoppelteIdException();
+                case "606":
+                    throw new UsernameExistiertException(username);
+                case "707":
+                    throw new EmailExistiertException(email);
+                case "808":
+                    throw new IdNichtVorhandenException(mitarbeiter.getId());
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addMitarbeiter" + e);
         }
 
     }
 
     public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
-        kundenManagement.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
+        out.println("addKunde");
+        out.println(vorname);
+        out.println(nachname);
+        out.println(email);
+        out.println(username);
+        out.println(password);
+        out.println(ort);
+        out.println(plz);
+        out.println(strasse);
+        out.println(strassenNummer);
+
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "505":
+                    //throw new DoppelteIdException();
+                case "606":
+                    throw new UsernameExistiertException(username);
+                case "707":
+                    throw new EmailExistiertException(email);
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addKunde" + e);
+        }
+
     }
 
     public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
-        return mitarbeiterManagement.loginMitarbeiter(usernameOrEmail, password);
+        out.println("loginMitarbeiter");
+        out.println(usernameOrEmail);
+        out.println(password);
+
+        try{
+            int id = Integer.parseInt(in.readLine());
+            String vorname = in.readLine();
+            String nachname = in.readLine();
+            String email = in.readLine();
+            String username = in.readLine();
+            String passwort = in.readLine();
+            //TODO: Richtige übergabe der ID
+            Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
+
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "404":
+                    throw new LoginException();
+            }
+            //TODO: Fehler abfangen
+
+            return mitarbeiter;
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = loginMitarbeiter" + e);
+        }
+        //TODO: Return Statement
+        return null;
     }
 
     public Kunde loginKunde(String usernameOrEmail, String password) throws LoginException {
-        Kunde kunde = kundenManagement.loginkunde(usernameOrEmail, password);
-        warenkorbManagement.warenkorbHinzufuegen(kunde);
-        return kunde;
+        out.println("loginKunde");
+
+        out.println(usernameOrEmail);
+        out.println(password);
+
+        try{
+            int id = Integer.parseInt(in.readLine());
+            String vorname = in.readLine();
+            String nachname = in.readLine();
+            String email = in.readLine();
+            String username = in.readLine();
+            String passwort = in.readLine();
+            String ort = in.readLine();
+            int plz = Integer.parseInt(in.readLine());
+            String strasse = in.readLine();
+            int strassenNummer = Integer.parseInt(in.readLine());
+            Kunde kunde = new Kunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
+
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "404":
+                    throw new LoginException();
+            }
+            //TODO: Fehler abfangen
+
+            return kunde;
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = loginKunde" + e);
+        }
+        //TODO: Return Statement
+        return null;
     }
 
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
@@ -175,9 +273,20 @@ public class Eshopclientsite {
     }
 
     public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
-        if (mitarbeiter instanceof Mitarbeiter) {
-            sucheArtikelMitNummer(artikelnummer);
-            artikelManagement.loescheArtikel(artikelnummer);
+        out.println("loescheArtikel");
+
+        out.println(mitarbeiter.getId());
+        out.println(artikelnummer);
+
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "404":
+                    throw new IdNichtVorhandenException(mitarbeiter.getId());
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = loescheArtikel" + e);
         }
     }
 

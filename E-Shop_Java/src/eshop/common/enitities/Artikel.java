@@ -19,7 +19,7 @@ public class Artikel{
         this.artikelPreis = artikelPreis;
 
     }
-
+    //TODO: Artikel name 1 mal benutzt bar
 
     public int getArtikelnummer() {
 

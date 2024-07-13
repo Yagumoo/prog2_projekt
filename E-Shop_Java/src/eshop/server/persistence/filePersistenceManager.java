@@ -128,7 +128,7 @@ public class filePersistenceManager {
                         parts[2], // email
                         parts[3], // username
                         parts[4], // password
-                        //id, // id
+                        id,       // id
                         parts[6], // ort
                         Integer.parseInt(parts[7]), // plz
                         parts[8], // strasse

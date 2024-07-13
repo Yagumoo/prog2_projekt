@@ -1,13 +1,7 @@
 package eshop.server.serverClientVerbindung;
 
-import eshop.common.enitities.Artikel;
-import eshop.common.enitities.Ereignis;
-import eshop.common.enitities.MassengutArtikel;
-import eshop.common.enitities.Mitarbeiter;
-import eshop.common.exceptions.DoppelteIdException;
-import eshop.common.exceptions.IdNichtVorhandenException;
-import eshop.common.exceptions.KeinMassengutException;
-import eshop.common.exceptions.MinusZahlException;
+import eshop.common.enitities.*;
+import eshop.common.exceptions.*;
 import eshop.server.domain.E_Shop;
 
 import java.io.BufferedReader;
@@ -68,6 +62,16 @@ public class ClientRequestProcessor extends Thread {
                     addMassengutartikel();
                 case "aendereArtikelBestand":
                     aendereArtikelBestand();
+                case"addKunde":
+                    addKunde();
+                case "addMitarbeiter":
+                    addMitarbeiter();
+                case "loginMitarbeiter":
+                    loginMitarbeiter();
+                case "loginKunde":
+                    loginKunde();
+                case "loescheArtikel":
+                    loescheArtikel();
             }
 
         } while (!input.equals("exit"));
@@ -203,4 +207,115 @@ public class ClientRequestProcessor extends Thread {
 
     }
 
+    public void addKunde(){
+        try {
+            String vorname = in.readLine();
+            String nachname = in.readLine();
+            String email = in.readLine();
+            String username = in.readLine();
+            String password = in.readLine();
+            String ort = in.readLine();
+            int plz = Integer.parseInt(in.readLine());
+            String strasse = in.readLine();
+            int strassenNummer = Integer.parseInt(in.readLine());
+
+            eShop.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
+        }catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+        } catch (DoppelteIdException e) {
+            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            out.println("ERROR 505");
+        } catch (UsernameExistiertException e) {
+            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            out.println("ERROR 606");
+        } catch (EmailExistiertException e) {
+            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            out.println("ERROR 707");
+        }
+    }
+
+    public void addMitarbeiter(){
+        try {
+            int mitarbeiterID = Integer.parseInt(in.readLine());
+            String vorname = in.readLine();
+            String nachname = in.readLine();
+            String email = in.readLine();
+            String username = in.readLine();
+            String password = in.readLine();
+
+            Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
+            eShop.addMitarbeiter(mitarbeiter,vorname, nachname, email, username, password);
+        }catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+        } catch (DoppelteIdException e) {
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            out.println("ERROR 505");
+        } catch (UsernameExistiertException e) {
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            out.println("ERROR 606");
+        } catch (EmailExistiertException e) {
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            out.println("ERROR 707");
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            out.println("ERROR 808");
+        }
+    }
+
+    private void loginMitarbeiter()  {
+        try {
+            String usernameOrEmail = in.readLine();
+            String password = in.readLine();
+
+            Mitarbeiter mitarbeiter = eShop.loginMitarbeiter(usernameOrEmail, password);
+            out.println(mitarbeiter.getVorname());
+            out.println(mitarbeiter.getNachname());
+            out.println(mitarbeiter.getEmail());
+            out.println(mitarbeiter.getUsername());
+            out.println(mitarbeiter.getPassword());
+        } catch (IOException e) {
+            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter" + e);
+        } catch (LoginException e) {
+            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter" + e);
+            out.println("ERROR 404");
+        }
+    }
+
+    private void loginKunde(){
+        try {
+            String usernameOrEmail = in.readLine();
+            String password = in.readLine();
+
+            Kunde kunde = eShop.loginKunde(usernameOrEmail, password);
+            out.println(kunde.getVorname());
+            out.println(kunde.getNachname());
+            out.println(kunde.getEmail());
+            out.println(kunde.getUsername());
+            out.println(kunde.getPassword());
+            out.println(kunde.getOrt());
+            out.println(kunde.getPlz());
+            out.println(kunde.getStrasse());
+            out.println(kunde.getStrassenNummer());
+        } catch (IOException e) {
+            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+        } catch (LoginException e) {
+            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+            out.println("ERROR 404");
+        }
+    }
+
+    private void loescheArtikel(){
+        try{
+            int mitarbeiterID = Integer.parseInt(in.readLine());
+            Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
+            int artikelnummer = Integer.parseInt(in.readLine());
+            eShop.loescheArtikel(mitarbeiter, artikelnummer);
+        }catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+            out.println("ERROR 404");
+        }
+
+    }
 }
