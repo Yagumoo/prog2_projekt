@@ -1,7 +1,6 @@
 package eshop.client.gui.KundenFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
-import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Kunde;
 
 import javax.swing.*;
@@ -11,11 +10,11 @@ import java.awt.*;
 
 public class KundenTabs extends JFrame {
 
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
     private Kunde aktuellerKunde;
 
-    public KundenTabs(Eshopclientsite eShop, Kunde eingeloggteKunde) {
-        this.eShop = eShop;
+    public KundenTabs(Eshopclientsite eShopclientsite, Kunde eingeloggteKunde) {
+        this.eShopclientsite = eShopclientsite;
         this.setTitle("E-Shop");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(820, 620);
@@ -24,8 +23,8 @@ public class KundenTabs extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
 
         // Erstellen und Hinzufügen der Tabs
-        KundenSeite kundenSeite = new KundenSeite(eShop, eingeloggteKunde);
-        WarenkorbGUI warenkorbGUI = new WarenkorbGUI(eShop, eingeloggteKunde);
+        KundenSeite kundenSeite = new KundenSeite(eShopclientsite, eingeloggteKunde);
+        WarenkorbGUI warenkorbGUI = new WarenkorbGUI(eShopclientsite, eingeloggteKunde);
 
         tabbedPane.addTab("Artikel in Warenkorb Hinzufügen", kundenSeite);
         tabbedPane.addTab("Warenkorb", warenkorbGUI);

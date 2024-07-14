@@ -15,9 +15,9 @@ public class Server {
         try {
             // erstellt ServerSocket mit dem angegeben Port, muss der gleiche Port sein wie der auf dem der Client versucht zu verbinden
             serverSocket = new ServerSocket(port);
-            System.out.println("Sever hört auf Port: " + port);
+            System.out.println("Server hört auf Port: " + port);
         } catch (IOException e) {
-            System.err.println("Sever ist NICHT geschlossen: " + port);
+            System.err.println("Server ist NICHT geschlossen: " + port);
         }
 
         try {

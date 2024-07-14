@@ -1,10 +1,8 @@
 package eshop.server.domain;
 
 
-import eshop.common.exceptions.DoppelteIdException;
-import eshop.common.exceptions.EmailExistiertException;
-import eshop.common.exceptions.LoginException;
-import eshop.common.exceptions.UsernameExistiertException;
+import eshop.common.enitities.Mitarbeiter;
+import eshop.common.exceptions.*;
 import eshop.common.enitities.Kunde;
 
 import java.util.Map;
@@ -88,15 +86,19 @@ public class KundenManagement {
     }
 
     public Map<Integer, Kunde> gibAlleKunden() {
-
         return kundenListe;
     }
 
-    public  boolean sucheKunde(int id){
+    public Kunde sucheKundePerId(int id) throws IdNichtVorhandenException{
+        if(!kundenListe.containsKey(id)){
+            throw new IdNichtVorhandenException(id);
+        } else {
+            return kundenListe.get(id);
+        }
+    }
+
+    public boolean sucheKunde(int id){
         return  kundenListe.containsKey(id);
     }
 
-    public Kunde gibKundePerId(int id) {
-        return kundenListe.get(id);
-    }
 }

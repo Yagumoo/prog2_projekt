@@ -35,6 +35,10 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Die run() Methode sorgt dafür, dass einzelne oder die selbe Methode Paralel laufen können
+     * @Param input ist wür den Empfang zuständig
+     * */
     @Override
     public void run() {
         String input = "";
@@ -63,7 +67,7 @@ public class ClientRequestProcessor extends Thread {
                     addMassengutartikel();
                 case "aendereArtikelBestand":
                     aendereArtikelBestand();
-                case"addKunde":
+                case "addKunde":
                     addKunde();
                 case "addMitarbeiter":
                     addMitarbeiter();
@@ -73,9 +77,9 @@ public class ClientRequestProcessor extends Thread {
                     loginKunde();
                 case "loescheArtikel":
                     loescheArtikel();
-                case"gibEreignis":
-                    List<Ereignis> ereignisList = eShop.getEreignisListe();
-                    gibEreignis(ereignisList);
+                case "getEreignisListe":
+                    List<Ereignis> ereignisListe = eShop.getEreignisListe();
+                    getEreignisListe(ereignisListe);
                 case "sucheArtikelMitNummer":
                     sucheArtikelMitNummer();
                 case "artikelInWarenkorbHinzufügen":
@@ -98,8 +102,12 @@ public class ClientRequestProcessor extends Thread {
 
         } while (!input.equals("exit"));
     }
-
-    public void gibAlleArtikel(Map<Integer, Artikel> alleArtikel){
+    /**
+     * Funktion um alle Artikel aus der Map auszulesen und diese in Strings umzuwandeln
+     * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
+     * @Param Artikel Holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
+     * */
+    private void gibAlleArtikel(Map<Integer, Artikel> alleArtikel){
         Map<Integer, Artikel> onlyAlleArtikel = new HashMap<Integer, Artikel>();
         for(Map.Entry<Integer, Artikel> entry : alleArtikel.entrySet()) {
             if(entry.getValue() instanceof Artikel) {
@@ -115,7 +123,12 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void gibAlleMassengutartikel(Map<Integer, Artikel> alleArtikel){
+    /**
+     * Funktion um alle Massengutartikel aus der Map auszulesen und diese in Strings umzuwandeln
+     * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
+     * @Param Artikel holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
+     * */
+    private void gibAlleMassengutartikel(Map<Integer, Artikel> alleArtikel){
         Map<Integer, MassengutArtikel> onlyAlleMassengutArtikel = new HashMap<Integer, MassengutArtikel>();
         for(Map.Entry<Integer, Artikel> entry : alleArtikel.entrySet()) {
             if(entry.getValue() instanceof MassengutArtikel) {
@@ -132,7 +145,19 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void gibAlleMitarbeiter(Map<Integer, Mitarbeiter> alleMitarbeiter){
+    /**
+     * Funktion um die Werte für den Mitarbeiter zu bekommen, damit diese aus der Map ausgelesen werden könne
+     * @Param Integer Key Wert der Map ist die Mitarbeiter ID
+     * @Param Mitarbeiter ist der Value, dass ausgegeben wird. (Mitarbeiter-Objekt)
+     *
+     * @Param out.println(entry.getValue().getId()); holt sich die ID aus der Map
+     * @Param out.println(entry.getValue().getVorname()); holt sich den Vornamen aus der Map
+     * @Param out.println(entry.getValue().getNachname()); holt sich den Nachnamen aus der Map
+     * @Param out.println(entry.getValue().getEmail()); holt sich die E-mail aus der Map
+     * @Param out.println(entry.getValue().getUsername()); holt sich den Username aus der Map
+     * @Param out.println(entry.getValue().getPassword()); holt sich das Passwort aus der Map
+     * */
+    private void gibAlleMitarbeiter(Map<Integer, Mitarbeiter> alleMitarbeiter){
         //TODO: brauche wir das hier?
         //Map<Integer, Mitarbeiter> onlyAlleMitarbeiter = new HashMap<>();
         for (Map.Entry<Integer, Mitarbeiter> entry : alleMitarbeiter.entrySet()) {
@@ -145,7 +170,20 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void addArtikel(){
+    /**
+     * Funktion um einen neuen Artikel von der EshopClientsite zu empfangen und dem eshop zu übergeben
+     * @Param mitarbeiterID empfängt die mitarbeiterID
+     * @Param artikelNummer empfängt die artikelNummer
+     * @Param artikelbezeichnung empfängt die artikelbezeichnung
+     * @Param artikelpreis empfängt den artikelpreis
+     * @Param artikelbestand empfängt den artikelbestand
+     *
+     * @Param IdNichtVorhandenException wird geworfen, wenn die ID nicht vorhanden ist
+     * @Param DoppelteIdException wird geworfen, wenn die ID schon vorhanden ist
+     * @Param MinusZahlException wird geworfen, wenn eine Negative Zahl gegeben wurde
+     * @Param KeinMassengutException wird geworfen, wenn der Artikel kein Massengut ist
+     * */
+    private void addArtikel(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
@@ -173,7 +211,7 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void addMassengutartikel(){
+    private void addMassengutartikel(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
@@ -203,7 +241,7 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void aendereArtikelBestand()  {
+    private void aendereArtikelBestand()  {
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
@@ -229,7 +267,7 @@ public class ClientRequestProcessor extends Thread {
 
     }
 
-    public void addKunde(){
+    private void addKunde(){
         try {
             String vorname = in.readLine();
             String nachname = in.readLine();
@@ -256,7 +294,7 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-    public void addMitarbeiter(){
+    private void addMitarbeiter(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             String vorname = in.readLine();
@@ -326,6 +364,13 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Funktion um die Daten für loescheArtikel() zu empfangen und für Eshop umzuwandeln
+     * @Param mitarbeiterID erwartet einen Integer
+     * @Param mitarbeiter ruft eine Methode auf, um die Mitarbeiter ID vom eingeloggten mitarbeiter zu bekommen
+     * @Param artikelnummer erwartet einen Integer
+     *
+     * */
     private void loescheArtikel(){
         try{
             int mitarbeiterID = Integer.parseInt(in.readLine());
@@ -340,5 +385,145 @@ public class ClientRequestProcessor extends Thread {
         }
 
     }
-    
+
+    private void sucheArtikelMitNummer() {
+        try{
+            int artikenummer = Integer.parseInt(in.readLine());
+            eShop.sucheArtikelMitNummer(artikenummer);
+        }catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (IdNichtVorhandenException e){
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 404");
+        }
+    }
+
+    private void getEreignisListe(List<Ereignis> ereignisListe) {
+        //return ereignisManagement.getEreignisse();
+        //Date datum, String artikelbezeichnung, int anzahl, Person kundeOderMitarbeiter, EreignisTyp typ
+        out.println(ereignisListe.size());
+        for(Ereignis ereignis :ereignisListe) {
+            out.println(ereignis.getDatum());
+            out.println(ereignis.getArtikel());
+            out.println(ereignis.getAnzahl());
+            out.println(ereignis.getKundeOderMitarbeiter());
+            try {
+                if(ereignis.getKundeOderMitarbeiter() instanceof Mitarbeiter){
+                    Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(ereignis.getKundeOderMitarbeiter().getId());
+                    out.println("m");
+                    out.println(mitarbeiter.getId());
+                    out.println(mitarbeiter.getVorname());
+                    out.println(mitarbeiter.getNachname());
+                    out.println(mitarbeiter.getEmail());
+                    out.println(mitarbeiter.getUsername());
+                    out.println(mitarbeiter.getPassword());
+                }
+                if(ereignis.getKundeOderMitarbeiter() instanceof Kunde){
+                    Kunde kunde = eShop.sucheKundeMitNummer(ereignis.getKundeOderMitarbeiter().getId());
+                    out.println("k");
+                    out.println(kunde.getId());
+                    out.println(kunde.getVorname());
+                    out.println(kunde.getNachname());
+                    out.println(kunde.getEmail());
+                    out.println(kunde.getUsername());
+                    out.println(kunde.getPassword());
+                    out.println(kunde.getOrt());
+                    out.println(kunde.getPlz());
+                    out.println(kunde.getStrasse());
+                    out.println(kunde.getStrassenNummer());
+                }
+            }catch (IdNichtVorhandenException e){
+                //System.out.println("Fehler bei getEreignisListe ID konnte nicht gefunden werden");
+            }
+            out.println(ereignis.getTyp());
+        }
+    }
+
+    private void artikelInWarenkorbHinzufügen(){
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+            int artikelnummer = Integer.parseInt(in.readLine());
+            int menge = Integer.parseInt(in.readLine());
+
+            eShop.artikelInWarenkorbHinzufügen(kunde, artikelnummer, menge);
+
+        } catch(IOException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (BestandNichtAusreichendException e) {
+            throw new RuntimeException(e);
+        } catch (MinusZahlException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 404");
+        } catch (KeinMassengutException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 505");
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 606");
+        }
+    }
+
+    private void gesamtPreis(){
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+
+            eShop.gesamtPreis(kunde);
+        } catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 404");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 505");
+        }
+    }
+
+    private void warenkorbLeeren(){
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+
+            eShop.warenkorbLeeren(kunde);
+        } catch (IOException e){
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 404");
+        }
+    }
+
+    private void bestandImWarenkorbAendern() {
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+
+            int artikelnummer = Integer.parseInt(in.readLine());
+            Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
+            int menge = Integer.parseInt(in.readLine());
+
+            eShop.bestandImWarenkorbAendern(kunde, artikel, menge);
+        } catch (IOException e) {
+
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 404");
+        } catch (BestandNichtAusreichendException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 505");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 606");
+        } catch (KeinMassengutException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 707");
+        } catch (MinusZahlException e) {
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            out.println("ERROR 808");
+        }
+    }
+
 }

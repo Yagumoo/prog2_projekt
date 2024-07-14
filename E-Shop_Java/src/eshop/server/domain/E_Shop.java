@@ -84,6 +84,10 @@ public class E_Shop {
         return mitarbeiterManagement.gibMitarbeiterPerID(id);
     }
 
+    public Kunde sucheKundeMitNummer(int id) throws IdNichtVorhandenException {
+        return kundenManagement.sucheKundePerId(id);
+    }
+
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
         return artikelManagement.gibArtikelPerId(artikelnummer);
     }

@@ -20,7 +20,6 @@ public class EreignisManagement {
         //ereignisListe.add(new Ereignis(aktuellesDatum, "Initialisierung", 0, new Person("System", 0)));
         try {
             this.fpm = fpm;
-
             ereignisListe = fpm.ladeEreignisListe("ereignis.txt", alleKunden, alleMitarbeiter);
         }catch(Exception e){
             System.out.println(e.getMessage());

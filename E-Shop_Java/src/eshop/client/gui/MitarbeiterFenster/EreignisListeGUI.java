@@ -4,7 +4,6 @@ import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.FilterException;
 import eshop.common.exceptions.WertNichtGefundenException;
-import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Ereignis;
 import eshop.common.enitities.Mitarbeiter;
 
@@ -17,13 +16,13 @@ import java.util.List;
 
 public class EreignisListeGUI extends JPanel {
 
-    private final Eshopclientsite eShop;
+    private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public EreignisListeGUI(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
-        this.eShop = eShop;
+    public EreignisListeGUI(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
+        this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
@@ -105,7 +104,7 @@ public class EreignisListeGUI extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingeloggterMitarbeiter = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             // Close the current window
             SwingUtilities.getWindowAncestor(this).dispose();
         });
@@ -170,7 +169,7 @@ public class EreignisListeGUI extends JPanel {
         tableModel.setRowCount(0); // Bestehende Daten löschen
 
         // Ereignisliste abrufen und sortieren
-        List<Ereignis> ereignisListe = eShop.getEreignisListe();
+        List<Ereignis> ereignisListe = eShopclientsite.getEreignisListe();
 
         // Sortieren nach Datum (aufsteigend)
         ereignisListe.sort(Comparator.comparing(Ereignis::getDatum));

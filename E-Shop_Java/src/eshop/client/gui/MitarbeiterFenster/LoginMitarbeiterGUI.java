@@ -2,7 +2,6 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.LoginException;
 import eshop.common.enitities.Mitarbeiter;
 
@@ -13,11 +12,11 @@ import java.awt.*;
 public class LoginMitarbeiterGUI extends JFrame {
 
     boolean loginErfolgreich = false;
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggteMitarbeiter = null;
 
-    public LoginMitarbeiterGUI(Eshopclientsite eShop) {
-        this.eShop = eShop;
+    public LoginMitarbeiterGUI(Eshopclientsite eShopclientsite) {
+        this.eShopclientsite = eShopclientsite;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 160);
@@ -72,12 +71,12 @@ public class LoginMitarbeiterGUI extends JFrame {
         // ActionListener für den Einloggen-Button
         loginButton.addActionListener(e -> {
             try {
-                eingeloggteMitarbeiter = eShop.loginMitarbeiter(usernameOrEmailTextfeld.getText(), passwortTextfeld.getText());
+                eingeloggteMitarbeiter = eShopclientsite.loginMitarbeiter(usernameOrEmailTextfeld.getText(), passwortTextfeld.getText());
                 //showCustomerPage();
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new MitarbeiterTabs(eShop, eingeloggteMitarbeiter);
+                        new MitarbeiterTabs(eShopclientsite, eingeloggteMitarbeiter);
                     }
                 });
                 this.dispose();
@@ -90,7 +89,7 @@ public class LoginMitarbeiterGUI extends JFrame {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new LoginOptionenGUI(eShop);
+                    new LoginOptionenGUI(eShopclientsite);
                 }
             });
             this.dispose();

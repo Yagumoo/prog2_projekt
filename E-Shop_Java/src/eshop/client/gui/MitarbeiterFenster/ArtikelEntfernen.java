@@ -2,7 +2,6 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.MassengutArtikel;
@@ -15,13 +14,13 @@ import java.util.Map;
 
 public class ArtikelEntfernen extends JPanel {
 
-    private final Eshopclientsite eShop;
+    private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public ArtikelEntfernen(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
-        this.eShop = eShop;
+    public ArtikelEntfernen(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
+        this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
@@ -96,7 +95,7 @@ public class ArtikelEntfernen extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingeloggterMitarbeiter = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             // Close the current window
             SwingUtilities.getWindowAncestor(this).dispose();
         });
@@ -106,7 +105,7 @@ public class ArtikelEntfernen extends JPanel {
                 String ID = nummerFeld.getText();
                 int artikelnummer = Integer.parseInt(ID);
 
-                eShop.loescheArtikel(eingeloggterMitarbeiter, artikelnummer);
+                eShopclientsite.loescheArtikel(eingeloggterMitarbeiter, artikelnummer);
                 updateTabelle();
             } catch (IdNichtVorhandenException ex) {
                 //throw new RuntimeException(ex);
@@ -127,7 +126,7 @@ public class ArtikelEntfernen extends JPanel {
 
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         for (Map.Entry<Integer, Artikel> eintrag : artikelMap.entrySet()) {
             Artikel artikel = eintrag.getValue();
             if (artikel instanceof MassengutArtikel massengutArtikel) {
@@ -153,7 +152,7 @@ public class ArtikelEntfernen extends JPanel {
 
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(eintrag -> {
@@ -181,7 +180,7 @@ public class ArtikelEntfernen extends JPanel {
 
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted((a1, a2) -> a1.getValue().getArtikelbezeichnung().compareTo(a2.getValue().getArtikelbezeichnung()))
                 .forEach(eintrag -> {

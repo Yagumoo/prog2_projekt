@@ -2,7 +2,6 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.KeinMassengutException;
 import eshop.common.exceptions.MinusZahlException;
@@ -17,13 +16,13 @@ import java.util.Map;
 
 public class ArtikelBestandÄndern extends JPanel {
 
-    private final Eshopclientsite eShop;
+    private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
 
-    public ArtikelBestandÄndern(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
-        this.eShop = eShop;
+    public ArtikelBestandÄndern(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
+        this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
@@ -99,7 +98,7 @@ public class ArtikelBestandÄndern extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingeloggterMitarbeiter = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             // Schließen des aktuellen Fensters
             SwingUtilities.getWindowAncestor(this).dispose();
         });
@@ -121,7 +120,7 @@ public class ArtikelBestandÄndern extends JPanel {
                 int neuerBestand = Integer.parseInt(neuerbestandText);
 
                 // Bestand ändern
-                eShop.aendereArtikelBestand(eingeloggterMitarbeiter, artikelNummer, neuerBestand);
+                eShopclientsite.aendereArtikelBestand(eingeloggterMitarbeiter, artikelNummer, neuerBestand);
 
                 // Tabelle aktualisieren
                 updateTabelle();
@@ -145,7 +144,7 @@ public class ArtikelBestandÄndern extends JPanel {
 
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         for (Map.Entry<Integer, Artikel> eintrag : artikelMap.entrySet()) {
             Artikel artikel = eintrag.getValue();
             if (artikel instanceof MassengutArtikel massengutArtikel) {
@@ -171,7 +170,7 @@ public class ArtikelBestandÄndern extends JPanel {
 
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(eintrag -> {
@@ -199,7 +198,7 @@ public class ArtikelBestandÄndern extends JPanel {
 
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted((a1, a2) -> a1.getValue().getArtikelbezeichnung().compareTo(a2.getValue().getArtikelbezeichnung()))
                 .forEach(eintrag -> {

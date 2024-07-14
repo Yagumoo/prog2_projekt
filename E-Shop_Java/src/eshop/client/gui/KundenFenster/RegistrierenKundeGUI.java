@@ -1,11 +1,9 @@
 package eshop.client.gui.KundenFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
-import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.DoppelteIdException;
 import eshop.common.exceptions.EmailExistiertException;
 import eshop.common.exceptions.UsernameExistiertException;
-import eshop.server.domain.E_Shop;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +11,10 @@ import java.awt.*;
 public class RegistrierenKundeGUI extends JFrame {
 
     boolean loginErfolgreich = false;
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
 
-    public RegistrierenKundeGUI(Eshopclientsite eShop) {
-        this.eShop = eShop;
+    public RegistrierenKundeGUI(Eshopclientsite eShopclientsite) {
+        this.eShopclientsite = eShopclientsite;
         this.setTitle("Registrieren");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(400, 500);
@@ -107,12 +105,12 @@ public class RegistrierenKundeGUI extends JFrame {
 
                 try {
                 // Hier wird die Methode addKunde aufgerufen
-                eShop.addKunde(vorname, nachname, email, username, passwort, ort, Integer.parseInt(plz), strasse, Integer.parseInt(strassenNummer));
+                eShopclientsite.addKunde(vorname, nachname, email, username, passwort, ort, Integer.parseInt(plz), strasse, Integer.parseInt(strassenNummer));
                 JOptionPane.showMessageDialog(null, "Registrierung erfolgreich!");
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new LoginKundeGUI(eShop);
+                        new LoginKundeGUI(eShopclientsite);
                     }
                 });
                 this.dispose();
@@ -125,7 +123,7 @@ public class RegistrierenKundeGUI extends JFrame {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new LoginKundeGUI(eShop);
+                    new LoginKundeGUI(eShopclientsite);
                 }
             });
             this.dispose();

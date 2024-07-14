@@ -2,13 +2,8 @@ package eshop.client.clientServerVerbindung;
 
 import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
-import eshop.server.serverClientVerbindung.Server;
 
-import javax.swing.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.net.*;
 import java.io.*;
 
@@ -106,11 +101,11 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "505":
+                case "ERROR 505":
                     throw new DoppelteIdException(mitarbeiter.getId());
-                case "606":
+                case "ERROR 606":
                     throw new MinusZahlException();
-                case "707":
+                case "ERROR 707":
                     throw new KeinMassengutException(artikel.getArtikelbestand());
             }
             //TODO: Fehler abfangen
@@ -131,11 +126,11 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "606":
+                case "ERROR 606":
                     throw new DoppelteIdException(mitarbeiter.getId());
-                case "707":
+                case "ERROR 707":
                     throw new MinusZahlException();
-                case "808":
+                case "ERROR 808":
                     throw new KeinMassengutException(massengutArtikel.getAnzahlMassengut());
             }
             //TODO: Fehler abfangen
@@ -145,8 +140,48 @@ public class Eshopclientsite {
     }
 
     public List<Ereignis> getEreignisListe() {
-        return ereignisManagement.getEreignisse();
+        List<Ereignis> ereignisListe = new ArrayList<Ereignis>();
+        Person kundeOderMitarbeiter;
+        out.println("getEreignisListe");
+        try {
+            int listengröße = Integer.parseInt(in.readLine());
+            for(int i = 0; i < listengröße; i++) {
+                Date datum = new Date(in.readLine());
+                String artikelbezeichnung = in.readLine();
+                int anzahl = Integer.parseInt(in.readLine());
+                String kOderM = in.readLine();
+                if(kOderM.equals("m")){
+                    int id = Integer.parseInt(in.readLine());
+                    String vorname = in.readLine();
+                    String nachname = in.readLine();
+                    String email = in.readLine();
+                    String username = in.readLine();
+                    String passwort = in.readLine();
+                    kundeOderMitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
+                } else{
+                    int id = Integer.parseInt(in.readLine());
+                    String vorname = in.readLine();
+                    String nachname = in.readLine();
+                    String email = in.readLine();
+                    String username = in.readLine();
+                    String passwort = in.readLine();
+                    String ort = in.readLine();
+                    int plz = Integer.parseInt(in.readLine());
+                    String strasse = in.readLine();
+                    int strassenNummer = Integer.parseInt(in.readLine());
+                    kundeOderMitarbeiter = new Kunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
+                }
+                Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(in.readLine());
+                Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, kundeOderMitarbeiter, typ);
+                ereignisListe.add(ereignis);
+            }
+            return ereignisListe;
+        } catch (IOException e) {
+            System.out.println("Fehler beim lesen der Ereignisliste = " + e);
+        }
+        return null;
     }
+
 
     public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException, IdNichtVorhandenException {
         out.println("addMitarbeiter");
@@ -159,20 +194,19 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "505":
+                case "ERROR 505":
                     //throw new DoppelteIdException();
-                case "606":
+                case "ERROR 606":
                     throw new UsernameExistiertException(username);
-                case "707":
+                case "ERROR 707":
                     throw new EmailExistiertException(email);
-                case "808":
+                case "ERROR 808":
                     throw new IdNichtVorhandenException(mitarbeiter.getId());
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = addMitarbeiter" + e);
         }
-
     }
 
     public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
@@ -190,11 +224,11 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "505":
+                case "ERROR 505":
                     //throw new DoppelteIdException();
-                case "606":
+                case "ERROR 606":
                     throw new UsernameExistiertException(username);
-                case "707":
+                case "ERROR 707":
                     throw new EmailExistiertException(email);
             }
             //TODO: Fehler abfangen
@@ -221,7 +255,7 @@ public class Eshopclientsite {
 
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "404":
+                case "ERROR 404":
                     throw new LoginException();
             }
             //TODO: Fehler abfangen
@@ -255,7 +289,7 @@ public class Eshopclientsite {
 
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "404":
+                case "ERROR 404":
                     throw new LoginException();
             }
             //TODO: Fehler abfangen
@@ -269,7 +303,29 @@ public class Eshopclientsite {
     }
 
     public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
-        return artikelManagement.gibArtikelPerId(artikelnummer);
+       out.println("sucheArtikelMitNummer");
+       out.println(artikelnummer);
+
+        try{
+            int nummer = Integer.parseInt(in.readLine());
+            String bezeichnung = in.readLine();
+            int bestand = Integer.parseInt(in.readLine());
+            double preis = Double.parseDouble(in.readLine());
+            Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
+
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 404":
+                    throw new IdNichtVorhandenException(artikelnummer);
+
+            }
+            //TODO: Fehler abfangen
+            return artikel;
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
+        }
+        //TODO: Return Statement
+        return null;
     }
 
     public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
@@ -281,7 +337,7 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "404":
+                case "ERROR 404":
                     throw new IdNichtVorhandenException(mitarbeiter.getId());
             }
             //TODO: Fehler abfangen
@@ -298,11 +354,11 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case "505":
+                case "ERROR 505":
                     throw new IdNichtVorhandenException(mitarbeiter.getId());
-                case "606":
+                case "ERROR 606":
                     throw new KeinMassengutException(neuerBestand);
-                case "707":
+                case "ERROR 707":
                     throw new MinusZahlException();
             }
             //TODO: Fehler abfangen
@@ -315,15 +371,28 @@ public class Eshopclientsite {
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
     public void artikelInWarenkorbHinzufügen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
-        if (kunde instanceof Kunde k) {
-            Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
-            if (artikel != null) {
-                warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
+        out.println("artikelInWarenkorbHinzufügen");
+        out.println(kunde.getId());
+        out.println(artikelnummer);
+        out.println(menge);
+
+        try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 606":
+                    throw new IdNichtVorhandenException(kunde.getId());
+                case "ERROR 404":
+                    throw new MinusZahlException();
+                case "ERROR 505":
+                    throw new KeinMassengutException(menge);
             }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
         }
     }
 
-
+    //TODO: SIMON
     public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException {
         if (kunde instanceof Kunde k) {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
@@ -333,33 +402,33 @@ public class Eshopclientsite {
         }
     }
 
-/*
-    public String printWarenkorbArtikel(Person kunde) throws IstLeerException {
-        if (kunde instanceof Kunde k) {
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            return wk.toString();
-        }
-        return "Person ist kein Kunde";
-    }
-
- */
-
-
+    //TODO: Siomon hilfe gesamtPreis: Soll noch den Preis vom Warenkorb returnen
     public double gesamtPreis(Person kunde) throws IstLeerException {
-        if (kunde instanceof Kunde k) {
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            return wk.gesamtPreis();
+        out.println("gesamtPreis");
+        out.println(kunde.getId());
+
+        try{
+
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 505":
+                    throw new IstLeerException();
+            }
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
         }
-        return -1.0;
+        return 0.0;
     }
 
 
     public void warenkorbLeeren(Person kunde) {
-        if (kunde instanceof Kunde k) {
-            warenkorbManagement.warenkorbLeeren(k);
-        }
+        out.println("warenkorbLeeren");
+        out.println(kunde.getId());
+
     }
 
+    //TODO SIMON
     public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
         Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
         artikelManagement.bestandAbbuchen(wk);
@@ -379,19 +448,10 @@ public class Eshopclientsite {
 
 
     public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {
-        if (kunde instanceof Kunde k) {
-            int aktuellerBestand = artikel.getArtikelbestand();
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-
-            // Überprüfen, ob der Artikel ein Massengutartikel ist
-
-            wk.bestandImWarenkorbAendern(artikel, menge);
-            int neuerBestand = artikel.getArtikelbestand();
-
-            if (menge > aktuellerBestand) {
-                throw new BestandNichtAusreichendException(artikel, neuerBestand);
-            }
-        }
+        out.println("bestandImWarenkorbAendern");
+        out.println(kunde.getId());
+        out.println(artikel.getArtikelnummer());
+        out.println(menge);
     }
 
 

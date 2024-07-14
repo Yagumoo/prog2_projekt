@@ -1,7 +1,6 @@
 package eshop.client.starten;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
-import eshop.server.domain.E_Shop;
 import eshop.client.gui.KundenFenster.LoginKundeGUI;
 import eshop.client.gui.MitarbeiterFenster.LoginMitarbeiterGUI;
 
@@ -10,10 +9,10 @@ import javax.swing.ImageIcon;
 import java.awt.*;
 
 public class LoginOptionenGUI extends JFrame{
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
 
     public LoginOptionenGUI(Eshopclientsite eShop) {
-        this.eShop = eShop;
+        this.eShopclientsite = eShop;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 160);
@@ -46,7 +45,7 @@ public class LoginOptionenGUI extends JFrame{
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new LoginKundeGUI(eShop);
+                    new LoginKundeGUI(eShopclientsite);
                 }
             });
             this.dispose();
@@ -57,7 +56,7 @@ public class LoginOptionenGUI extends JFrame{
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new LoginMitarbeiterGUI(eShop);
+                    new LoginMitarbeiterGUI(eShopclientsite);
                 }
             });
             this.dispose();

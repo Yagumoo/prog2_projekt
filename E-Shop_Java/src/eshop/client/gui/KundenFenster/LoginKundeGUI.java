@@ -2,7 +2,6 @@ package eshop.client.gui.KundenFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Kunde;
 
 import eshop.common.exceptions.LoginException;
@@ -12,11 +11,11 @@ import java.awt.*;
 
 public class LoginKundeGUI extends JFrame {
 
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
     private Kunde eingeloggteKunde = null;
 
-    public LoginKundeGUI(Eshopclientsite eShop) {
-        this.eShop = eShop;
+    public LoginKundeGUI(Eshopclientsite eShopclientsite) {
+        this.eShopclientsite = eShopclientsite;
         this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(420, 160);
@@ -78,12 +77,12 @@ public class LoginKundeGUI extends JFrame {
             try {
                 String usernameOrEmail = usernameOrEmailTextfeld.getText();
                 char[] password = passwortTextfeld.getPassword();
-                eingeloggteKunde = eShop.loginKunde(usernameOrEmail, new String(password));
+                eingeloggteKunde = eShopclientsite.loginKunde(usernameOrEmail, new String(password));
                 // Zeige die Kundenansicht an
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new KundenTabs(eShop, eingeloggteKunde);
+                        new KundenTabs(eShopclientsite, eingeloggteKunde);
                     }
                 });
                 // Schließe das Login-Fenster
@@ -100,7 +99,7 @@ public class LoginKundeGUI extends JFrame {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new RegistrierenKundeGUI(eShop);
+                    new RegistrierenKundeGUI(eShopclientsite);
                 }
             }); // Zeigt das Registrierungsfenster an
             this.dispose(); // Schließt das Login-Fenster
@@ -110,7 +109,7 @@ public class LoginKundeGUI extends JFrame {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    new LoginOptionenGUI(eShop);
+                    new LoginOptionenGUI(eShopclientsite);
                 }
             });
             this.dispose();

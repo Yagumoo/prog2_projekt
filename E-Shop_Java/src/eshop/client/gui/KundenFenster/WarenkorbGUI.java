@@ -6,23 +6,21 @@ import eshop.common.enitities.Artikel;
 import eshop.common.enitities.Kunde;
 import eshop.common.enitities.Rechnung;
 import eshop.common.exceptions.*;
-import eshop.server.domain.E_Shop;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Date;
 import java.util.Map;
 
 public class WarenkorbGUI extends JPanel {
 
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
     private JTable artikelTabelle;
     private Kunde eingelogterKunde;
     private DefaultTableModel tableModel;
 
-    public WarenkorbGUI(Eshopclientsite eShop, Kunde eingelogterKunde) {
-        this.eShop = eShop;
+    public WarenkorbGUI(Eshopclientsite eShopclientsite, Kunde eingelogterKunde) {
+        this.eShopclientsite = eShopclientsite;
         this.eingelogterKunde = eingelogterKunde;
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(123, 50, 250));
@@ -115,14 +113,14 @@ public class WarenkorbGUI extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingelogterKunde = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             this.setVisible(false); // Schließt das aktuelle Fenster
             SwingUtilities.getWindowAncestor(this).dispose();
         });
 
         //Warenkorb leeren
         entfernenButton.addActionListener(e -> {
-            eShop.warenkorbLeeren(eingelogterKunde);
+            eShopclientsite.warenkorbLeeren(eingelogterKunde);
             updateTabelle();
         });
 
@@ -133,11 +131,11 @@ public class WarenkorbGUI extends JPanel {
                 String mengeText = mengenFeld.getText();
 
                 int nummer = Integer.parseInt(artikelnummerText);
-                Artikel artikel = eShop.sucheArtikelMitNummer(nummer);
+                Artikel artikel = eShopclientsite.sucheArtikelMitNummer(nummer);
 
                 int bestand = Integer.parseInt(mengeText);
 
-                eShop.bestandImWarenkorbAendern(eingelogterKunde, artikel, bestand);
+                eShopclientsite.bestandImWarenkorbAendern(eingelogterKunde, artikel, bestand);
                 updateTabelle();
             } catch (IdNichtVorhandenException | MinusZahlException | IstLeerException | KeinMassengutException |
                      BestandNichtAusreichendException ex) {
@@ -148,8 +146,8 @@ public class WarenkorbGUI extends JPanel {
 
         kaufButton.addActionListener(e -> {
             try {
-                double gesamtRechnungspreis = eShop.gesamtPreis(eingelogterKunde);
-                Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingelogterKunde);
+                double gesamtRechnungspreis = eShopclientsite.gesamtPreis(eingelogterKunde);
+                Rechnung rechnung = eShopclientsite.warenkorbKaufen((Kunde) eingelogterKunde);
                 zeigeRechnungPopup(rechnung.getKunde(), rechnung, gesamtRechnungspreis);
             } catch (BestandNichtAusreichendException | IstLeerException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
@@ -172,7 +170,7 @@ public class WarenkorbGUI extends JPanel {
             tableModel.addRow(kundenDaten);
 
             // Artikelinformationen abrufen
-            Map<Artikel, Integer> artikelMap = eShop.gibWarenkorbArtikel(eingelogterKunde);
+            Map<Artikel, Integer> artikelMap = eShopclientsite.gibWarenkorbArtikel(eingelogterKunde);
             for (Map.Entry<Artikel, Integer> eintrag : artikelMap.entrySet()) {
                 Artikel artikel = eintrag.getKey();
                 int menge = eintrag.getValue();
@@ -187,7 +185,7 @@ public class WarenkorbGUI extends JPanel {
             }
 
             // Gesamtpreis hinzufügen
-            double gesamtPreis = eShop.gesamtPreis(eingelogterKunde);
+            double gesamtPreis = eShopclientsite.gesamtPreis(eingelogterKunde);
             Object[] gesamtPreisDaten = {
                     "Gesamtpreis",
                     gesamtPreis

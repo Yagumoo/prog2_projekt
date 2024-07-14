@@ -6,7 +6,6 @@ import eshop.common.exceptions.DoppelteIdException;
 import eshop.common.exceptions.EmailExistiertException;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.UsernameExistiertException;
-import eshop.server.domain.E_Shop;
 import eshop.common.enitities.Mitarbeiter;
 
 
@@ -17,13 +16,13 @@ import java.util.Map;
 
 public class MitarbeiterRegistrieren extends JPanel {
 
-    private final Eshopclientsite eShop;
+    private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable mitarbeiterTabelle;
     private DefaultTableModel tableModel;
 
-    public MitarbeiterRegistrieren(Eshopclientsite eShop, Mitarbeiter eingeloggterMitarbeiter) {
-        this.eShop = eShop;
+    public MitarbeiterRegistrieren(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
+        this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
@@ -142,7 +141,7 @@ public class MitarbeiterRegistrieren extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingeloggterMitarbeiter = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             // Close the current window
             SwingUtilities.getWindowAncestor(this).dispose();
         });
@@ -155,7 +154,7 @@ public class MitarbeiterRegistrieren extends JPanel {
                 String Username = usernameFeld.getText();
                 String Passwort = passwortFeld.getText();
 
-                eShop.addMitarbeiter(eingeloggterMitarbeiter, Vorname, Nachname, Email, Username, Passwort);
+                eShopclientsite.addMitarbeiter(eingeloggterMitarbeiter, Vorname, Nachname, Email, Username, Passwort);
 
                 updateTabelle();
 
@@ -168,7 +167,7 @@ public class MitarbeiterRegistrieren extends JPanel {
 
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Mitarbeiter> artikelMap = eShop.gibAlleMitarbeiter();
+        Map<Integer, Mitarbeiter> artikelMap = eShopclientsite.gibAlleMitarbeiter();
         for (Map.Entry<Integer, Mitarbeiter> eintrag : artikelMap.entrySet()) {
             Mitarbeiter mitarbeiter = eintrag.getValue();
             if (mitarbeiter != null) {

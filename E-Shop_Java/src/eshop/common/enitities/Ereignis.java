@@ -66,6 +66,12 @@ public class Ereignis {
         return sdf.format(datum);
     }
 
+    public Ereignis ereignisSpeicher(Date datum, String artikelbezeichnung, int anzahl, String nachname, int id){
+        Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl,kundeOderMitarbeiter,typ);
+        return ereignis;
+
+    }
+
     @Override
     public String toString() {
         return "Datum: " + simpleDatum() +
@@ -73,11 +79,5 @@ public class Ereignis {
                 ", Anzahl: " + anzahl +
                 ", Person: " + kundeOderMitarbeiter +
                 ", Typ: " + typ;
-    }
-
-    public Ereignis ereignisSpeicher(Date datum, String artikelbezeichnung, int anzahl, String nachname, int id){
-        Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl,kundeOderMitarbeiter,typ);
-        return ereignis;
-
     }
 }

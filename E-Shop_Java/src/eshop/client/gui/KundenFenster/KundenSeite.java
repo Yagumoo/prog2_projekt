@@ -2,7 +2,6 @@ package eshop.client.gui.KundenFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.server.domain.E_Shop;
 import eshop.common.exceptions.BestandNichtAusreichendException;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.KeinMassengutException;
@@ -18,13 +17,13 @@ import java.util.Map;
 
 public class KundenSeite extends JPanel {
 
-    private Eshopclientsite eShop;
+    private Eshopclientsite eShopclientsite;
     private JTable artikelTabelle;
     private Kunde eingelogterKunde;
     private DefaultTableModel tableModel;
 
-    public KundenSeite(Eshopclientsite eShop, Kunde eingelogterKunde) {
-        this.eShop = eShop;
+    public KundenSeite(Eshopclientsite eShopclientsite, Kunde eingelogterKunde) {
+        this.eShopclientsite = eShopclientsite;
         this.eingelogterKunde = eingelogterKunde;
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(123, 50, 250));
@@ -124,7 +123,7 @@ public class KundenSeite extends JPanel {
 
         logoutButton.addActionListener(e -> {
             eingelogterKunde = null;
-            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShop));
+            SwingUtilities.invokeLater(() -> new LoginOptionenGUI(eShopclientsite));
             //this.setVisible(false); // Schließt das aktuelle Fenster
             SwingUtilities.getWindowAncestor(this).dispose();
         });
@@ -137,7 +136,7 @@ public class KundenSeite extends JPanel {
                 int nummer = Integer.parseInt(nummerText);
                 int bestand = Integer.parseInt(bestandText);
 
-                eShop.artikelInWarenkorbHinzufügen(eingelogterKunde, nummer, bestand);
+                eShopclientsite.artikelInWarenkorbHinzufügen(eingelogterKunde, nummer, bestand);
                 updateTabelle();  // Tabelle aktualisieren
 
             } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException ex) {
@@ -148,7 +147,7 @@ public class KundenSeite extends JPanel {
         });
 
         entfernenButton.addActionListener(e -> {
-            eShop.warenkorbLeeren(eingelogterKunde);
+            eShopclientsite.warenkorbLeeren(eingelogterKunde);
             updateTabelle();  // Tabelle aktualisieren
         });
 
@@ -167,7 +166,7 @@ public class KundenSeite extends JPanel {
     //Artikelliste asugeben lassen
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         for (Map.Entry<Integer, Artikel> eintrag : artikelMap.entrySet()) {
             Artikel artikel = eintrag.getValue();
             if (artikel instanceof MassengutArtikel massengutArtikel) {
@@ -191,7 +190,7 @@ public class KundenSeite extends JPanel {
 
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(eintrag -> {
@@ -217,7 +216,7 @@ public class KundenSeite extends JPanel {
 
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
-        Map<Integer, Artikel> artikelMap = eShop.gibAlleArtikel();
+        Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
         artikelMap.entrySet().stream()
                 .sorted((a1, a2) -> a1.getValue().getArtikelbezeichnung().compareTo(a2.getValue().getArtikelbezeichnung()))
                 .forEach(eintrag -> {
