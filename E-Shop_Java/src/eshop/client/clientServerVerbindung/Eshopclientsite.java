@@ -61,6 +61,7 @@ public class Eshopclientsite {
         } catch (IOException e){
             System.err.println("Error beim lesen vom Server bei = gibAlleMassengutartikel" + e);
         }
+
         return alleArtikel;
     }
 
@@ -377,6 +378,8 @@ public class Eshopclientsite {
         out.println(menge);
 
         try{
+
+
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 606":
@@ -394,20 +397,23 @@ public class Eshopclientsite {
 
     //TODO: SIMON
     public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException {
-        if (kunde instanceof Kunde k) {
-            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-            return wk.getWarenkorbMap();
-        } else {
-            throw new IstLeerException();
-        }
-    }
-
-    //TODO: Siomon hilfe gesamtPreis: Soll noch den Preis vom Warenkorb returnen
-    public double gesamtPreis(Person kunde) throws IstLeerException {
-        out.println("gesamtPreis");
+        Map<Artikel, Integer> artikelInWarenkorb = new HashMap<Artikel, Integer >();
+        out.println("gibWarenkorbArtikel");
         out.println(kunde.getId());
 
         try{
+            int warenkorbInhalt = Integer.parseInt(in.readLine());
+            for (int i = 0; i < warenkorbInhalt; i++) {
+
+                int mengeVonArtikelnImWarenkorb = Integer.parseInt(in.readLine());
+                int artikelnummer = Integer.parseInt(in.readLine());
+                String artikelbezeichnung = in.readLine();
+                int artikelbestand = Integer.parseInt(in.readLine());
+                double artikelpreis = Double.parseDouble(in.readLine());
+                Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelpreis);
+                artikelInWarenkorb.put(artikel, mengeVonArtikelnImWarenkorb);
+            }
+
 
             String rückfrage = in.readLine();
             switch (rückfrage) {
@@ -415,10 +421,31 @@ public class Eshopclientsite {
                     throw new IstLeerException();
             }
             //TODO: Fehler abfangen
+            return artikelInWarenkorb;
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
         }
-        return 0.0;
+        return null;
+    }
+
+
+    public double gesamtPreis(Person kunde) throws IstLeerException {
+        out.println("gesamtPreis");
+        out.println(kunde.getId());
+
+        try{
+            double gesamtPreis = Double.parseDouble(in.readLine());
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 505":
+                    throw new IstLeerException();
+            }
+            return gesamtPreis;
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
+        }
+        return -1.0;
     }
 
 
@@ -428,22 +455,36 @@ public class Eshopclientsite {
 
     }
 
-    //TODO SIMON
+    //TODO Marvin
     public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
-        Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
-        artikelManagement.bestandAbbuchen(wk);
+        out.print("warenkorbKaufen");
+        out.println(kunde.getId());
 
-        for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
-            Artikel artikel = entry.getKey();
-            int menge = entry.getValue();
-            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunde, Ereignis.EreignisTyp.KAUF);
-            ereignisManagement.addEreignis(neuesEreignis);
+        try{
+            Warenkorb warenkorb = new Warenkorb();
+            int warenkorbInhalt = Integer.parseInt(in.readLine());
+            for (int i = 0; i < warenkorbInhalt; i++) {
+                int menge = Integer.parseInt(in.readLine());
+                int artikelnummer = Integer.parseInt(in.readLine());
+                String artikelbezeichnung = in.readLine();
+                int artikelbestand = Integer.parseInt(in.readLine());
+                double artikelpreis = Double.parseDouble(in.readLine());
+                Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand ,artikelpreis);
+                warenkorb.artikelHinzufuegen(artikel, menge);
+            }
+
+            Rechnung rechnung = new Rechnung(warenkorb, kunde);
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 606":
+                    throw new IstLeerException();
+            }
+            return rechnung;
+            //TODO: Fehler abfangen
+        } catch (IOException e){
+            System.err.println("Fehler beim lesen vom Server = addArtikel" + e);
         }
-
-        Rechnung rechnung = new Rechnung(wk, kunde);
-        warenkorbLeeren(kunde);
-
-        return rechnung;
+        return null;
     }
 
 
@@ -454,11 +495,13 @@ public class Eshopclientsite {
         out.println(menge);
     }
 
-
+/*
     public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel) throws ArtikelExisitiertNichtException, IdNichtVorhandenException {
         if(kunde instanceof Kunde k){
             warenkorbManagement.entferneArtikelAusWarenkorb(k, artikel);
         }
     }
+
+ */
 
 }

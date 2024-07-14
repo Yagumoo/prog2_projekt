@@ -53,14 +53,11 @@ public class ClientRequestProcessor extends Thread {
 
             switch (input) {
                 case "gibAlleArtikel":
-                    Map<Integer, Artikel> alleArtikel = eShop.gibAlleArtikel();
-                    gibAlleArtikel(alleArtikel);
+                    gibAlleArtikel();
                 case "gibAlleMassengutartikel":
-                    Map<Integer, Artikel> alleMassengutartikel = eShop.gibAlleArtikel();
-                    gibAlleMassengutartikel(alleMassengutartikel);
+                    gibAlleMassengutartikel();
                 case "gibAlleMitarbeiter":
-                    Map<Integer, Mitarbeiter> alleMitarbeiter = eShop.gibAlleMitarbeiter();
-                    gibAlleMitarbeiter(alleMitarbeiter);
+                    gibAlleMitarbeiter();
                 case "addArtikel":
                     addArtikel();
                 case "addMassengutartikel":
@@ -78,15 +75,13 @@ public class ClientRequestProcessor extends Thread {
                 case "loescheArtikel":
                     loescheArtikel();
                 case "getEreignisListe":
-                    List<Ereignis> ereignisListe = eShop.getEreignisListe();
-                    getEreignisListe(ereignisListe);
+                    getEreignisListe();
                 case "sucheArtikelMitNummer":
                     sucheArtikelMitNummer();
                 case "artikelInWarenkorbHinzufügen":
                     artikelInWarenkorbHinzufügen();
                 case "gibWarenkorbArtikel":
-                    Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
-                    gibWarenkorbArtikel(gibWarenkorbAusArtikel);
+                    gibWarenkorbArtikel();
                 case "gesamtPreis":
                     gesamtPreis();
                 case "warenkorbLeeren":
@@ -95,8 +90,6 @@ public class ClientRequestProcessor extends Thread {
                     warenkorbKaufen();
                 case "bestandImWarenkorbAendern":
                     bestandImWarenkorbAendern();
-                case "artikelImWarenkorbEntfernen":
-                    artikelImWarenkorbEntfernen();
                 default:
             }
 
@@ -107,7 +100,8 @@ public class ClientRequestProcessor extends Thread {
      * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
      * @Param Artikel Holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
      * */
-    private void gibAlleArtikel(Map<Integer, Artikel> alleArtikel){
+    private void gibAlleArtikel(){
+        Map<Integer, Artikel> alleArtikel = eShop.gibAlleArtikel();
         Map<Integer, Artikel> onlyAlleArtikel = new HashMap<Integer, Artikel>();
         for(Map.Entry<Integer, Artikel> entry : alleArtikel.entrySet()) {
             if(entry.getValue() instanceof Artikel) {
@@ -121,6 +115,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelbestand());
             out.println(entry.getValue().getArtikelPreis());
         }
+        out.println("Erfolgreich: gibAlleArtikel()");
     }
 
     /**
@@ -128,9 +123,10 @@ public class ClientRequestProcessor extends Thread {
      * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
      * @Param Artikel holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
      * */
-    private void gibAlleMassengutartikel(Map<Integer, Artikel> alleArtikel){
+    private void gibAlleMassengutartikel(){
+        Map<Integer, Artikel> alleMassengutartikel = eShop.gibAlleArtikel();
         Map<Integer, MassengutArtikel> onlyAlleMassengutArtikel = new HashMap<Integer, MassengutArtikel>();
-        for(Map.Entry<Integer, Artikel> entry : alleArtikel.entrySet()) {
+        for(Map.Entry<Integer, Artikel> entry : alleMassengutartikel.entrySet()) {
             if(entry.getValue() instanceof MassengutArtikel) {
                 onlyAlleMassengutArtikel.put(entry.getKey(), (MassengutArtikel) entry.getValue());
             }
@@ -143,6 +139,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelPreis());
             out.println(((MassengutArtikel) entry.getValue()).getAnzahlMassengut());
         }
+        out.println("Erfolgreich: gibAlleMassengutartikel()");
     }
 
     /**
@@ -157,9 +154,8 @@ public class ClientRequestProcessor extends Thread {
      * @Param out.println(entry.getValue().getUsername()); holt sich den Username aus der Map
      * @Param out.println(entry.getValue().getPassword()); holt sich das Passwort aus der Map
      * */
-    private void gibAlleMitarbeiter(Map<Integer, Mitarbeiter> alleMitarbeiter){
-        //TODO: brauche wir das hier?
-        //Map<Integer, Mitarbeiter> onlyAlleMitarbeiter = new HashMap<>();
+    private void gibAlleMitarbeiter(){
+        Map<Integer, Mitarbeiter> alleMitarbeiter = eShop.gibAlleMitarbeiter();
         for (Map.Entry<Integer, Mitarbeiter> entry : alleMitarbeiter.entrySet()) {
             out.println(entry.getValue().getId());
             out.println(entry.getValue().getVorname());
@@ -168,6 +164,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getUsername());
             out.println(entry.getValue().getPassword());
         }
+        out.println("Erfolgreich: gibAlleMitarbeiter()");
     }
 
     /**
@@ -194,19 +191,21 @@ public class ClientRequestProcessor extends Thread {
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             Artikel artikel = new Artikel(artikelNummer, artikelbezeichnung, artikelpreis, artikelbestand);
             eShop.addArtikel(mitarbeiter, artikel);
+            out.println("Erfolgreich: addArtikel()");
         } catch (IOException e) {
-            System.err.println("Error beim lesen vom Client bei = addArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
-            System.err.println("Error beim lesen vom Client bei = addArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
             out.println("ERROR 404");
         } catch (DoppelteIdException e){
-            System.err.println("Error beim lesen vom Client bei = addArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
             out.println("ERROR 505");
         } catch (MinusZahlException e){
-            System.err.println("Error beim lesen vom Client bei = addArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
             out.println("ERROR 606");
         } catch (KeinMassengutException e){
-            System.err.println("Error beim lesen vom Client bei = addArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
             out.println("ERROR 707");
         }
     }
@@ -223,20 +222,21 @@ public class ClientRequestProcessor extends Thread {
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             Artikel massengutArtikel = new MassengutArtikel(artikelNummer, artikelbezeichnung, artikelpreis, artikelbestand, artikelMassengut);
             eShop.addArtikel(mitarbeiter, massengutArtikel);
-
+            out.println("Erfolgreich: addMassengutartikel()");
         } catch (IOException e) {
-            System.err.println("Error beim lesen vom Client bei = addMassengutartikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
-            System.err.println("Error beim lesen vom Client bei = addMassengutartikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
             out.println("ERROR 505");
         } catch (DoppelteIdException e){
-            System.err.println("Error beim lesen vom Client bei = addMassengutartikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
             out.println("ERROR 606");
         } catch (MinusZahlException e){
-            System.err.println("Error beim lesen vom Client bei = addMassengutartikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
             out.println("ERROR 707");
         } catch (KeinMassengutException e){
-            System.err.println("Error beim lesen vom Client bei = addMassengutartikel" + e);
+            System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
             out.println("ERROR 808");
         }
     }
@@ -249,18 +249,18 @@ public class ClientRequestProcessor extends Thread {
             int neuerBestand = Integer.parseInt(in.readLine());
 
             eShop.aendereArtikelBestand(mitarbeiter, artikelnummer, neuerBestand);
-            out.println("aendereArtikelBestand war erfolgreich");
+            out.println("Erfolgreich: aendereArtikelBestand()");
         } catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand" + e);
-            out.println("ERROR 404");
+            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
+            out.println("ERROR 101");
         } catch(IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand" + e);
+            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
             out.println("ERROR 505");
         } catch(MinusZahlException e) {
-            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand" + e);
+            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
             out.println("ERROR 606");
         } catch(KeinMassengutException e) {
-            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand" + e);
+            System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
             out.println("ERROR 707");
         }
         //TODO: Fehler zurük zum client senden wie oben ^
@@ -280,16 +280,18 @@ public class ClientRequestProcessor extends Thread {
             int strassenNummer = Integer.parseInt(in.readLine());
 
             eShop.addKunde(vorname, nachname, email, username, password, ort, plz, strasse, strassenNummer);
+            out.println("Erfolgreich addKunde()");
         }catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
+            out.println("ERROR 101");
         } catch (DoppelteIdException e) {
-            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
             out.println("ERROR 505");
         } catch (UsernameExistiertException e) {
-            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
             out.println("ERROR 606");
         } catch (EmailExistiertException e) {
-            System.err.println("Error beim lesen vom Client bei = addKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
             out.println("ERROR 707");
         }
     }
@@ -305,19 +307,21 @@ public class ClientRequestProcessor extends Thread {
 
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             eShop.addMitarbeiter(mitarbeiter,vorname, nachname, email, username, password);
+            out.println("Erfolgreich addMitarbeiter()");
         }catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
+            out.println("ERROR 101");
         } catch (DoppelteIdException e) {
-            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
             out.println("ERROR 505");
         } catch (UsernameExistiertException e) {
-            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
             out.println("ERROR 606");
         } catch (EmailExistiertException e) {
-            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
             out.println("ERROR 707");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = addMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
             out.println("ERROR 808");
         }
     }
@@ -328,15 +332,18 @@ public class ClientRequestProcessor extends Thread {
             String password = in.readLine();
 
             Mitarbeiter mitarbeiter = eShop.loginMitarbeiter(usernameOrEmail, password);
+            out.println(mitarbeiter.getId());
             out.println(mitarbeiter.getVorname());
             out.println(mitarbeiter.getNachname());
             out.println(mitarbeiter.getEmail());
             out.println(mitarbeiter.getUsername());
             out.println(mitarbeiter.getPassword());
+            out.println("Erfolgreich loginMitarbeiter()");
         } catch (IOException e) {
-            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter()" + e);
+            out.println("ERROR 101");
         } catch (LoginException e) {
-            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter" + e);
+            System.err.println("Error beim lesen vom Client bei = loginMitarbeiter()" + e);
             out.println("ERROR 404");
         }
     }
@@ -347,6 +354,7 @@ public class ClientRequestProcessor extends Thread {
             String password = in.readLine();
 
             Kunde kunde = eShop.loginKunde(usernameOrEmail, password);
+            out.println(kunde.getId());
             out.println(kunde.getVorname());
             out.println(kunde.getNachname());
             out.println(kunde.getEmail());
@@ -356,10 +364,12 @@ public class ClientRequestProcessor extends Thread {
             out.println(kunde.getPlz());
             out.println(kunde.getStrasse());
             out.println(kunde.getStrassenNummer());
+            out.println("Erfolgreich loginKunde()");
         } catch (IOException e) {
-            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
+            out.println("ERROR 101");
         } catch (LoginException e) {
-            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
             out.println("ERROR 404");
         }
     }
@@ -377,10 +387,12 @@ public class ClientRequestProcessor extends Thread {
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             int artikelnummer = Integer.parseInt(in.readLine());
             eShop.loescheArtikel(mitarbeiter, artikelnummer);
+            out.println("Erfolgreich loescheArtikel()");
         }catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = loginKunde" + e);
+            System.err.println("Error beim lesen vom Client bei = loescheArtikel()" + e);
             out.println("ERROR 404");
         }
 
@@ -390,17 +402,18 @@ public class ClientRequestProcessor extends Thread {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
             eShop.sucheArtikelMitNummer(artikenummer);
+            out.println("Erfolgreich sucheArtikelMitNummer()");
         }catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 404");
         }
     }
 
-    private void getEreignisListe(List<Ereignis> ereignisListe) {
-        //return ereignisManagement.getEreignisse();
-        //Date datum, String artikelbezeichnung, int anzahl, Person kundeOderMitarbeiter, EreignisTyp typ
+    private void getEreignisListe() {
+        List<Ereignis> ereignisListe = eShop.getEreignisListe();
         out.println(ereignisListe.size());
         for(Ereignis ereignis :ereignisListe) {
             out.println(ereignis.getDatum());
@@ -437,6 +450,7 @@ public class ClientRequestProcessor extends Thread {
             }
             out.println(ereignis.getTyp());
         }
+        out.println("Erfolgreich getEreignisListe()");
     }
 
     private void artikelInWarenkorbHinzufügen(){
@@ -447,19 +461,20 @@ public class ClientRequestProcessor extends Thread {
             int menge = Integer.parseInt(in.readLine());
 
             eShop.artikelInWarenkorbHinzufügen(kunde, artikelnummer, menge);
-
+            out.println("Erfolgreich: artikelInWarenkorbHinzufügen()");
         } catch(IOException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
+            out.println("ERROR 101");
         } catch (BestandNichtAusreichendException e) {
             throw new RuntimeException(e);
         } catch (MinusZahlException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 404");
         } catch (KeinMassengutException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 505");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 606");
         }
     }
@@ -469,14 +484,17 @@ public class ClientRequestProcessor extends Thread {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
 
-            eShop.gesamtPreis(kunde);
+            double gesamtpreis = eShop.gesamtPreis(kunde);
+            out.println(gesamtpreis);
+            out.println("Erfolgreich: gesamtPreis()");
         } catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
             out.println("ERROR 404");
         } catch (IstLeerException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
             out.println("ERROR 505");
         }
     }
@@ -487,10 +505,12 @@ public class ClientRequestProcessor extends Thread {
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
 
             eShop.warenkorbLeeren(kunde);
+            out.println("Erfolgreich: warenkorbLeeren()");
         } catch (IOException e){
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
             out.println("ERROR 404");
         }
     }
@@ -505,24 +525,91 @@ public class ClientRequestProcessor extends Thread {
             int menge = Integer.parseInt(in.readLine());
 
             eShop.bestandImWarenkorbAendern(kunde, artikel, menge);
+            out.println("Erfolgreich: bestandImWarenkorbAendern()");
         } catch (IOException e) {
-
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
+            out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 404");
         } catch (BestandNichtAusreichendException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 505");
         } catch (IstLeerException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 606");
         } catch (KeinMassengutException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 707");
         } catch (MinusZahlException e) {
-            System.err.println("Error beim lesen vom Client bei = loescheArtikel" + e);
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 808");
+        }
+    }
+
+//    public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException {
+//    if (kunde instanceof Kunde k) {
+//        Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+//        return wk.getWarenkorbMap();
+//    } else {
+//        throw new IstLeerException();
+//    }
+    private void gibWarenkorbArtikel(){
+        //Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+            Map<Artikel, Integer> warenKorbInhalt = eShop.gibWarenkorbArtikel(kunde);
+            out.println(warenKorbInhalt.size());
+            for(Map.Entry<Artikel, Integer> entry: warenKorbInhalt.entrySet()) {
+                out.println(entry.getValue());
+                out.println(entry.getKey().getArtikelnummer());
+                out.println(entry.getKey().getArtikelbezeichnung());
+                out.println(entry.getKey().getArtikelbestand());
+                out.println(entry.getKey().getArtikelPreis());
+            }
+            out.println("Erfolgreich: gibWarenkorbArtikel()");
+        } catch (IOException  e) {
+            System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
+            out.println("ERROR 101");
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
+            out.println("ERROR 404");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
+            out.println("ERROR 505");
+        }
+
+    }
+    //public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
+    private void warenkorbKaufen(){
+        try {
+            int kundenID = Integer.parseInt(in.readLine());
+            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+
+            Rechnung rechnung = eShop.warenkorbKaufen(kunde);
+            Warenkorb warenkorb = rechnung.getWarenkorb();
+            out.println(warenkorb.getWarenkorbMap().size());
+            for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
+                out.println(entry.getValue());
+                out.println(entry.getKey().getArtikelnummer());
+                out.println(entry.getKey().getArtikelbezeichnung());
+                out.println(entry.getKey().getArtikelbestand());
+                out.println(entry.getKey().getArtikelPreis());
+            }
+            out.println("Erfolgreich: warenkorbKaufen()");
+        } catch (IOException e) {
+            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
+            out.println("ERROR 101");
+        } catch (IdNichtVorhandenException e) {
+            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
+            out.println("ERROR 404");
+        } catch (BestandNichtAusreichendException e) {
+            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
+            out.println("ERROR 505");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
+            out.println("ERROR 606");
         }
     }
 

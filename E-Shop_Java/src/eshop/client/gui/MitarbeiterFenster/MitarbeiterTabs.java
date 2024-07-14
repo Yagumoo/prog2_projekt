@@ -12,14 +12,16 @@ import java.awt.*;
 
 public class MitarbeiterTabs extends JFrame {
 
+    Eshopclientsite eShopclientsite;
     public MitarbeiterTabs(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggteMitarbeiter)  {
+        this.eShopclientsite = eShopclientsite;
         this.setTitle("E-Shop");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(820, 620);
         this.setLayout(new BorderLayout());
 
         JTabbedPane tabbedPane = new JTabbedPane();
-
+        
         // Erstellen und Hinzufügen der Tabs
         MitarbeiterSeite mitarbeiterSeite = new MitarbeiterSeite(eShopclientsite, eingeloggteMitarbeiter);
         ArtikelEntfernen artikelEntfernen = new ArtikelEntfernen(eShopclientsite, eingeloggteMitarbeiter);

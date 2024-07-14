@@ -60,7 +60,6 @@ public class MitarbeiterManagement {
     }
 
     public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
-
         // Überprüfung der Mitarbeiter-Anmeldeinformationen
         for (Map.Entry<Integer, Mitarbeiter> entry : mitarbeiterListe.entrySet()) {
             Mitarbeiter mitarbeiter = entry.getValue();
@@ -71,7 +70,6 @@ public class MitarbeiterManagement {
                 }
             }
         }
-
         throw new LoginException();
 
     }

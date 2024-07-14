@@ -67,7 +67,6 @@ public class LoginMitarbeiterGUI extends JFrame {
         this.add(zurückButton, gbc);
 
 
-
         // ActionListener für den Einloggen-Button
         loginButton.addActionListener(e -> {
             try {
@@ -106,6 +105,6 @@ public class LoginMitarbeiterGUI extends JFrame {
             System.err.println("Könnte Pfard nicht finden: " + "eshop/client/gui/Icon/Bock.png");
             return null;
         }
-    }
+        }
 
 }
