@@ -50,46 +50,65 @@ public class ClientRequestProcessor extends Thread {
                 System.err.println("Error beim lesen vom Client " + e);
                 break;
             }
-
+            //TODO: SIMONS KACK AUSGABEN Prüfen
             switch (input) {
                 case "gibAlleArtikel":
                     gibAlleArtikel();
+                    break;
                 case "gibAlleMassengutartikel":
                     gibAlleMassengutartikel();
+                    break;
                 case "gibAlleMitarbeiter":
                     gibAlleMitarbeiter();
+                    break;
                 case "addArtikel":
                     addArtikel();
+                    break;
                 case "addMassengutartikel":
                     addMassengutartikel();
+                    break;
                 case "aendereArtikelBestand":
                     aendereArtikelBestand();
+                    break;
                 case "addKunde":
                     addKunde();
+                    break;
                 case "addMitarbeiter":
                     addMitarbeiter();
+                    break;
                 case "loginMitarbeiter":
                     loginMitarbeiter();
+                    break;
                 case "loginKunde":
                     loginKunde();
+                    break;
                 case "loescheArtikel":
                     loescheArtikel();
+                    break;
                 case "getEreignisListe":
                     getEreignisListe();
+                    break;
                 case "sucheArtikelMitNummer":
                     sucheArtikelMitNummer();
+                    break;
                 case "artikelInWarenkorbHinzufügen":
                     artikelInWarenkorbHinzufügen();
+                    break;
                 case "gibWarenkorbArtikel":
                     gibWarenkorbArtikel();
+                    break;
                 case "gesamtPreis":
                     gesamtPreis();
+                    break;
                 case "warenkorbLeeren":
                     warenkorbLeeren();
+                    break;
                 case "warenkorbKaufen":
                     warenkorbKaufen();
+                    break;
                 case "bestandImWarenkorbAendern":
                     bestandImWarenkorbAendern();
+                    break;
                 default:
             }
 
@@ -115,7 +134,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelbestand());
             out.println(entry.getValue().getArtikelPreis());
         }
-        out.println("Erfolgreich: gibAlleArtikel()");
+        //out.println("Erfolgreich: gibAlleArtikel()");
     }
 
     /**
@@ -139,7 +158,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelPreis());
             out.println(((MassengutArtikel) entry.getValue()).getAnzahlMassengut());
         }
-        out.println("Erfolgreich: gibAlleMassengutartikel()");
+        //out.println("Erfolgreich: gibAlleMassengutartikel()");
     }
 
     /**
@@ -364,7 +383,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(kunde.getPlz());
             out.println(kunde.getStrasse());
             out.println(kunde.getStrassenNummer());
-            out.println("Erfolgreich loginKunde()");
+            out.println("Erfolgreich loginKunde()"); //TODO: BEIM AUSKOMMENTIEREN HÄNGT SICH DAS PROGRAMM AUF
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
             out.println("ERROR 101");
@@ -402,7 +421,7 @@ public class ClientRequestProcessor extends Thread {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
             eShop.sucheArtikelMitNummer(artikenummer);
-            out.println("Erfolgreich sucheArtikelMitNummer()");
+            //out.println("Erfolgreich sucheArtikelMitNummer()"); //TODO: WENN WEG HÄNGT AUF
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 101");
@@ -525,7 +544,7 @@ public class ClientRequestProcessor extends Thread {
             int menge = Integer.parseInt(in.readLine());
 
             eShop.bestandImWarenkorbAendern(kunde, artikel, menge);
-            out.println("Erfolgreich: bestandImWarenkorbAendern()");
+            //out.println("Erfolgreich: bestandImWarenkorbAendern()");
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 101");
@@ -568,7 +587,7 @@ public class ClientRequestProcessor extends Thread {
                 out.println(entry.getKey().getArtikelbestand());
                 out.println(entry.getKey().getArtikelPreis());
             }
-            out.println("Erfolgreich: gibWarenkorbArtikel()");
+            out.println("Erfolgreich: gibWarenkorbArtikel()"); //TODO: WENN NICHT DA, DANN KEINE KUNDENSEITE
         } catch (IOException  e) {
             System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
             out.println("ERROR 101");
@@ -582,7 +601,7 @@ public class ClientRequestProcessor extends Thread {
 
     }
     //public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
-    private void warenkorbKaufen(){
+    private void warenkorbKaufen(){ //TODO: HÄNGT SICH AUF
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
@@ -597,7 +616,7 @@ public class ClientRequestProcessor extends Thread {
                 out.println(entry.getKey().getArtikelbestand());
                 out.println(entry.getKey().getArtikelPreis());
             }
-            out.println("Erfolgreich: warenkorbKaufen()");
+            //out.println("Erfolgreich: warenkorbKaufen()");
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
             out.println("ERROR 101");

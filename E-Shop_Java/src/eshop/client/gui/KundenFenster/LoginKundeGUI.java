@@ -80,9 +80,11 @@ public class LoginKundeGUI extends JFrame {
                 eingeloggteKunde = eShopclientsite.loginKunde(usernameOrEmail, new String(password));
                 // Zeige die Kundenansicht an
                 SwingUtilities.invokeLater(new Runnable() {
+
                     @Override
                     public void run() {
-                        new KundenTabs(eShopclientsite, eingeloggteKunde);
+                        new KundenTabs(eShopclientsite, eingeloggteKunde).setVisible(true);
+
                     }
                 });
                 // Schließe das Login-Fenster

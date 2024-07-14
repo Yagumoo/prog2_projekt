@@ -65,6 +65,7 @@ public class Eshopclientsite {
         return alleArtikel;
     }
 
+
     public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
         Map<Integer, Mitarbeiter> alleMitarbeiter = new HashMap<Integer, Mitarbeiter>();
         out.println("gibAlleMitarbeiter");

@@ -75,7 +75,7 @@ public class LoginMitarbeiterGUI extends JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        new MitarbeiterTabs(eShopclientsite, eingeloggteMitarbeiter);
+                        new MitarbeiterTabs(eShopclientsite, eingeloggteMitarbeiter).setVisible(true);
                     }
                 });
                 this.dispose();
