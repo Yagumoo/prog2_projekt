@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ClientRequestProcessor extends Thread {
@@ -72,6 +73,27 @@ public class ClientRequestProcessor extends Thread {
                     loginKunde();
                 case "loescheArtikel":
                     loescheArtikel();
+                case"gibEreignis":
+                    List<Ereignis> ereignisList = eShop.getEreignisListe();
+                    gibEreignis(ereignisList);
+                case "sucheArtikelMitNummer":
+                    sucheArtikelMitNummer();
+                case "artikelInWarenkorbHinzufügen":
+                    artikelInWarenkorbHinzufügen();
+                case "gibWarenkorbArtikel":
+                    Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
+                    gibWarenkorbArtikel(gibWarenkorbAusArtikel);
+                case "gesamtPreis":
+                    gesamtPreis();
+                case "warenkorbLeeren":
+                    warenkorbLeeren();
+                case "warenkorbKaufen":
+                    warenkorbKaufen();
+                case "bestandImWarenkorbAendern":
+                    bestandImWarenkorbAendern();
+                case "artikelImWarenkorbEntfernen":
+                    artikelImWarenkorbEntfernen();
+                default:
             }
 
         } while (!input.equals("exit"));
@@ -318,4 +340,5 @@ public class ClientRequestProcessor extends Thread {
         }
 
     }
+    
 }
