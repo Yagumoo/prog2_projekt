@@ -151,3 +151,5 @@
 12-07-2024,Handy/Samsung S21 Ultra,1,KAUF,k,8
 13-07-2024,Wasser/Saskia,6,KAUF,k,8
 13-07-2024,Bier/Desperados,4,KAUF,k,8
+14-07-2024,Wasser/Saskia,6,KAUF,k,8
+14-07-2024,Energy/Monster,4,KAUF,k,8

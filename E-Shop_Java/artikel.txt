@@ -1,4 +1,4 @@
-1,Wasser/Saskia,2574,4.99,6
+1,Wasser/Saskia,2568,4.99,6
 2,Bier/Desperados,1896,11.99,4
 3,Elgato/Streamdeck,97,149.99,1
 4,Elgato/Facecam,97,149.99,1
@@ -19,4 +19,4 @@
 19,Papier,480,15.38,24
 20,Manga/ One Piece,49997,4.87,1
 21,Energy/RedBull Lila,8,4.99,4
-666,Energy/Monster,1976,2.99,4
+666,Energy/Monster,1972,2.99,4

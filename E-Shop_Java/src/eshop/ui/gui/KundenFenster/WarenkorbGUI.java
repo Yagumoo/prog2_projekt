@@ -3,14 +3,11 @@ package eshop.ui.gui.KundenFenster;
 import eshop.domain.E_Shop;
 import eshop.domain.exceptions.*;
 import eshop.enitities.*;
-import eshop.domain.*;
 import eshop.ui.gui.LoginOptionenGUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WarenkorbGUI extends JPanel {
@@ -206,40 +203,43 @@ public class WarenkorbGUI extends JPanel {
     }
 
     private void zeigeRechnungPopup(Kunde kunde,Rechnung rechnung, double gesamtRechnungspreis) {
-            // Erstellen Sie die Rechnungsdetails
-            StringBuilder rechnungsDetails = new StringBuilder();
-            rechnungsDetails.append("Rechnung\n");
-            rechnungsDetails.append("==============================\n");
-            rechnungsDetails.append("Kunde: ").append(kunde.getVorname()).append(" ").append(kunde.getNachname()).append("\n");
-            rechnungsDetails.append("Artikel\n");
+        // Erstellen Sie die Rechnungsdetails
+        StringBuilder rechnungsDetails = new StringBuilder();
+        rechnungsDetails.append("Rechnung\n");
+        rechnungsDetails.append("==============================\n");
+        rechnungsDetails.append("Kunde: ").append(kunde.getVorname()).append(" ").append(kunde.getNachname()).append("\n");
+        rechnungsDetails.append("Artikel\n");
 
-            // Holen Sie sich die Artikel und deren Menge direkt aus dem Warenkorb
-            Map<Artikel, Integer> artikelMap = rechnung.getWarenkorbKopie();
+        // Holen Sie sich die Artikel und deren Menge direkt aus dem Warenkorb
+        Map<Artikel, Integer> artikelMap = rechnung.getWarenkorbKopie();
 
-            if (artikelMap == null || artikelMap.isEmpty()) {
-                // Falls der Warenkorb leer ist, informieren wir den Nutzer
-                rechnungsDetails.append("Ihr Warenkorb ist leer.\n");
-            } else {
-                // Iteriere über die Artikel und deren Menge im Warenkorb
-                for (Map.Entry<Artikel, Integer> eintrag : artikelMap.entrySet()) {
-                    Artikel artikel = eintrag.getKey();
-                    int menge = eintrag.getValue();
-                    double preis = artikel.getArtikelPreis();
+        if (artikelMap == null || artikelMap.isEmpty()) {
+            // Falls der Warenkorb leer ist, informieren wir den Nutzer
+            rechnungsDetails.append("Ihr Warenkorb ist leer.\n");
+        } else {
+            // Iteriere über die Artikel und deren Menge im Warenkorb
+            for (Map.Entry<Artikel, Integer> eintrag : artikelMap.entrySet()) {
+                Artikel artikel = eintrag.getKey();
+                int menge = eintrag.getValue();
+                double preis = artikel.getArtikelPreis();
 
-                    rechnungsDetails.append(artikel.getArtikelbezeichnung())
-                            .append(" - Menge: ").append(menge)
-                            .append(" - Einzelpreis: ").append(preis)
-                            .append("\n");
-                }
-
-                // Gesamtpreis der Rechnung
-                rechnungsDetails.append("\nGesamtbetrag: ").append( gesamtRechnungspreis).append(" Euro\n");
+                rechnungsDetails.append(artikel.getArtikelbezeichnung())
+                        .append(" - Menge: ").append(menge)
+                        .append(" - Einzelpreis: ").append(preis)
+                        .append("\n");
             }
 
-            rechnungsDetails.append("==============================\n");
-            rechnungsDetails.append("Vielen Dank für Ihren Einkauf!");
-            // Zeigen Sie die Rechnung in einem Popup an
-            JOptionPane.showMessageDialog(this, rechnungsDetails.toString(), "Rechnung", JOptionPane.INFORMATION_MESSAGE);
+            // Gesamtpreis der Rechnung
+            rechnungsDetails.append("\nGesamtbetrag: ").append( gesamtRechnungspreis).append(" Euro\n");
+        }
+
+        rechnungsDetails.append("==============================\n");
+        rechnungsDetails.append("Datum: "+ rechnung.getDatum() +"\n");
+        //Date datumJetzt = new Date();
+        //rechnungsDetails.append(datumJetzt.getDay()+ "-"+datumJetzt.getMonth()+"-"+datumJetzt.getYear()+"\n");
+        rechnungsDetails.append("Vielen Dank für Ihren Einkauf!");
+        // Zeigen Sie die Rechnung in einem Popup an
+        JOptionPane.showMessageDialog(this, rechnungsDetails.toString(), "Rechnung", JOptionPane.INFORMATION_MESSAGE);
     }
 
 

@@ -4,6 +4,8 @@ import eshop.domain.WarenkorbManagement;
 import eshop.enitities.*;
 import eshop.domain.*;
 
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class Rechnung {
     private Kunde kunde;
     private WarenkorbManagement warenkorbManagement;
     private Map<Artikel, Integer> warenkorbKopie;
+    private LocalDate datumaktuel;
 
     /**
      * @param kunde ist das Kundenobjekt
@@ -25,19 +28,36 @@ public class Rechnung {
         this.kunde = kunde;
         this.warenkorbKopie = new HashMap<>();
         this.warenkorbKopie.putAll(warenkorb.getWarenkorbMap());
+        this.datumaktuel = LocalDate.now();
     }
+
 
     public Kunde getKunde(){
         return kunde;
     }
 
+
+    public String getDatum() {
+        return simpleDatum();
+    }
+
+
     public Warenkorb getWarenkorb() {
         return warenkorb;
     }
 
+
     public Map<Artikel, Integer> getWarenkorbKopie(){
         return warenkorbKopie;
     }
+
+
+    public String simpleDatum() {
+        // Formatierung des Datums und der Uhrzeit
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return datumaktuel.format(formatter);
+    }
+
 
     @Override
     public String toString() {
@@ -51,9 +71,11 @@ public class Rechnung {
             rechnung += "Bezeichnung: " + artikel.getArtikelbezeichnung() + " | ";
             rechnung += "Menge: " + menge + " | ";
             rechnung += "Preis: " + artikel.getArtikelPreis() + "\n";
+            rechnung += "Datum: " + getDatum() + "\n";
         }
 
         return rechnung;
     }
+
 
 }
