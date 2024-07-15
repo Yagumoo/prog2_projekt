@@ -7,10 +7,21 @@ import eshop.client.gui.MitarbeiterFenster.LoginMitarbeiterGUI;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
-
+/**
+ * GUI-Klasse für die Login-Optionen des E-Shop-Clients.
+ *
+ * <p>
+ * Diese Klasse zeigt die Login-Optionen für Kunden und Mitarbeiter an und ermöglicht es, das Programm zu beenden.
+ * </p>
+ */
 public class LoginOptionenGUI extends JFrame{
     private Eshopclientsite eShopclientsite;
 
+    /**
+     * Konstruktor für die LoginOptionenGUI.
+     *
+     * @param eShop Eshopclientsite-Instanz für die Kommunikation mit dem Server.
+     */
     public LoginOptionenGUI(Eshopclientsite eShop) {
         this.eShopclientsite = eShop;
         this.setTitle("Login");
@@ -26,6 +37,12 @@ public class LoginOptionenGUI extends JFrame{
         }
     }
 
+    /**
+     * Erstellt und zeigt die Login-Optionen für den Benutzer an.
+     * Es gibt drei Schaltflächen: eine für den Zugang als Kunde, eine für den Zugang als Mitarbeiter
+     * und eine zum Beenden der Anwendung. Bei einem Klick auf eine der Schaltflächen wird das
+     * aktuelle Fenster geschlossen und die entsprechende Login-GUI geöffnet.
+     */
     private void showLoginOptions() {
 
         JButton kundeButton = new JButton("Kunde");
@@ -64,6 +81,14 @@ public class LoginOptionenGUI extends JFrame{
 
     }
 
+    /**
+     * Lädt ein {@link ImageIcon} aus dem Ressourcenordner der Anwendung.
+     *
+     * Versucht, das Bild "Mann.png" aus dem Pfad "eshop/client/gui/Icon/" zu laden.
+     * Gibt ein {@link ImageIcon} zurück, das das Bild darstellt, oder `null`, wenn die Datei nicht gefunden wurde.
+     *
+     * @return Ein {@link ImageIcon} Objekt für das Bild, oder `null` bei Fehler.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Macker.png");
         if (imgURL != null) {

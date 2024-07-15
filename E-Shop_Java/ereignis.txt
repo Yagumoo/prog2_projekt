@@ -245,3 +245,7 @@
 2024-07-15,Polllack,90,ERHOEHUNG,m,1
 2024-07-15,Polllack,4,KAUF,k,9
 2024-07-15,Polllack,4,KAUF,k,12
+2024-07-15,Energy/Monster,60000,NEU,m,1
+2024-07-15,Energy/Monster Ultra Purple,60000,NEU,m,1
+2024-07-15,Wasser/Saskia,6,KAUF,k,9
+2024-07-15,Bier/Desperados,4,KAUF,k,9

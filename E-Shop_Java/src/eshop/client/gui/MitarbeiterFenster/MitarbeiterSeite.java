@@ -210,17 +210,17 @@ public class MitarbeiterSeite extends JPanel {
                 String Preis = preisFeld.getText();
                 String Paketgröße = paketgrößeFeld.getText();
 
-                if(ID.isEmpty() || Bezeichnung.isEmpty() || Menge.isEmpty() || Preis.isEmpty() || Paketgröße.isEmpty()){
+                if(ID.isEmpty() || Bezeichnung.isEmpty() || Menge.isEmpty() || Preis.isEmpty()){
                     throw new FalscheEingabeException();
                 }
 
                 int id = Integer.parseInt(ID);
                 int menge = Integer.parseInt(Menge);
                 double preis = Double.parseDouble(Preis);
-                int paketgröße = Integer.parseInt(Paketgröße);
+                //int paketgröße = Integer.parseInt(Paketgröße);
                 //TODO: gucken ob geht => (paketgröße != 1)
                 if (!Paketgröße.isEmpty() /*|| paketgröße != 1*/) {
-                    //int paketgröße = Integer.parseInt(Paketgröße);
+                    int paketgröße = Integer.parseInt(Paketgröße);
                     MassengutArtikel massengutArtikel = new MassengutArtikel(id, Bezeichnung, menge, preis, paketgröße);
                     eShopclientsite.addMassengutartikel(eingeloggterMitarbeiter, massengutArtikel);
                 } else {

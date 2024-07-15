@@ -12,7 +12,16 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Verarbeitet Anfragen von Clients in einem separaten Thread.
+ *
+ * Diese Klasse ist für die Kommunikation mit einem Client zuständig, indem sie Anfragen des Clients verarbeitet
+ * und Antworten zurücksendet. Sie verwendet einen `Socket`, um mit dem Client zu kommunizieren, und einen `E_Shop`,
+ * um auf die Geschäftslogik und Daten des Online-Shops zuzugreifen.
+ *
+ * Die Klasse erweitert `Thread`, um jede Client-Anfrage in einem eigenen Thread zu verarbeiten, sodass mehrere
+ * Clients gleichzeitig bedient werden können.
+ */
 public class ClientRequestProcessor extends Thread {
 
     private Socket clientSocket;
@@ -21,6 +30,16 @@ public class ClientRequestProcessor extends Thread {
     private PrintStream out;
     private BufferedReader in;
 
+    /**
+     * Erstellt einen neuen `ClientRequestProcessor`-Thread, der für die Verarbeitung von Anfragen eines Clients
+     * zuständig ist.
+     *
+     * Initialisiert die Socket-Verbindung zum Client und die Kommunikationsströme (Input/Output Streams) für den
+     * Datenaustausch.
+     *
+     * @param clientSocket Der Socket, der die Verbindung zwischen dem Client und dem Server repräsentiert.
+     * @param eShop Die Hauptklasse des Online-Shops, die Zugriff auf die Geschäftslogik und Daten bietet.
+     */
     public ClientRequestProcessor(Socket clientSocket, E_Shop eShop){
         this.clientSocket = clientSocket;
         this.eShop = eShop;
@@ -231,6 +250,31 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Liest die Daten eines Massengutartikels vom Client und fügt diesen Artikel zum Online-Shop hinzu.
+     *
+     * Diese Methode verarbeitet eine Client-Anfrage zum Hinzufügen eines neuen Massengutartikels. Sie liest die erforderlichen
+     * Informationen vom Client, erstellt ein `MassengutArtikel`-Objekt und fügt es mithilfe der `addArtikel`-Methode des `E_Shop`
+     * zur Artikelliste hinzu. Bei Fehlern werden entsprechende Fehlermeldungen an den Client gesendet.
+     *
+     * Der Ablauf umfasst das Einlesen der folgenden Daten:
+     * 1. Mitarbeiter-ID (zum Identifizieren des Mitarbeiters, der den Artikel hinzufügt)
+     * 2. Artikelnummer
+     * 3. Artikelbezeichnung
+     * 4. Artikelbestand
+     * 5. Artikelpreis
+     * 6. Anzahl der Massengut-Einheiten
+     *
+     * Die Methode überprüft auch mögliche Fehlerquellen und gibt Fehlermeldungen zurück, wenn beim Einlesen oder Verarbeiten der
+     * Daten ein Fehler auftritt.
+     *
+     * @throws IOException Wenn ein Fehler beim Lesen von Daten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn der angegebene Mitarbeiter nicht gefunden wird.
+     * @throws DoppelteIdException Wenn bereits ein Artikel mit der gleichen ID existiert.
+     * @throws MinusZahlException Wenn eine der übermittelten Zahlen negativ ist.
+     * @throws ArtikelnameDoppeltException Wenn bereits ein Artikel mit der gleichen Bezeichnung existiert.
+     * @throws KeinMassengutException Wenn die übergebene Anzahl für Massengutartikel nicht den Vorgaben entspricht.
+     */
     private void addMassengutartikel(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
@@ -265,6 +309,14 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Ändert den Lagerbestand eines Artikels basierend auf den eingegebenen Werten.
+     *
+     * @throws IOException                       wenn ein Fehler beim Lesen vom Client auftritt
+     * @throws IdNichtVorhandenException         wenn die eingegebene Mitarbeiter-ID nicht vorhanden ist
+     * @throws MinusZahlException                wenn der eingegebene Bestandswert negativ ist
+     * @throws KeinMassengutException            wenn der Artikel kein Massengut ist und der Bestandswert größer als 1 ist
+     */
     private void aendereArtikelBestand()  {
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
@@ -291,6 +343,14 @@ public class ClientRequestProcessor extends Thread {
 
     }
 
+    /**
+     * Fügt einen neuen Kunden hinzu, basierend auf den eingegebenen Werten.
+     *
+     * @throws IOException                   wenn ein Fehler beim Lesen vom Client auftritt
+     * @throws DoppelteIdException           wenn die eingegebene ID bereits existiert
+     * @throws UsernameExistiertException    wenn der eingegebene Benutzername bereits existiert
+     * @throws EmailExistiertException       wenn die eingegebene E-Mail-Adresse bereits existiert
+     */
     private void addKunde(){
         try {
             String vorname = in.readLine();
@@ -320,6 +380,15 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Fügt einen neuen Mitarbeiter zum eShop hinzu.
+     *
+     * @throws IOException                   Wenn ein Fehler beim Lesen vom Client auftritt.
+     * @throws DoppelteIdException           Wenn die Mitarbeiter-ID bereits existiert.
+     * @throws UsernameExistiertException    Wenn der Benutzername bereits existiert.
+     * @throws EmailExistiertException       Wenn die E-Mail-Adresse bereits existiert.
+     * @throws IdNichtVorhandenException     Wenn die Mitarbeiter-ID nicht gefunden wird.
+     */
     private void addMitarbeiter(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
@@ -350,6 +419,12 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Loggt einen Mitarbeiter in das System ein.
+     *
+     * @throws IOException falls ein Fehler beim Lesen vom Client auftritt
+     * @throws LoginException falls der Login fehlschlägt
+     */
     private void loginMitarbeiter()  {
         try {
             String usernameOrEmail = in.readLine();
@@ -372,6 +447,16 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Diese Methode ermöglicht es einem Kunden, sich mit seinem Benutzernamen oder seiner E-Mail-Adresse und seinem Passwort in den eShop einzuloggen.
+     * Wenn der Login erfolgreich ist, werden die Informationen des Kunden zurückgegeben, einschließlich seiner ID, Vorname, Nachname, E-Mail, Benutzername,
+     * Passwort, Ort, Postleitzahl, Straße und Hausnummer.
+     *
+     *@throws IOException Wenn ein Fehler beim Lesen vom Client auftritt.
+     * @throws LoginException Wenn der Login fehlschlägt.
+     *
+     * */
+
     private void loginKunde(){
         try {
             String usernameOrEmail = in.readLine();
@@ -389,7 +474,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(kunde.getPlz());
             out.println(kunde.getStrasse());
             out.println(kunde.getStrassenNummer());
-            //TODO: BEIM AUSKOMMENTIEREN HÄNGT SICH DAS PROGRAMM AUF
+
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
             out.println("ERROR 101");
@@ -423,6 +508,12 @@ public class ClientRequestProcessor extends Thread {
 
     }
 
+    /**
+     * Sucht einen Artikel anhand der Artikelnummer.
+     *
+     * @throws IOException Wenn ein Fehler beim Lesen vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Artikelnummer nicht vorhanden ist.
+     */
     private void sucheArtikelMitNummer() {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
@@ -441,6 +532,19 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Ruft die Liste der Ereignisse aus dem eShop ab und gibt detaillierte Informationen zu jedem Ereignis aus.
+     *
+     * Die Methode holt sich eine Liste von Ereignissen durch einen Aufruf der Methode {eShop.getEreignisListe()}
+     * Danach wird die Größe der Liste und die Details jedes Ereignisses, wie Datum, Artikel und Anzahl, auf der Konsole ausgegeben.
+     * Zusätzlich wird geprüft, ob der `KundeOderMitarbeiter` in dem Ereignis ein {@link Mitarbeiter} oder ein {@link Kunde} ist,
+     * und es werden weitere Details wie ID, Vorname, Nachname, E-Mail und Benutzername für den jeweiligen Typ des `KundeOderMitarbeiter` ausgegeben.
+     * Falls der `KundeOderMitarbeiter` nicht gefunden werden kann, wird eine Fehlermeldung auf der Konsole ausgegeben und ein Fehlercode angezeigt.
+     * Abschließend wird der Typ des Ereignisses auf der Konsole ausgegeben.
+     *
+     * @throws IdNichtVorhandenException Wenn ein `KundeOderMitarbeiter` mit der angegebenen ID nicht gefunden werden kann,
+     *                                   wird eine entsprechende Fehlermeldung ausgegeben und der Fehlercode 303 angezeigt.
+     */
     private void getEreignisListe() {
         List<Ereignis> ereignisListe = eShop.getEreignisListe();
         out.println("Erfolgreich getEreignisListe()");
@@ -484,6 +588,21 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Fügt einen Artikel zum Warenkorb eines Kunden hinzu.
+     *
+     * Die Methode liest die Kunden-ID, Artikelnummer und Menge von der Eingabe. Anschließend wird überprüft, ob der Kunde
+     * existiert und der Artikel in der angegebenen Menge zum Warenkorb des Kunden hinzugefügt. Bei Erfolg wird eine Bestätigung
+     * ausgegeben. Bei Fehlern während des Lesevorgangs oder bei Problemen mit dem Hinzufügen des Artikels werden entsprechende
+     * Fehlermeldungen ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws BestandNichtAusreichendException Wenn die angeforderte Menge des Artikels nicht verfügbar ist.
+     * @throws MinusZahlException Wenn eine der Eingaben (Menge) eine negative Zahl ist.
+     * @throws KeinMassengutException Wenn der Artikel kein Massengut ist, jedoch eine Massengut-Bedingung erwartet wird.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID oder Artikelnummer nicht in der Datenbank gefunden werden kann.
+     * @throws IstLeerException Wenn der Warenkorb leer ist und daher keine weiteren Artikel hinzugefügt werden können.
+     */
     private void artikelInWarenkorbHinzufügen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
@@ -514,6 +633,18 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Berechnet und gibt den Gesamtpreis für den Warenkorb eines Kunden aus.
+     *
+     * Die Methode liest die Kunden-ID von der Eingabe, ruft den entsprechenden {@link Kunde} aus dem eShop ab und berechnet
+     * den Gesamtpreis für den Warenkorb dieses Kunden. Der Gesamtpreis wird anschließend auf der Konsole ausgegeben. Bei Fehlern
+     * während des Lesevorgangs oder bei Problemen mit dem Berechnen des Gesamtpreises werden entsprechende Fehlermeldungen
+     * ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
+     * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist und daher kein Gesamtpreis berechnet werden kann.
+     */
     private void gesamtPreis(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
@@ -534,6 +665,16 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Leert den Warenkorb eines Kunden.
+     *
+     * Die Methode liest die Kunden-ID von der Eingabe, ruft den entsprechenden {@link Kunde} aus dem eShop ab und leert
+     * den Warenkorb dieses Kunden. Bei Erfolg wird eine Bestätigung ausgegeben. Bei Fehlern während des Lesevorgangs oder bei
+     * Problemen beim Leeren des Warenkorbs werden entsprechende Fehlermeldungen ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
+     */
     private void warenkorbLeeren(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
@@ -549,6 +690,22 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Ändert die Menge eines Artikels im Warenkorb eines Kunden.
+     *
+     * Die Methode liest die Kunden-ID, die Artikelnummer und die neue Menge des Artikels von der Eingabe. Anschließend wird
+     * überprüft, ob der Kunde und der Artikel existieren und ob die angegebene Menge gültig ist. Die Methode aktualisiert dann
+     * die Menge des Artikels im Warenkorb des Kunden entsprechend der angegebenen Menge. Bei Erfolg wird eine Bestätigung auf der
+     * Konsole ausgegeben. Bei Fehlern während des Lesevorgangs oder bei Problemen mit der Menge werden entsprechende Fehlermeldungen
+     * ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID oder die Artikelnummer in der Datenbank nicht gefunden werden kann.
+     * @throws BestandNichtAusreichendException Wenn die angegebene Menge des Artikels nicht verfügbar ist.
+     * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist und daher keine Bestandsänderung durchgeführt werden kann.
+     * @throws KeinMassengutException Wenn der Artikel kein Massengut ist, jedoch eine Massengut-Bedingung erwartet wird.
+     * @throws MinusZahlException Wenn die angegebene Menge eine negative Zahl ist.
+     */
     private void bestandImWarenkorbAendern() {
         try {
             int kundenID = Integer.parseInt(in.readLine());
@@ -579,6 +736,19 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
+    /**
+     * Gibt die Artikel im Warenkorb eines Kunden aus.
+     *
+     * Die Methode liest die Kunden-ID von der Eingabe, ruft den entsprechenden {@link Kunde} aus dem eShop ab und erhält
+     * die Artikel und deren Mengen im Warenkorb des Kunden. Die Methode gibt die Anzahl der Artikel im Warenkorb sowie Details
+     * zu jedem Artikel, einschließlich der Artikelnummer, der Artikelbezeichnung, des Artikelbestands und des Artikelpreises, auf
+     * der Konsole aus. Bei Fehlern während des Lesevorgangs oder bei Problemen mit dem Warenkorb werden entsprechende Fehlermeldungen
+     * ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
+     * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist.
+     */
     private void gibWarenkorbArtikel(){
         //Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
         try {
@@ -607,6 +777,20 @@ public class ClientRequestProcessor extends Thread {
 
     }
     //public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
+    /**
+     * Kauft den Warenkorb eines Kunden und gibt die Details der Rechnung aus.
+     *
+     * Die Methode liest die Kunden-ID von der Eingabe, ruft den entsprechenden {@link Kunde} aus dem eShop ab und löst den
+     * Kauf des Warenkorbs für diesen Kunden aus. Es wird eine {@link Rechnung} erstellt, die eine Kopie des Warenkorbs enthält.
+     * Die Methode gibt die Anzahl der Artikel im Warenkorb sowie Details zu jedem Artikel, einschließlich der Menge, der Artikelnummer,
+     * der Artikelbezeichnung, des Artikelbestands und des Artikelpreises, auf der Konsole aus. Bei Fehlern während des Lesevorgangs
+     * oder beim Kauf des Warenkorbs werden entsprechende Fehlermeldungen ausgegeben.
+     *
+     * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
+     * @throws IdNichtVorhandenException Wenn die Kunden-ID in der Datenbank nicht gefunden werden kann.
+     * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist und daher keine Bestellung durchgeführt werden kann.
+     * @throws BestandNichtAusreichendException Wenn ein oder mehrere Artikel im Warenkorb nicht genug Bestand haben, um die Bestellung auszuführen.
+     */
     private void warenkorbKaufen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());

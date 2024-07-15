@@ -1,5 +1,5 @@
-1,Wasser/Saskia,2748,4.99,6
-2,Bier/Desperados,1900,11.99,4
+1,Wasser/Saskia,2742,4.99,6
+2,Bier/Desperados,1896,11.99,4
 3,Elgato/Streamdeck,97,149.99,1
 4,Elgato/Facecam,97,149.99,1
 5,Handy/Samsung S21 Ultra,98,1199.99,1
@@ -21,6 +21,8 @@
 21,Energy/RedBull Lila,8,4.99,4
 22,Figur,100,20000.0
 23,Vitamin D Tabletten,8,48.0
+666,Energy/Monster,60000,2.99,1
+668,Energy/Monster Ultra Purple,60000,2.99
 99,Hecht,99,15.0,1
 100,Barsch,50,20.0,1
 101,Regenbogenforelle,25,45.99,1
