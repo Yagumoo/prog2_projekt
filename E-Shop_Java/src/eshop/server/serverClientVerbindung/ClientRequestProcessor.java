@@ -524,7 +524,7 @@ public class ClientRequestProcessor extends Thread {
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
 
             eShop.warenkorbLeeren(kunde);
-            out.println("Erfolgreich: warenkorbLeeren()");
+            //out.println("Erfolgreich: warenkorbLeeren()");
         } catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
             out.println("ERROR 101");

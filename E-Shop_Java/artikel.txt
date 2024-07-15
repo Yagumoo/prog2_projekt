@@ -19,4 +19,6 @@
 19,Papier,480,15.38,24
 20,Manga/ One Piece,49997,4.87,1
 21,Energy/RedBull Lila,8,4.99,4
+22,Figur,100,20000.0
+23,Vitamin D Tabletten,8,48.0
 666,Energy/Monster,1976,2.99,4

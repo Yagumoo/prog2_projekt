@@ -156,3 +156,5 @@
 13-07-2024,Wasser/Saskia,198,KAUF,k,9
 13-07-2024,Wasser/Saskia,12,KAUF,k,9
 13-07-2024,Wasser/Saskia,12,KAUF,k,9
+15-07-2024,Figur,100,NEU,m,1
+15-07-2024,Vitamin D Tabletten,8,NEU,m,2
