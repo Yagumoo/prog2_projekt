@@ -703,12 +703,22 @@ public class Eshopclientsite {
 
             }
             //TODO: Fehler abfangen
-            int nummer = Integer.parseInt(in.readLine());
-            String bezeichnung = in.readLine();
-            int bestand = Integer.parseInt(in.readLine());
-            double preis = Double.parseDouble(in.readLine());
-            Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
-            return artikel;
+            String mOdera = in.readLine();
+            if (mOdera.equals("m")){
+                int nummer = Integer.parseInt(in.readLine());
+                String bezeichnung = in.readLine();
+                int bestand = Integer.parseInt(in.readLine());
+                double preis = Double.parseDouble(in.readLine());
+                int massgut = Integer.parseInt(in.readLine());
+                MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massgut);
+            } else {
+                int nummer = Integer.parseInt(in.readLine());
+                String bezeichnung = in.readLine();
+                int bestand = Integer.parseInt(in.readLine());
+                double preis = Double.parseDouble(in.readLine());
+                Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
+                return artikel;
+            }
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
         }
@@ -788,7 +798,7 @@ public class Eshopclientsite {
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 303":
-                    throw new IdNichtVorhandenException(mitarbeiter.getId());
+                    throw new IdNichtVorhandenException(artikelnummer);
                 case "ERROR 405":
                     throw new KeinMassengutException(neuerBestand);
                 case "ERROR 202":

@@ -519,10 +519,20 @@ public class ClientRequestProcessor extends Thread {
             int artikenummer = Integer.parseInt(in.readLine());
             Artikel artikel = eShop.sucheArtikelMitNummer(artikenummer);
             out.println("Erfolgreich sucheArtikelMitNummer()");
-            out.println(artikel.getArtikelnummer());
-            out.println(artikel.getArtikelbestand());
-            out.println(artikel.getArtikelbestand());
-            out.println(artikel.getArtikelPreis());
+            if (artikel instanceof MassengutArtikel massengutArtikel) {
+                out.println("m");
+                out.println(massengutArtikel.getArtikelnummer());
+                out.println(massengutArtikel.getArtikelbestand());
+                out.println(massengutArtikel.getArtikelbestand());
+                out.println(massengutArtikel.getArtikelPreis());
+                out.println(massengutArtikel.getAnzahlMassengut());
+            }else {
+                out.println("a");
+                out.println(artikel.getArtikelnummer());
+                out.println(artikel.getArtikelbestand());
+                out.println(artikel.getArtikelbestand());
+                out.println(artikel.getArtikelPreis());
+            }
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 101");
