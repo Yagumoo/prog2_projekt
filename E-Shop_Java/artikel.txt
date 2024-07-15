@@ -21,12 +21,12 @@
 21,Energy/RedBull Lila,8,4.99,4
 22,Figur,100,20000.0
 23,Vitamin D Tabletten,8,48.0
-99,Hecht,66,15.0,1
-100,Barsch,49,20.0,1
-101,Regenbogenforelle,24,45.99,1
+99,Hecht,99,15.0,1
+100,Barsch,50,20.0,1
+101,Regenbogenforelle,25,45.99,1
 102,Dorsch,25,68.74,1
 103,Flunder,10,13.99,1
 104,Scholle,5,20.0,1
-105,Hornhecht,149,5.99,1
+105,Hornhecht,150,5.99,1
 106,Polllack,99,15.0,1
-107,Wels,1,99.99,1
+107,Karpfen,690,9.99,1
