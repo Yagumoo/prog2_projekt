@@ -14,14 +14,27 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Map;
-
+/**
+ * Die Klasse ArtikelBestandÄndern ist eine Erweiterung von JPanel und ermöglicht
+ * das Ändern des Bestands eines Artikels.
+ */
 public class ArtikelBestandÄndern extends JPanel {
-
+    /**
+     * Erstellt eine Instanz von ArtikelBestandÄndern.
+     *
+     * @param eShopclientsite           Die Eshopclientsite-Instanz
+     * @param eingeloggterMitarbeiter   Der eingeloggte Mitarbeiter
+     */
     private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
-
+    /**
+     * Konstruktor der Klasse ArtikelBestandÄndern.
+     *
+     * @param eShopclientsite           Die Instanz der Eshopclientsite
+     * @param eingeloggterMitarbeiter   Der eingeloggte Mitarbeiter
+     */
     public ArtikelBestandÄndern(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
@@ -34,7 +47,11 @@ public class ArtikelBestandÄndern extends JPanel {
         // UI-Komponenten erstellen
         mitarbeiterSeite();
     }
-
+    /**
+     * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
+     * Erstellt die Spaltennamen, initialisiert das TableModel und fügt die Tabelle
+     * zum Panel hinzu. Führt anschließend ein initiales Update der Tabelle durch.
+     */
     private void initializeTable() {
         String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Bestand", "Preis", "Verpackungsgröße"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
@@ -44,7 +61,11 @@ public class ArtikelBestandÄndern extends JPanel {
 
         updateTabelle();  // Initiales Update der Tabelle
     }
-
+    /**
+     * Initialisiert die Benutzeroberfläche für die Mitarbeiterseite.
+     * Erstellt verschiedene Panels und fügt UI-Komponenten wie Labels, Buttons und Textfelder hinzu.
+     * Fügt ActionListener zu den Buttons hinzu, um entsprechende Aktionen auszuführen.
+     */
     private void mitarbeiterSeite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelSouth = new JPanel();
@@ -143,7 +164,9 @@ public class ArtikelBestandÄndern extends JPanel {
             updateTabelleSortedByName();
         });
     }
-
+    /**
+     * Aktualisiert die Tabelle mit allen Artikeln aus dem eShopclientsite.
+     */
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -169,7 +192,9 @@ public class ArtikelBestandÄndern extends JPanel {
             }
         }
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach der Artikelnummer.
+     */
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -197,7 +222,9 @@ public class ArtikelBestandÄndern extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach der Artikelbezeichnung.
+     */
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -225,7 +252,14 @@ public class ArtikelBestandÄndern extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Lädt ein {@link ImageIcon} aus dem Ressourcenordner der Anwendung.
+     *
+     * Versucht, das Bild "Mann.png" aus dem Pfad "eshop/client/gui/Icon/" zu laden.
+     * Gibt ein {@link ImageIcon} zurück, das das Bild darstellt, oder `null`, wenn die Datei nicht gefunden wurde.
+     *
+     * @return Ein {@link ImageIcon} Objekt für das Bild, oder `null` bei Fehler.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Mann.png");
         if (imgURL != null) {

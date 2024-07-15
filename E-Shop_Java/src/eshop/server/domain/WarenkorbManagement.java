@@ -46,6 +46,7 @@ public class WarenkorbManagement {
             menge += bestehendeMenge;
         }
         warenkorb.artikelHinzufuegen(artikel, menge);
+
     }
 
     public void entferneArtikelAusWarenkorb(Kunde kunde, Artikel artikel) throws ArtikelExisitiertNichtException {
@@ -74,7 +75,7 @@ public class WarenkorbManagement {
     }
 
     //holt sich den Warenkorb für Gui zum kaufen
-    public Warenkorb getWarenkorbKaufen(Kunde kunde) throws IstLeerException {
+    public Warenkorb getWarenkorbKaufen(Person kunde) throws IstLeerException {
         Warenkorb wk = warenkorbVonKunde.get(kunde);
         Map<Artikel, Integer> wkMap = wk.getWarenkorbMap();
         if(wkMap.isEmpty()){

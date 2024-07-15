@@ -13,14 +13,29 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Comparator;
 import java.util.List;
-
+/**
+ * Ein Panel für die Benutzeroberfläche zur Anzeige von Ereignissen für einen Mitarbeiter.
+ *
+ * Diese Klasse stellt die Benutzeroberfläche bereit, auf der Mitarbeiter eine Liste von Ereignissen aus dem E-Shop einsehen können.
+ * Die Ansicht umfasst eine Tabelle zur Darstellung von Ereignisinformationen und eine Möglichkeit, zur Mitarbeiterseite zurückzukehren.
+ *
+ * @see Eshopclientsite
+ * @see Mitarbeiter
+ */
 public class EreignisListeGUI extends JPanel {
 
     private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
-
+    /**
+     * Konstruktor für das {@link EreignisListeGUI} Panel.
+     *
+     * Initialisiert die Benutzeroberfläche, einschließlich des Layouts, der Tabelle zur Anzeige der Ereignisse und der Schaltflächen.
+     *
+     * @param eShopclientsite Die Client-Seite des E-Shop, die die Verbindung zur Server-Seite herstellt.
+     * @param eingeloggterMitarbeiter Der derzeit eingeloggte Mitarbeiter, der die Ereignisliste einsehen kann.
+     */
     public EreignisListeGUI(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
@@ -39,7 +54,11 @@ public class EreignisListeGUI extends JPanel {
 
 
     }
-
+    /**
+     * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
+     * Erstellt die Spaltennamen, initialisiert das TableModel und fügt die Tabelle
+     * zum Panel hinzu. Führt anschließend ein initiales Update der Tabelle durch.
+     */
     private void initializeTable() {
         String[] spaltenNamen = {"Datum", "Artikel", "Anzahl", "Kunde Oder Mitarbeiter", "Ereignistyp"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
@@ -49,7 +68,11 @@ public class EreignisListeGUI extends JPanel {
 
         updateTabelle();  // Initiales Update der Tabelle
     }
-
+    /**
+     * Initialisiert die Benutzeroberfläche für die Mitarbeiterseite.
+     * Erstellt verschiedene Panels und fügt UI-Komponenten wie Labels, Buttons und Textfelder hinzu.
+     * Fügt ActionListener zu den Buttons hinzu, um entsprechende Aktionen auszuführen.
+     */
     private void mitarbeiterSeite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
@@ -154,7 +177,15 @@ public class EreignisListeGUI extends JPanel {
 
 
     }
-
+    /**
+     * Aktualisiert die Tabelle mit den aktuellen Ereignisinformationen ohne Filter.
+     *
+     * Diese Methode ruft die überladene Methode updateTabelle auf, ohne Filterparameter
+     * zu setzen. Sie aktualisiert die Tabelle, um alle Ereignisse anzuzeigen, die keine speziellen Filter erfordern.
+     *
+     * Falls ein Fehler auftritt, der durch {@link WertNichtGefundenException} gekennzeichnet ist, wird der Fehler hier nicht behandelt,
+     * da keine Filter angewendet werden und folglich keine Fehler auftreten sollten.
+     */
     public void updateTabelle() {
         try {
             updateTabelle(null, null, null);  // Keine Filter anwenden
@@ -163,7 +194,36 @@ public class EreignisListeGUI extends JPanel {
         }
 
     }
-
+    /**
+     * Aktualisiert die Tabelle mit den aktuellen Ereignisinformationen unter Anwendung von optionalen Filtern.
+     *
+     * Diese Methode leert zunächst die bestehende Tabelle und ruft dann die vollständige Liste der Ereignisse von der E-Shop-Client-Seite ab.
+     * Anschließend wird die Liste nach Datum aufsteigend sortiert und basierend auf den angegebenen Filterparametern gefiltert.
+     * Die gefilterten Ereignisse werden in die Tabelle eingefügt. Wenn keine Ereignisse den Filterkriterien entsprechen, wird eine
+     * {@link WertNichtGefundenException} ausgelöst.
+     *
+     * <p>Die Filterparameter sind optional:
+     * <ul>
+     *     <li><b>artikelFilter:</b> Filter für die Artikelbeschreibung der Ereignisse. Wenn {@code null} oder leer, wird dieser Filter ignoriert.</li>
+     *     <li><b>usernameFilter:</b> Filter für den Username des Kunden oder Mitarbeiters, der mit dem Ereignis verbunden ist. Wenn {@code null} oder leer, wird dieser Filter ignoriert.</li>
+     *     <li><b>typFilter:</b> Filter für den Typ des Ereignisses. Wenn {@code null} oder leer, wird dieser Filter ignoriert.</li>
+     * </ul>
+     * </p>
+     *
+     * <p>Die Methode sortiert die Ereignisse nach Datum in aufsteigender Reihenfolge und wendet die Filter auf die Ereignisse an:
+     * <ul>
+     *     <li>Artikelbeschreibung muss mit {@code artikelFilter} übereinstimmen, wenn dieser Filter gesetzt ist.</li>
+     *     <li>Der Username des Kunden oder Mitarbeiters muss mit {@code usernameFilter} übereinstimmen, wenn dieser Filter gesetzt ist.</li>
+     *     <li>Der Typ des Ereignisses muss mit {@code typFilter} übereinstimmen, wenn dieser Filter gesetzt ist.</li>
+     * </ul>
+     * </p>
+     *
+     * @param artikelFilter Der Filter für die Artikelbeschreibung der Ereignisse, kann {@code null} oder leer sein, wenn kein Filter angewendet wird.
+     * @param usernameFilter Der Filter für den Username des Kunden oder Mitarbeiters, kann {@code null} oder leer sein, wenn kein Filter angewendet wird.
+     * @param typFilter Der Filter für den Typ der Ereignisse, kann {@code null} oder leer sein, wenn kein Filter angewendet wird.
+     *
+     * @throws WertNichtGefundenException Wenn keine Ereignisse den Filterkriterien entsprechen. Dies tritt auf, wenn keine Ereignisse die angegebenen Filterbedingungen erfüllen.
+     */
     public void updateTabelle(String artikelFilter, String usernameFilter, String typFilter) throws WertNichtGefundenException {
 
         tableModel.setRowCount(0); // Bestehende Daten löschen
@@ -200,7 +260,14 @@ public class EreignisListeGUI extends JPanel {
         }
     }
 
-
+    /**
+     * Lädt ein {@link ImageIcon} aus dem Ressourcenordner der Anwendung.
+     *
+     * Versucht, das Bild "Mann.png" aus dem Pfad "eshop/client/gui/Icon/" zu laden.
+     * Gibt ein {@link ImageIcon} zurück, das das Bild darstellt, oder `null`, wenn die Datei nicht gefunden wurde.
+     *
+     * @return Ein {@link ImageIcon} Objekt für das Bild, oder `null` bei Fehler.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Mann.png");
         if (imgURL != null) {

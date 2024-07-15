@@ -8,9 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -489,17 +487,18 @@ public class ClientRequestProcessor extends Thread {
     private void artikelInWarenkorbHinzufügen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
-            Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
+            Person kunde = eShop.sucheKundeMitNummer(kundenID);
             int artikelnummer = Integer.parseInt(in.readLine());
             int menge = Integer.parseInt(in.readLine());
-
+            //TODO: ist Peron richtig gucken
             eShop.artikelInWarenkorbHinzufügen(kunde, artikelnummer, menge);
             out.println("Erfolgreich: artikelInWarenkorbHinzufügen()");
         } catch(IOException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 101");
         } catch (BestandNichtAusreichendException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
+            out.println("ERROR 408");
         } catch (MinusZahlException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 202");
@@ -509,6 +508,9 @@ public class ClientRequestProcessor extends Thread {
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
             out.println("ERROR 303");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
+            out.println("ERROR 406");
         }
     }
 
@@ -610,10 +612,10 @@ public class ClientRequestProcessor extends Thread {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
             Rechnung rechnung = eShop.warenkorbKaufen(kunde);
-            Warenkorb warenkorb = rechnung.getWarenkorb();
+            Map<Artikel, Integer> warenkorbMap = rechnung.getWarenkorbKopieMap();
             out.println("Erfolgreich: warenkorbKaufen()");
-            out.println(warenkorb.getWarenkorbMap().size());
-            for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
+            out.println(warenkorbMap.size());
+            for (Map.Entry<Artikel, Integer> entry : warenkorbMap.entrySet()) {
                 out.println(entry.getValue());
                 out.println(entry.getKey().getArtikelnummer());
                 out.println(entry.getKey().getArtikelbezeichnung());
@@ -626,12 +628,12 @@ public class ClientRequestProcessor extends Thread {
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
             out.println("ERROR 303");
-        } catch (BestandNichtAusreichendException e) {
-            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
-            out.println("ERROR 408");
         } catch (IstLeerException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
             out.println("ERROR 406");
+        } catch (BestandNichtAusreichendException e) {
+            System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
+            out.println("ERROR 408");
         }
     }
 

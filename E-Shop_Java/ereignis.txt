@@ -226,3 +226,18 @@
 2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
 2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
 2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-15,Wels,3,NEU,m,1
+2024-07-15,Schmerle,24,NEU,m,1
+2024-07-15,Hecht,-19,REDUZIERUNG,m,1
+2024-07-15,Hecht,0,ERHOEHUNG,m,1
+2024-07-15,Hecht,0,ERHOEHUNG,m,1
+2024-07-15,Hecht,1,KAUF,k,9
+2024-07-15,Hecht,7,KAUF,k,9
+2024-07-15,Hornhecht,1,KAUF,k,9
+2024-07-15,Regenbogenforelle,1,KAUF,k,9
+2024-07-15,Hecht,1,KAUF,k,9
+2024-07-15,Barsch,1,KAUF,k,9
+2024-07-15,Hecht,1,KAUF,k,9
+2024-07-15,Hecht,1,KAUF,k,9
+2024-07-15,Hecht,2,KAUF,k,9
+2024-07-15,Hecht,1,KAUF,k,9

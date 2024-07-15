@@ -11,14 +11,32 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Map;
-
+/**
+ * Eine Benutzeroberfläche für die Mitarbeiter-Seite im E-Shop-Client.
+ *
+ * Diese Klasse stellt die Hauptseite für Mitarbeiter dar, die nach dem Login angezeigt wird.
+ * Sie enthält eine Tabelle zur Anzeige von Artikeldaten und bietet eine Grundlage für zusätzliche Mitarbeiter-Aktionen.
+ *
+ * Die Klasse erbt von {@link JPanel} und verwendet ein {@link BorderLayout} für die Anordnung der Benutzeroberflächenkomponenten.
+ *
+ * @see Eshopclientsite
+ * @see Mitarbeiter
+ */
 public class MitarbeiterSeite extends JPanel {
 
     private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable artikelTabelle;
     private DefaultTableModel tableModel;
-
+    /**
+     * Konstruktor für das {@link MitarbeiterSeite} Panel.
+     *
+     * Initialisiert das Panel für die Hauptseite eines Mitarbeiters. Setzt den Hintergrund, das Layout und lädt optional ein Bild-Icon.
+     * Erstellt das Formular für Mitarbeiter-Aktionen und initialisiert die Tabelle zur Anzeige der Artikeldaten.
+     *
+     * @param eShopclientsite Die Client-Seite des E-Shop, die die Verbindung zur Server-Seite herstellt.
+     * @param eingeloggterMitarbeiter Der derzeit eingeloggte Mitarbeiter, dessen Seite angezeigt wird.
+     */
     public MitarbeiterSeite(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
@@ -35,7 +53,11 @@ public class MitarbeiterSeite extends JPanel {
         //Tabelle erstellen
         TabelleErstellen();
     }
-
+    /**
+     * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
+     * Erstellt die Spaltennamen, initialisiert das TableModel und fügt die Tabelle
+     * zum Panel hinzu. Führt anschließend ein initiales Update der Tabelle durch.
+     */
     private void TabelleErstellen() {
         String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Bestand", "Preis", "Verpackungsgröße"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
@@ -45,7 +67,11 @@ public class MitarbeiterSeite extends JPanel {
 
         updateTabelle();  // Initiales Update der Tabelle
     }
-
+    /**
+     * Initialisiert die Benutzeroberfläche für die Mitarbeiterseite.
+     * Erstellt verschiedene Panels und fügt UI-Komponenten wie Labels, Buttons und Textfelder hinzu.
+     * Fügt ActionListener zu den Buttons hinzu, um entsprechende Aktionen auszuführen.
+     */
     private void mitarbeiterSeite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
@@ -184,6 +210,10 @@ public class MitarbeiterSeite extends JPanel {
                 String Preis = preisFeld.getText();
                 String Paketgröße = paketgrößeFeld.getText();
 
+                if(ID.isEmpty() || Bezeichnung.isEmpty() || Menge.isEmpty() || Preis.isEmpty() || Paketgröße.isEmpty()){
+                    throw new FalscheEingabeException();
+                }
+
                 int id = Integer.parseInt(ID);
                 int menge = Integer.parseInt(Menge);
                 double preis = Double.parseDouble(Preis);
@@ -204,6 +234,8 @@ public class MitarbeiterSeite extends JPanel {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer, Menge oder Preis ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (DoppelteIdException | MinusZahlException | KeinMassengutException | ArtikelnameDoppeltException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (FalscheEingabeException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -217,7 +249,9 @@ public class MitarbeiterSeite extends JPanel {
             updateTabelleSortedByName();
         });
     }
-
+    /**
+     * Aktualisiert die Tabelle mit allen Artikeln aus dem eShopclientsite.
+     */
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -243,7 +277,9 @@ public class MitarbeiterSeite extends JPanel {
             }
         }
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach ihrer Artikelnummer.
+     */
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -271,7 +307,9 @@ public class MitarbeiterSeite extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach der Artikelbezeichnung.
+     */
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -299,7 +337,14 @@ public class MitarbeiterSeite extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Lädt ein {@link ImageIcon} aus dem Ressourcenordner der Anwendung.
+     *
+     * Versucht, das Bild "Mann.png" aus dem Pfad "eshop/client/gui/Icon/" zu laden.
+     * Gibt ein {@link ImageIcon} zurück, das das Bild darstellt, oder `null`, wenn die Datei nicht gefunden wurde.
+     *
+     * @return Ein {@link ImageIcon} Objekt für das Bild, oder `null` bei Fehler.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Mann.png");
         if (imgURL != null) {

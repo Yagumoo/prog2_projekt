@@ -129,7 +129,7 @@ public class E_Shop {
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufügen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
+    public void artikelInWarenkorbHinzufügen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException, IstLeerException {
         if (kunde instanceof Kunde k) {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {

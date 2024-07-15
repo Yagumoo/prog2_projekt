@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDate;
-import java.text.SimpleDateFormat;
 
 /**
  * Repräsentiert eine Rechnung für eine Bestellung oder einen Kauf.
@@ -19,7 +18,7 @@ public class Rechnung {
     private Warenkorb warenkorb;
     private Kunde kunde;
     private WarenkorbManagement warenkorbManagement;
-    private Map<Artikel, Integer> warenkorbKopie;
+    private Map<Artikel, Integer> warenkorbKopieMap;
     private LocalDate datumaktuel;
 
     /**
@@ -30,8 +29,8 @@ public class Rechnung {
     public Rechnung(Warenkorb warenkorb, Kunde kunde){
         this.warenkorb = warenkorb;
         this.kunde = kunde;
-        this.warenkorbKopie = new HashMap<>();
-        this.warenkorbKopie.putAll(warenkorb.getWarenkorbMap());
+        this.warenkorbKopieMap = new HashMap<>();
+        this.warenkorbKopieMap.putAll(warenkorb.getWarenkorbMap());
         this.datumaktuel = LocalDate.now();
     }
 
@@ -39,7 +38,6 @@ public class Rechnung {
     public Kunde getKunde(){
         return kunde;
     }
-
 
     public String getDatum() {
         return simpleDatum();
@@ -51,8 +49,8 @@ public class Rechnung {
     }
 
 
-    public Map<Artikel, Integer> getWarenkorbKopie(){
-        return warenkorbKopie;
+    public Map<Artikel, Integer> getWarenkorbKopieMap(){
+        return warenkorbKopieMap;
     }
 
 
@@ -68,7 +66,7 @@ public class Rechnung {
         String rechnung = "Rechnung für Kunde: " + kunde.getVorname() + " " + kunde.getNachname() +"\n" +
                 "Wohnort:"+ kunde.getPlz() + " " + kunde.getOrt() + " " + kunde.getStrasse() + " " + kunde.getStrassenNummer() +  "\n\n";
 
-        for (Map.Entry<Artikel, Integer> entry : warenkorbKopie.entrySet()) {
+        for (Map.Entry<Artikel, Integer> entry : warenkorbKopieMap.entrySet()) {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();
             rechnung += "Artikel: \n" + "Artikelnummer: " + artikel.getArtikelnummer() + " | ";

@@ -2,10 +2,7 @@ package eshop.client.gui.KundenFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.common.exceptions.BestandNichtAusreichendException;
-import eshop.common.exceptions.IdNichtVorhandenException;
-import eshop.common.exceptions.KeinMassengutException;
-import eshop.common.exceptions.MinusZahlException;
+import eshop.common.exceptions.*;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.Kunde;
 import eshop.common.enitities.MassengutArtikel;
@@ -14,14 +11,35 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Map;
-
+/**
+ * Das Haupt-Panel für die Kunden-Seite im E-Shop-Client, das die Hauptansicht für Kunden darstellt.
+ *
+ * Diese Klasse bietet die Benutzeroberfläche für Kunden im E-Shop-System. Sie zeigt eine Tabelle mit Artikeln an, die vom Kunden angesehen und möglicherweise gekauft werden können.
+ *
+ * Die Klasse erbt von {@link JPanel} und verwendet ein {@link BorderLayout}, um die Benutzeroberfläche zu organisieren.
+ * Die Klasse enthält eine Tabelle für die Anzeige von Artikeldaten und stellt eine Methode zum Aktualisieren dieser Tabelle bereit.
+ *
+ * @see Eshopclientsite
+ * @see Kunde
+ * @see Artikel
+ */
 public class KundenSeite extends JPanel {
 
     private Eshopclientsite eShopclientsite;
     private JTable artikelTabelle;
     private Kunde eingelogterKunde;
     private DefaultTableModel tableModel;
-
+    /**
+     * Konstruktor für das {@link KundenSeite} Panel.
+     *
+     * Initialisiert das Panel für die Kundenansicht im E-Shop. Setzt das Layout, die Hintergrundfarbe und ruft Methoden zur Erstellung der Benutzeroberfläche und der Tabelle auf.
+     *
+     * <p>Dieser Konstruktor konfiguriert das Panel und erstellt die Benutzeroberfläche, die einen Bereich für die Anzeige von Artikeln enthält. Es wird eine Methode
+     * zum Initialisieren der Tabelle sowie zum Laden eines optionalen Icons für die Benutzeroberfläche verwendet.</p>
+     *
+     * @param eShopclientsite Die Client-Seite des E-Shop, die die Verbindung zur Server-Seite herstellt.
+     * @param eingelogterKunde Der aktuell eingeloggte Kunde, der die Artikel im E-Shop ansieht.
+     */
     public KundenSeite(Eshopclientsite eShopclientsite, Kunde eingelogterKunde) {
         this.eShopclientsite = eShopclientsite;
         this.eingelogterKunde = eingelogterKunde;
@@ -37,7 +55,11 @@ public class KundenSeite extends JPanel {
         kundenseite();
         initializeTable();
     }
-
+    /**
+     * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
+     * Erstellt die Spaltennamen, initialisiert das TableModel und fügt die Tabelle
+     * zum Panel hinzu. Führt anschließend ein initiales Update der Tabelle durch.
+     */
     private void initializeTable() {
         String[] spaltenNamen = {"Artikelnummer", "Bezeichnung", "Preis", "Verpackungsgröße"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
@@ -47,7 +69,24 @@ public class KundenSeite extends JPanel {
 
         updateTabelle();  // Initiales Update der Tabelle
     }
-
+    /**
+     * Konfiguriert die Benutzeroberfläche für die Kundenansicht im E-Shop-Client.
+     *
+     * Diese Methode erstellt und organisiert alle grafischen Benutzeroberflächenkomponenten für die Kundenansicht.
+     * Sie richtet Layouts und GUI-Elemente wie Buttons, Labels und Textfelder ein und fügt sie den entsprechenden Panels hinzu.
+     *
+     * <p>Die Methode baut die Benutzeroberfläche mit den folgenden Komponenten auf:</p>
+     *
+     * <ul>
+     *     <li><b>Panel Nord:</b> Ein Bereich zur Sortierung der Artikel nach Nummer oder Bezeichnung.</li>
+     *     <li><b>Panel West (oben):</b> Ein Bereich zum Hinzufügen von Artikeln zum Warenkorb, einschließlich Eingabefelder für Artikelnummer und Menge sowie Buttons zum Hinzufügen oder Entfernen von Artikeln.</li>
+     *     <li><b>Panel Süd:</b> Ein Bereich für den Logout-Button, um sich aus dem E-Shop abzumelden.</li>
+     *     <li><b>Panel West (unten):</b> (Derzeit nicht verwendet, aber für zukünftige Erweiterungen vorbereitet.)</li>
+     *     <li><b>Panel East:</b> (Derzeit nicht verwendet, aber für zukünftige Erweiterungen vorbereitet.)</li>
+     * </ul>
+     *
+     * <p>Die Methode definiert auch ActionListener für die Buttons, um Funktionen wie das Hinzufügen von Artikeln zum Warenkorb, das Entfernen von Artikeln und das Sortieren der Tabelle zu implementieren.</p>
+     */
     private void kundenseite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
@@ -112,10 +151,10 @@ public class KundenSeite extends JPanel {
         westUpgbc.gridy = 7;
         panelWestup.add(hinzufügenButton, westUpgbc);
 
-        JButton entfernenButton = new JButton("Entfernen");
-        westUpgbc.gridx = 0;
-        westUpgbc.gridy = 8;
-        panelWestup.add(entfernenButton, westUpgbc);
+//        JButton entfernenButton = new JButton("Entfernen");
+//        westUpgbc.gridx = 0;
+//        westUpgbc.gridy = 8;
+//        panelWestup.add(entfernenButton, westUpgbc);
 
         // Logout im Süden
         JButton logoutButton = new JButton("logout");
@@ -132,24 +171,31 @@ public class KundenSeite extends JPanel {
             try {
                 String nummerText = nummerFeld.getText();
                 String bestandText = bestandFeld.getText();
-
-                int nummer = Integer.parseInt(nummerText);
+                if(nummerText.isEmpty() || bestandText.isEmpty()){
+                    throw new FalscheEingabeException();
+                }
+                int idNummer = Integer.parseInt(nummerText);
+                Artikel artikel = eShopclientsite.sucheArtikelMitNummer(idNummer);
                 int bestand = Integer.parseInt(bestandText);
 
-                eShopclientsite.artikelInWarenkorbHinzufügen(eingelogterKunde, nummer, bestand);
+                eShopclientsite.artikelInWarenkorbHinzufügen(eingelogterKunde, artikel, bestand);
                 updateTabelle();  // Tabelle aktualisieren
 
             } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer und Menge ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (FalscheEingabeException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (IstLeerException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        entfernenButton.addActionListener(e -> {
-            //eShopclientsite.warenkorbLeeren(eingelogterKunde);
-            updateTabelle();  // Tabelle aktualisieren
-        });
+//        entfernenButton.addActionListener(e -> {
+//            //eShopclientsite.warenkorbLeeren(eingelogterKunde);
+//            updateTabelle();  // Tabelle aktualisieren
+//        });
 
         sortByNumberButton.addActionListener(e -> {
             // Sortiere die Tabelle nach Artikelnummer
@@ -163,7 +209,9 @@ public class KundenSeite extends JPanel {
     }
 
 
-    //Artikelliste asugeben lassen
+    /**
+     * Aktualisiert die Tabelle mit allen Artikeln aus dem eShopclientsite.
+     */
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -187,7 +235,9 @@ public class KundenSeite extends JPanel {
             }
         }
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach ihrer Artikelnummer.
+     */
     public void updateTabelleSortedByNumber() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -213,7 +263,9 @@ public class KundenSeite extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Aktualisiert die Tabelle und sortiert die Artikel nach der Artikelbezeichnung.
+     */
     public void updateTabelleSortedByName() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Artikel> artikelMap = eShopclientsite.gibAlleArtikel();
@@ -239,7 +291,14 @@ public class KundenSeite extends JPanel {
                     }
                 });
     }
-
+    /**
+     * Lädt ein Bild-Icon aus den Ressourcen des Projekts.
+     *
+     * Diese Methode versucht, ein Bild-Icon von einem bestimmten Pfad in den Ressourcen des Projekts zu laden.
+     * Wird von der Klasse verwendet, obwohl ein Icon für ein {@link JPanel} nicht direkt gesetzt werden kann.
+     *
+     * @return Das geladene {@link ImageIcon} oder null, wenn die Ressource nicht gefunden wurde.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Mann.png");
         if (imgURL != null) {

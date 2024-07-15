@@ -427,10 +427,10 @@ public class Eshopclientsite {
 
     //Warenkorb
     //public void artikelInWarenkorbHinzufuegen1(Kunde kunde, Artikel artikel, int menge){
-    public void artikelInWarenkorbHinzufügen(Person kunde, int artikelnummer, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException {
+    public void artikelInWarenkorbHinzufügen(Person kunde, Artikel artikel, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException, IstLeerException {
         out.println("artikelInWarenkorbHinzufügen");
         out.println(kunde.getId());
-        out.println(artikelnummer);
+        out.println(artikel.getArtikelnummer());
         out.println(menge);
 
         try{
@@ -442,6 +442,10 @@ public class Eshopclientsite {
                     throw new MinusZahlException();
                 case "ERROR 405":
                     throw new KeinMassengutException(menge);
+                case "ERROR 408":
+                    throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
+                case "ERROR 406":
+                    throw new IstLeerException();
                 default:
                     System.out.println("Erfolgreich artikelInWarenkorbHinzufügen()");
             }
@@ -527,17 +531,19 @@ public class Eshopclientsite {
     }
 
     //TODO Marvin
-    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
-        out.print("warenkorbKaufen");
+    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException, IdNichtVorhandenException {
+        out.println("warenkorbKaufen");
         out.println(kunde.getId());
 
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
+//                case "ERROR 303":
+//                    throw new IdNichtVorhandenException();
                 case "ERROR 406":
                     throw new IstLeerException();
-                case "ERROR 408":
-                    // throw new BestandNichtAusreichendException();
+//                case "ERROR 408":
+//                    throw new BestandNichtAusreichendException();
                 default:
                     System.out.println("Erfolgreich warenkorbKaufen()");
             }
@@ -571,6 +577,16 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
+                case"ERROR 303":
+                    throw new IdNichtVorhandenException(artikel.getArtikelnummer());
+                case "408":
+                    throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
+                case "405":
+                    throw new KeinMassengutException(artikel.getArtikelbestand());
+                case "202":
+                    throw new MinusZahlException();
+                case "406":
+                    throw new IstLeerException();
                 //TODO: machen
                 default:
                     System.out.println("Erfolgreich bestandImWarenkorbAendern()");
@@ -580,5 +596,39 @@ public class Eshopclientsite {
         }
     }
 
+        /*
+        Erfolgreich => Erfolgreich ...;
+
+        IOException => "ERROR 101"
+
+        MinusZahlException => "ERROR 202"
+
+        IdNichtVorhandenException => "ERROR 303"
+
+        DoppelteIdException => "ERROR 304"
+
+        ArtikelnameDoppeltException => "ERROR 404"
+
+        KeinMassengutException => "ERROR 405"
+
+        IstLeerException => "ERROR 406"
+
+        ArtikelnameDoppeltException =>"ERROR 407"
+
+        BestandNichtAusreichendException =>"ERROR 408"
+
+        LoginException => "ERROR 807"
+
+        UsernameExistiertException => "ERROR 808"
+
+        EmailExistiertException => "ERROR 809"
+
+
+        UngueltigeArtikelBezeichnung => /
+        FalscheEingabeException => only CUI
+        FilterException => only Clientseite
+        WertNichtGefundenException => only Clientseite
+        ArtikelExisitiertNichtException => only Warenkorbleeren CUI
+     */
 
 }

@@ -10,14 +10,32 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Map;
-
+/**
+ * Eine GUI für die Registrierung neuer Mitarbeiter im E-Shop-Client.
+ *
+ * Diese Klasse stellt eine Benutzeroberfläche zur Verfügung, die es Administratoren ermöglicht, neue Mitarbeiter im System zu registrieren.
+ * Die GUI enthält ein Formular zur Eingabe der Mitarbeiterdaten sowie eine Tabelle, um die Liste der registrierten Mitarbeiter anzuzeigen.
+ *
+ * Die Klasse erbt von {@link JPanel} und organisiert die Benutzeroberfläche mit einem {@link BorderLayout}.
+ *
+ * @see Eshopclientsite
+ * @see Mitarbeiter
+ */
 public class MitarbeiterRegistrieren extends JPanel {
 
     private final Eshopclientsite eShopclientsite;
     private Mitarbeiter eingeloggterMitarbeiter;
     private JTable mitarbeiterTabelle;
     private DefaultTableModel tableModel;
-
+    /**
+     * Konstruktor für das {@link MitarbeiterRegistrieren} Panel.
+     *
+     * Initialisiert das Panel für die Registrierung neuer Mitarbeiter. Setzt den Hintergrund, das Layout und lädt optional ein Bild-Icon.
+     * Erstellt das Formular für die Eingabe der Mitarbeiterdaten und initialisiert die Tabelle zur Anzeige der registrierten Mitarbeiter.
+     *
+     * @param eShopclientsite Die Client-Seite des E-Shop, die die Verbindung zur Server-Seite herstellt.
+     * @param eingeloggterMitarbeiter Der derzeit eingeloggte Mitarbeiter, der die Registrierung durchführt.
+     */
     public MitarbeiterRegistrieren(Eshopclientsite eShopclientsite, Mitarbeiter eingeloggterMitarbeiter) {
         this.eShopclientsite = eShopclientsite;
         this.eingeloggterMitarbeiter = eingeloggterMitarbeiter;
@@ -36,7 +54,11 @@ public class MitarbeiterRegistrieren extends JPanel {
 
 
     }
-
+    /**
+     * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
+     * Erstellt die Spaltennamen, initialisiert das TableModel und fügt die Tabelle
+     * zum Panel hinzu. Führt anschließend ein initiales Update der Tabelle durch.
+     */
     private void initializeTable() {
         String[] spaltenNamen = {"Vorname", "Nachname", "E-mail", "Username", "Mitarbeiter-ID"};
         tableModel = new DefaultTableModel(spaltenNamen, 0);
@@ -46,7 +68,11 @@ public class MitarbeiterRegistrieren extends JPanel {
 
         updateTabelle();  // Initiales Update der Tabelle
     }
-
+    /**
+     * Initialisiert die Benutzeroberfläche für die Mitarbeiterseite.
+     * Erstellt verschiedene Panels und fügt UI-Komponenten wie Labels, Buttons und Textfelder hinzu.
+     * Fügt ActionListener zu den Buttons hinzu, um entsprechende Aktionen auszuführen.
+     */
     private void mitarbeiterSeite() {
         JPanel panelNord = new JPanel(new FlowLayout());
         JPanel panelEast = new JPanel(new GridLayout(6, 1));
@@ -154,19 +180,23 @@ public class MitarbeiterRegistrieren extends JPanel {
                 if(Vorname.isEmpty() || Nachname.isEmpty() || Email.isEmpty() || Username.isEmpty() || Passwort.isEmpty()){
                     throw new FalscheEingabeException();
                 }
+
                 eShopclientsite.addMitarbeiter(eingeloggterMitarbeiter, Vorname, Nachname, Email, Username, Passwort);
 
                 updateTabelle();
-
 
             } catch (DoppelteIdException | UsernameExistiertException | EmailExistiertException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (FalscheEingabeException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte geben Sie eine gültige Artikelnummer ein", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
-
+    /**
+     * Aktualisiert die Tabelle mit allen Artikeln aus dem eShopclientsite.
+     */
     public void updateTabelle() {
         tableModel.setRowCount(0); // Bestehende Daten löschen
         Map<Integer, Mitarbeiter> artikelMap = eShopclientsite.gibAlleMitarbeiter();
@@ -184,7 +214,14 @@ public class MitarbeiterRegistrieren extends JPanel {
             }
         }
     }
-
+    /**
+     * Lädt ein {@link ImageIcon} aus dem Ressourcenordner der Anwendung.
+     *
+     * Versucht, das Bild "Mann.png" aus dem Pfad "eshop/client/gui/Icon/" zu laden.
+     * Gibt ein {@link ImageIcon} zurück, das das Bild darstellt, oder `null`, wenn die Datei nicht gefunden wurde.
+     *
+     * @return Ein {@link ImageIcon} Objekt für das Bild, oder `null` bei Fehler.
+     */
     private ImageIcon loadImageIcon() {
         java.net.URL imgURL = getClass().getClassLoader().getResource("eshop/client/gui/Icon/Mann.png");
         if (imgURL != null) {
