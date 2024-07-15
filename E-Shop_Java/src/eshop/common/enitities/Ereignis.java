@@ -34,7 +34,7 @@ public class Ereignis {
     private int anzahl;
     private Person kundeOderMitarbeiter;
     private EreignisTyp typ;
-    private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
+    private DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
 //    private Person betroffenePerson;
     /**
      * Konstruktor für die {@code Ereignis}-Klasse.

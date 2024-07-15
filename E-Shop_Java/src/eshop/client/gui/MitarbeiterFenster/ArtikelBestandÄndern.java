@@ -2,6 +2,7 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
+import eshop.common.exceptions.FalscheEingabeException;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.KeinMassengutException;
 import eshop.common.exceptions.MinusZahlException;
@@ -112,8 +113,7 @@ public class ArtikelBestandÄndern extends JPanel {
 
                 // Überprüfen, ob die Textfelder leer sind
                 if (artikelnummerText.isEmpty() || neuerbestandText.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Bitte geben Sie sowohl die Artikelnummer als auch den neuen Bestand ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    throw new FalscheEingabeException();
                 }
 
                 int artikelNummer = Integer.parseInt(artikelnummerText);
@@ -128,6 +128,8 @@ public class ArtikelBestandÄndern extends JPanel {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer und den neuen Bestand ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (IdNichtVorhandenException | KeinMassengutException | MinusZahlException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (FalscheEingabeException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 

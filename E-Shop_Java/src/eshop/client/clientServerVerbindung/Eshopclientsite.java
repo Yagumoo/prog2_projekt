@@ -38,6 +38,14 @@ public class Eshopclientsite {
         Map<Integer, Artikel> alleArtikel = new HashMap<Integer, Artikel>();
         out.println("gibAlleArtikel");
         try {
+
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                //TODO: machen
+                default:
+                    System.out.println("Erfolgreich gibAlleArtikel()");
+            }
+
             int anzahlArtikelMap = Integer.parseInt(in.readLine());
             for(int i = 0; i < anzahlArtikelMap; i++){
                 int nummer = Integer.parseInt(in.readLine());
@@ -47,16 +55,17 @@ public class Eshopclientsite {
                 Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
                 alleArtikel.put(nummer, artikel);
             }
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                //TODO: machen
-            }
         } catch (IOException e){
             System.err.println("Error beim Artikel erstellen" + e);
         }
         out.println("gibAlleMassengutartikel");
         try {
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                //TODO: machen
+                default:
+                    System.out.println("Erfolgreich gibAlleArtikel()");
+            }
             int anzahlArtikelMap = Integer.parseInt(in.readLine());
             for(int i = 0; i < anzahlArtikelMap; i++) {
                 int nummer = Integer.parseInt(in.readLine());
@@ -66,17 +75,6 @@ public class Eshopclientsite {
                 int massengutAnzahl = Integer.parseInt(in.readLine());
                 MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massengutAnzahl);
                 alleArtikel.put(nummer, massengutArtikel);
-
-                String rückfrage = in.readLine();
-                switch (rückfrage) {
-
-                }
-                //TODO: Fehler abfangen
-            }
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                //TODO: machen
             }
         } catch (IOException e){
             System.err.println("Error beim lesen vom Server bei = gibAlleMassengutartikel" + e);
@@ -90,6 +88,12 @@ public class Eshopclientsite {
         Map<Integer, Mitarbeiter> alleMitarbeiter = new HashMap<Integer, Mitarbeiter>();
         out.println("gibAlleMitarbeiter");
         try {
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                //TODO: machen
+                default:
+                    System.out.println("Erfolgreich gibAlleMitarbeiter()");
+            }
             int anzahlMitarbeiterMap = Integer.parseInt(in.readLine());
             for(int i = 0; i < anzahlMitarbeiterMap; i++){
                 int id = Integer.parseInt(in.readLine());
@@ -101,16 +105,6 @@ public class Eshopclientsite {
                 //TODO: Richtige übergabe der ID
                 Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
                 alleMitarbeiter.put(mitarbeiter.getId(), mitarbeiter);
-
-                String rückfrage = in.readLine();
-                switch (rückfrage) {
-
-                }
-                //TODO: Fehler abfangen
-            }
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-              //TODO: machen
             }
         } catch (IOException e){
             System.err.println("Error beim lesen vom Server bei = gibAlleMitarbeiter" + e);
@@ -130,7 +124,6 @@ public class Eshopclientsite {
         out.println(artikel.getArtikelbestand());
         out.println(artikel.getArtikelPreis());
 
-
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
@@ -144,6 +137,8 @@ public class Eshopclientsite {
                     throw new ArtikelnameDoppeltException(artikel.getArtikelbezeichnung());
                 case "ERROR 303":
                     throw new IdNichtVorhandenException(artikel.getArtikelnummer());
+                default:
+                    System.out.println("Erfolgreich addArtikel()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -173,6 +168,8 @@ public class Eshopclientsite {
                     throw new ArtikelnameDoppeltException(massengutArtikel.getArtikelbezeichnung());
                 case "ERROR 303":
                     throw new IdNichtVorhandenException(massengutArtikel.getAnzahlMassengut());
+                default:
+                    System.out.println("Erfolgreich addMassengutartikel()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -181,11 +178,17 @@ public class Eshopclientsite {
     }
 
     public List<Ereignis> getEreignisListe() {
-        List<Ereignis> ereignisListe = new ArrayList<Ereignis>();
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
+        List<Ereignis> ereignisListe = new ArrayList<>();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
         Person kundeOderMitarbeiter;
         out.println("getEreignisListe");
         try {
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                //TODO: abfangen
+                default:
+                    System.out.println("Erfolgreich getEreignisListe()");
+            }
             int listengröße = Integer.parseInt(in.readLine());
             for(int i = 0; i < listengröße; i++) {
                 //TODO: Datum kann nicht richtig übergeben werden
@@ -218,9 +221,6 @@ public class Eshopclientsite {
                 Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, kundeOderMitarbeiter, typ);
                 ereignisListe.add(ereignis);
             }
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-            }
             return ereignisListe;
         } catch (IOException e) {
             System.out.println("Fehler beim lesen der Ereignisliste = " + e);
@@ -248,6 +248,8 @@ public class Eshopclientsite {
                     throw new EmailExistiertException(email);
                 case "ERROR 303":
                     throw new IdNichtVorhandenException(mitarbeiter.getId());
+                default:
+                    System.out.println("Erfolgreich addMitarbeiter()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -276,6 +278,8 @@ public class Eshopclientsite {
                     throw new UsernameExistiertException(username);
                 case "ERROR 809":
                     throw new EmailExistiertException(email);
+                default:
+                    System.out.println("Erfolgreich addKunde()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -290,6 +294,14 @@ public class Eshopclientsite {
         out.println(password);
 
         try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 807":
+                    throw new LoginException();
+                default:
+                    System.out.println("Erfolgreich loginMitarbeiter()");
+            }
+            //TODO: Fehler abfangen
             int id = Integer.parseInt(in.readLine());
             String vorname = in.readLine();
             String nachname = in.readLine();
@@ -298,14 +310,6 @@ public class Eshopclientsite {
             String passwort = in.readLine();
             //TODO: Richtige übergabe der ID
             Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                case "ERROR 807":
-                    throw new LoginException();
-            }
-            //TODO: Fehler abfangen
-
             return mitarbeiter;
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = loginMitarbeiter" + e);
@@ -321,6 +325,15 @@ public class Eshopclientsite {
         out.println(password);
 
         try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 807":
+                    throw new LoginException();
+                    //TODO: Fehler abfangen
+                default:
+                    System.out.println("Erfolgreich loginKunde()");
+            }
+
             int id = Integer.parseInt(in.readLine());
             String vorname = in.readLine();
             String nachname = in.readLine();
@@ -332,13 +345,6 @@ public class Eshopclientsite {
             String strasse = in.readLine();
             int strassenNummer = Integer.parseInt(in.readLine());
             Kunde kunde = new Kunde(vorname, nachname, email, username, passwort, id, ort, plz, strasse, strassenNummer);
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                case "ERROR 807":
-                    throw new LoginException();
-            }
-            //TODO: Fehler abfangen
 
             return kunde;
         } catch (IOException e){
@@ -353,19 +359,20 @@ public class Eshopclientsite {
        out.println(artikelnummer);
 
         try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 303":
+                    throw new IdNichtVorhandenException(artikelnummer);
+                default:
+                    System.out.println("Erfolgreich sucheArtikelMitNummer()");
+
+            }
+            //TODO: Fehler abfangen
             int nummer = Integer.parseInt(in.readLine());
             String bezeichnung = in.readLine();
             int bestand = Integer.parseInt(in.readLine());
             double preis = Double.parseDouble(in.readLine());
             Artikel artikel = new Artikel(nummer, bezeichnung, bestand, preis);
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                case "ERROR 303":
-                    throw new IdNichtVorhandenException(artikelnummer);
-
-            }
-            //TODO: Fehler abfangen
             return artikel;
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = aendereArtikelBestand" + e);
@@ -384,7 +391,9 @@ public class Eshopclientsite {
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 303":
-                    throw new IdNichtVorhandenException(mitarbeiter.getId());
+                    throw new IdNichtVorhandenException(artikelnummer);
+                default:
+                    System.out.println("Erfolgreich loescheArtikel()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -406,6 +415,8 @@ public class Eshopclientsite {
                     throw new KeinMassengutException(neuerBestand);
                 case "ERROR 202":
                     throw new MinusZahlException();
+                default:
+                    System.out.println("Erfolgreich aendereArtikelBestand()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -431,6 +442,8 @@ public class Eshopclientsite {
                     throw new MinusZahlException();
                 case "ERROR 405":
                     throw new KeinMassengutException(menge);
+                default:
+                    System.out.println("Erfolgreich artikelInWarenkorbHinzufügen()");
             }
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -445,6 +458,16 @@ public class Eshopclientsite {
         out.println(kunde.getId());
 
         try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 406":
+                    throw new IstLeerException();
+                case "ERROR 303":
+                    //throw new IdNichtVorhandenException(); TODO: Was fehlt noch
+                default:
+                    System.out.println("Erfolgreich gibWarenkorbArtikel()");
+            }
+            //TODO: Fehler abfangen
             int warenkorbInhalt = Integer.parseInt(in.readLine());
             for (int i = 0; i < warenkorbInhalt; i++) {
 
@@ -456,16 +479,6 @@ public class Eshopclientsite {
                 Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand, artikelpreis);
                 artikelInWarenkorb.put(artikel, mengeVonArtikelnImWarenkorb);
             }
-
-
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                case "ERROR 406":
-                    throw new IstLeerException();
-                case "ERROR 303":
-                    //throw new IdNichtVorhandenException(); TODO: Was fehlt noch
-            }
-            //TODO: Fehler abfangen
             return artikelInWarenkorb;
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = gibWarenkorbArtikel()" + e);
@@ -479,16 +492,18 @@ public class Eshopclientsite {
         out.println(kunde.getId());
 
         try{
-            double gesamtPreis = Double.parseDouble(in.readLine());
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 202":
                     throw new IstLeerException();
                 case "ERROR 406":
                     //throw new IdNichtVorhandenException();
+                default:
+                    System.out.println("Erfolgreich gesamtPreis()");
             }
-            return gesamtPreis;
             //TODO: Fehler abfangen
+            double gesamtPreis = Double.parseDouble(in.readLine());
+            return gesamtPreis;
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = gesamtPreis()" + e);
         }
@@ -503,6 +518,8 @@ public class Eshopclientsite {
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 //TODO: machen
+                default:
+                    System.out.println("Erfolgreich warenkorbLeeren()");
             }
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = warenkorbLeeren()" + e);
@@ -515,6 +532,15 @@ public class Eshopclientsite {
         out.println(kunde.getId());
 
         try{
+            String rückfrage = in.readLine();
+            switch (rückfrage) {
+                case "ERROR 406":
+                    throw new IstLeerException();
+                case "ERROR 408":
+                    // throw new BestandNichtAusreichendException();
+                default:
+                    System.out.println("Erfolgreich warenkorbKaufen()");
+            }
             Warenkorb warenkorb = new Warenkorb();
             int warenkorbInhalt = Integer.parseInt(in.readLine());
             for (int i = 0; i < warenkorbInhalt; i++) {
@@ -526,15 +552,7 @@ public class Eshopclientsite {
                 Artikel artikel = new Artikel(artikelnummer, artikelbezeichnung, artikelbestand ,artikelpreis);
                 warenkorb.artikelHinzufuegen(artikel, menge);
             }
-
             Rechnung rechnung = new Rechnung(warenkorb, kunde);
-            String rückfrage = in.readLine();
-            switch (rückfrage) {
-                case "ERROR 406":
-                    throw new IstLeerException();
-                case "ERROR 408":
-                   // throw new BestandNichtAusreichendException();
-            }
             return rechnung;
             //TODO: Fehler abfangen
         } catch (IOException e){
@@ -554,19 +572,13 @@ public class Eshopclientsite {
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 //TODO: machen
+                default:
+                    System.out.println("Erfolgreich bestandImWarenkorbAendern()");
             }
         } catch (IOException e){
             System.err.println("Fehler beim lesen vom Server = bestandImWarenkorbAendern()" + e);
         }
     }
 
-/*
-    public void artikelImWarenkorbEntfernen(Person kunde, Artikel artikel) throws ArtikelExisitiertNichtException, IdNichtVorhandenException {
-        if(kunde instanceof Kunde k){
-            warenkorbManagement.entferneArtikelAusWarenkorb(k, artikel);
-        }
-    }
-
- */
 
 }

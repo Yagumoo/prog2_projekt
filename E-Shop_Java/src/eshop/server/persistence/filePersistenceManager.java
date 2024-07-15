@@ -214,8 +214,10 @@ public class filePersistenceManager {
             Person person;
             while ((line = liesZeile()) != null) {
                 String[] parts = line.split(",");
-                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
-                LocalDate datum = (LocalDate) dateFormat.parse(parts[0]);
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+                //String datumÜbergabe = parts[0];
+                //LocalDate datum = (LocalDate) dateFormat.parse(datumÜbergabe);
+                LocalDate datum = LocalDate.parse(parts[0], dateFormat);
                 String artikelbezeichnung = parts[1];
                 int anzahl = Integer.parseInt(parts[2]);
                 Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(parts[3]);
@@ -231,6 +233,8 @@ public class filePersistenceManager {
                 Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, person, typ);
                 ereignisList.add(ereignis);
             }
+        }catch (Exception e){
+            System.out.println(e);
         } finally {
             close();
         }
@@ -242,7 +246,7 @@ public class filePersistenceManager {
         try {
             for (Ereignis ereignis : ereignisList) {
                 boolean istKunde = ereignis.getKundeOderMitarbeiter() instanceof Kunde;
-                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
                 String daten = String.join(",",
                         dateFormat.format(ereignis.getDatum()),
                         ereignis.getArtikel(),

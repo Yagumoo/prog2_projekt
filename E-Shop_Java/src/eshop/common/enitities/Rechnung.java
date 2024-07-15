@@ -58,7 +58,7 @@ public class Rechnung {
 
     public String simpleDatum() {
         // Formatierung des Datums und der Uhrzeit
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return datumaktuel.format(formatter);
     }
 

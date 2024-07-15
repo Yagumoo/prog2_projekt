@@ -2,6 +2,7 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
+import eshop.common.exceptions.FalscheEingabeException;
 import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.MassengutArtikel;
@@ -10,6 +11,7 @@ import eshop.common.enitities.Mitarbeiter;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.NumberFormat;
 import java.util.Map;
 
 public class ArtikelEntfernen extends JPanel {
@@ -103,14 +105,21 @@ public class ArtikelEntfernen extends JPanel {
         entfernenButton.addActionListener(e -> {
             try {
                 String ID = nummerFeld.getText();
+                if(ID.isEmpty()){
+                    throw new FalscheEingabeException();
+                }
                 int artikelnummer = Integer.parseInt(ID);
-
                 eShopclientsite.loescheArtikel(eingeloggterMitarbeiter, artikelnummer);
                 updateTabelle();
             } catch (IdNichtVorhandenException ex) {
                 //throw new RuntimeException(ex);
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (FalscheEingabeException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Bitte geben Sie eine gültige Artikelnummer ein", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
+
         });
 
         sortByNumberButton.addActionListener(e -> {

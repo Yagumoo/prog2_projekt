@@ -1,160 +1,228 @@
-Tue Jun 11 00:00:00  2024, Monitor,20,NEU,m,1
-Tue Jun 11 00:00:00  2024, Bier/Becks,192,NEU,m,1
-Tue Jun 11 00:00:00  2024, Brot,-661,REDUZIERUNG,m,1
-Tue Jun 11 00:00:00  2024, Brot,661,ERHOEHUNG,m,1
-Tue Jun 11 00:00:00  2024, Brot,6,KAUF,m,1
-Tue Jun 11 00:00:00  2024, Brot,5,KAUF,m,1
-Tue Jun 11 00:00:00  2024, RedBull,4,KAUF,m,1
-Tue Jun 11 00:00:00  2024, Brot,5,KAUF,m,1
-Wed Jun 12 00:00:00  2024, Tisch,6,NEU,m,1
-Wed Jun 12 00:00:00  2024, Fenster,30,NEU,m,1
-Wed Jun 12 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Brot,666,NEU,m,1
-Wed Jun 12 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Stuhl,3,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Brot,666,NEU,m,1
-Wed Jun 12 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Spielkarten,4,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 12 00:00:00  2024, Maus,10,NEU,m,1
-Thu Jun 13 00:00:00  2024, Brot,666,NEU,m,1
-Thu Jun 13 00:00:00  2024, Spielkarten,18,ERHOEHUNG,m,1
-Thu Jun 13 00:00:00  2024, Spielkarten,4,KAUF,k,8
-Thu Jun 13 00:00:00  2024, Brot,6,KAUF,k,8
-Thu Jun 13 00:00:00  2024, Honig,80,KAUF,k,8
-Thu Jun 13 00:00:00  2024, Brot,6,KAUF,k,8
-Thu Jun 13 00:00:00  2024, Brot,6,KAUF,k,8
-Wed Jun 26 00:00:00  2024, Energy,10,KAUF,k,9
-Wed Jun 26 00:00:00  2024, Bier/Franziskaner,48,NEU,m,1
-Wed Jun 26 00:00:00  2024, Bier/Paulaner,800,NEU,m,1
-Wed Jun 26 00:00:00  2024, Bier/Paulaner,800,NEU,m,1
-Wed Jun 26 00:00:00  2024, Bier/Paulaner,800,NEU,m,1
-Wed Jun 26 00:00:00  2024, Bier/Heinicke,800,NEU,m,1
-Tue Jul 09 00:00:00  2024, Dacg,87,NEU,m,1
-Tue Jul 09 00:00:00  2024, Handschuhe,99,NEU,m,1
-Tue Jul 09 00:00:00  2024, Handschuhe,99,NEU,m,1
-Tue Jul 09 00:00:00  2024, Land,1,NEU,m,1
-Tue Jul 09 00:00:00  2024, Dosefutter,1000,NEU,m,1
-Tue Jul 09 00:00:00  2024, Dose,99,NEU,m,1
-Tue Jul 09 00:00:00  2024, Bier/Heinicke,200,ERHOEHUNG,m,1
-Tue Jul 09 00:00:00  2024, Bier/Heinicke,200,ERHOEHUNG,m,1
-Tue Jul 09 00:00:00  2024, Bier/Heinicke,0,ERHOEHUNG,m,1
-Tue Jul 09 00:00:00  2024, Bier/Heinicke,8,ERHOEHUNG,m,1
-Wed Jul 10 00:00:00  2024, Wasser/Saskia,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Bier/Desperados,2000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Waldhonig,666,NEU,m,1
-Wed Jul 10 00:00:00  2024, Elgato/Streamdeck,100,NEU,m,1
-Wed Jul 10 00:00:00  2024, Elgato/Facecam,100,NEU,m,1
-Wed Jul 10 00:00:00  2024, Handy/Samsung S21 Ultra,100,NEU,m,1
-Wed Jul 10 00:00:00  2024, Handy/Samsung S21 Ultra,100,NEU,m,1
-Wed Jul 10 00:00:00  2024, Schweinenacken,500,NEU,m,1
-Wed Jul 10 00:00:00  2024, MioMio/ Mate,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, MioMio/ Mate Ginger,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, MioMio/ Cola,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, MioMio/ Orange+,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Coca Cola,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Coca Cola Zero,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Coca Cola Light,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Pepsi Lime,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Pepsi ,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Pepsi Zero,3000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Englisch Duden,368,NEU,m,1
-Wed Jul 10 00:00:00  2024, Deutsch Duden,472,NEU,m,1
-Wed Jul 10 00:00:00  2024, Papier,480,NEU,m,1
-Wed Jul 10 00:00:00  2024, Manga/ One Piece,50000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Energy/RedBull,50000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Energy/Monster,2000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Energy/RedBull,2000,NEU,m,1
-Wed Jul 10 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Wed Jul 10 00:00:00  2024, Energy/RedBull Lila,24,NEU,m,7
-Fri Jul 12 00:00:00  2024, Energy/Monster,8,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Handy/Samsung S21 Ultra,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Energy/Monster,8,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Energy/Monster,8,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Pepsi Lime,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Manga/ One Piece,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Englisch Duden,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Deutsch Duden,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Elgato/Streamdeck,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Elgato/Streamdeck,1,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Schweinenacken,2,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Pepsi Zero,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Energy/RedBull Lila,8,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,8,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Manga/ One Piece,1,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Pepsi Lime,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Elgato/Streamdeck,1,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Schweinenacken,2,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Energy/RedBull Lila,8,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Pepsi ,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,8,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Schweinenacken,2,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Manga/ One Piece,1,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,8,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Deutsch Duden,1,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,4,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,12
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,24,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,24,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,24,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,24,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,6,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,48,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Bier/Desperados,24,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Elgato/Facecam,3,KAUF,k,9
-Fri Jul 12 00:00:00  2024, Handy/Samsung S21 Ultra,1,KAUF,k,9
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,420,ERHOEHUNG,m,1
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,6,KAUF,k,13
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,198,KAUF,k,9
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Sat Jul 13 00:00:00  2024, Wasser/Saskia,12,KAUF,k,9
-Mon Jul 15 00:00:00  2024, Figur,100,NEU,m,1
-Mon Jul 15 00:00:00  2024, Vitamin D Tabletten,8,NEU,m,2
+2024-06-11,Monitor,20,NEU,m,1
+2024-06-11,Bier/Becks,192,NEU,m,1
+2024-06-11,Brot,-661,REDUZIERUNG,m,1
+2024-06-11,Brot,661,ERHOEHUNG,m,1
+2024-06-11,Brot,6,KAUF,m,1
+2024-06-11,Brot,5,KAUF,m,1
+2024-06-11,RedBull,4,KAUF,m,1
+2024-06-11,Brot,5,KAUF,m,1
+2024-06-12,Tisch,6,NEU,m,1
+2024-06-12,Fenster,30,NEU,m,1
+2024-06-12,Brot,6,KAUF,k,8
+2024-06-12,Brot,666,NEU,m,1
+2024-06-12,Brot,6,KAUF,k,8
+2024-06-12,Brot,6,KAUF,k,8
+2024-06-12,Stuhl,3,KAUF,k,8
+2024-06-12,Brot,666,NEU,m,1
+2024-06-12,Brot,6,KAUF,k,8
+2024-06-12,Spielkarten,4,KAUF,k,8
+2024-06-12,Brot,6,KAUF,k,8
+2024-06-12,Maus,10,NEU,m,1
+2024-06-13,Brot,666,NEU,m,1
+2024-06-13,Spielkarten,18,ERHOEHUNG,m,1
+2024-06-13,Spielkarten,4,KAUF,k,8
+2024-06-13,Brot,6,KAUF,k,8
+2024-06-13,Honig,80,KAUF,k,8
+2024-06-13,Brot,6,KAUF,k,8
+2024-06-13,Brot,6,KAUF,k,8
+2024-06-26,Energy,10,KAUF,k,9
+2024-06-26,Bier/Franziskaner,48,NEU,m,1
+2024-06-26,Bier/Paulaner,800,NEU,m,1
+2024-06-26,Bier/Paulaner,800,NEU,m,1
+2024-06-26,Bier/Paulaner,800,NEU,m,1
+2024-06-26,Bier/Heinicke,800,NEU,m,1
+2024-07-09,Dacg,87,NEU,m,1
+2024-07-09,Handschuhe,99,NEU,m,1
+2024-07-09,Handschuhe,99,NEU,m,1
+2024-07-09,Land,1,NEU,m,1
+2024-07-09,Dosefutter,1000,NEU,m,1
+2024-07-09,Dose,99,NEU,m,1
+2024-07-09,Bier/Heinicke,200,ERHOEHUNG,m,1
+2024-07-09,Bier/Heinicke,200,ERHOEHUNG,m,1
+2024-07-09,Bier/Heinicke,0,ERHOEHUNG,m,1
+2024-07-09,Bier/Heinicke,8,ERHOEHUNG,m,1
+2024-07-10,Wasser/Saskia,3000,NEU,m,1
+2024-07-10,Bier/Desperados,2000,NEU,m,1
+2024-07-10,Waldhonig,666,NEU,m,1
+2024-07-10,Elgato/Streamdeck,100,NEU,m,1
+2024-07-10,Elgato/Facecam,100,NEU,m,1
+2024-07-10,Handy/Samsung S21 Ultra,100,NEU,m,1
+2024-07-10,Handy/Samsung S21 Ultra,100,NEU,m,1
+2024-07-10,Schweinenacken,500,NEU,m,1
+2024-07-10,MioMio/ Mate,3000,NEU,m,1
+2024-07-10,MioMio/ Mate Ginger,3000,NEU,m,1
+2024-07-10,MioMio/ Cola,3000,NEU,m,1
+2024-07-10,MioMio/ Orange+,3000,NEU,m,1
+2024-07-10,Coca Cola,3000,NEU,m,1
+2024-07-10,Coca Cola Zero,3000,NEU,m,1
+2024-07-10,Coca Cola Light,3000,NEU,m,1
+2024-07-10,Pepsi Lime,3000,NEU,m,1
+2024-07-10,Pepsi ,3000,NEU,m,1
+2024-07-10,Pepsi Zero,3000,NEU,m,1
+2024-07-10,Englisch Duden,368,NEU,m,1
+2024-07-10,Deutsch Duden,472,NEU,m,1
+2024-07-10,Papier,480,NEU,m,1
+2024-07-10,Manga/ One Piece,50000,NEU,m,1
+2024-07-10,Energy/RedBull,50000,NEU,m,1
+2024-07-10,Energy/Monster,2000,NEU,m,1
+2024-07-10,Energy/RedBull,2000,NEU,m,1
+2024-07-10,Wasser/Saskia,12,KAUF,k,9
+2024-07-10,Energy/RedBull Lila,24,NEU,m,7
+2024-07-12,Energy/Monster,8,KAUF,k,9
+2024-07-12,Handy/Samsung S21 Ultra,1,KAUF,k,9
+2024-07-12,Energy/Monster,8,KAUF,k,9
+2024-07-12,Energy/Monster,8,KAUF,k,9
+2024-07-12,Pepsi Lime,6,KAUF,k,9
+2024-07-12,Manga/ One Piece,1,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,12,KAUF,k,9
+2024-07-12,Englisch Duden,1,KAUF,k,9
+2024-07-12,Deutsch Duden,1,KAUF,k,9
+2024-07-12,Elgato/Streamdeck,1,KAUF,k,9
+2024-07-12,Elgato/Streamdeck,1,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Schweinenacken,2,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Bier/Desperados,4,KAUF,k,9
+2024-07-12,Wasser/Saskia,6,KAUF,k,9
+2024-07-12,Bier/Desperados,4,KAUF,k,9
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Bier/Desperados,8,KAUF,k,12
+2024-07-12,Manga/ One Piece,1,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/Monster,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Bier/Desperados,8,KAUF,k,12
+2024-07-12,Bier/Desperados,8,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/Monster,8,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Bier/Desperados,4,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Lime,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Pepsi Zero,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Wasser/Saskia,6,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12
+2024-07-12,Energy/RedBull Lila,8,KAUF,k,12

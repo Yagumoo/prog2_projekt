@@ -137,8 +137,7 @@ public class WarenkorbGUI extends JPanel {
 
                 eShopclientsite.bestandImWarenkorbAendern(eingelogterKunde, artikel, bestand);
                 updateTabelle();
-            } catch (IdNichtVorhandenException | MinusZahlException | IstLeerException | KeinMassengutException |
-                     BestandNichtAusreichendException ex) {
+            } catch (IdNichtVorhandenException | MinusZahlException | IstLeerException | KeinMassengutException | BestandNichtAusreichendException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
 

@@ -127,6 +127,7 @@ public class ClientRequestProcessor extends Thread {
                 onlyAlleArtikel.put(entry.getKey(), (Artikel) entry.getValue());
             }
         }
+        out.println("Erfolgreich: gibAlleArtikel()");
         out.println(onlyAlleArtikel.size());
         for(Map.Entry<Integer, Artikel> entry : onlyAlleArtikel.entrySet()){
             out.println(entry.getValue().getArtikelnummer());
@@ -134,7 +135,6 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelbestand());
             out.println(entry.getValue().getArtikelPreis());
         }
-       out.println("Erfolgreich: gibAlleArtikel()");
     }
 
     /**
@@ -150,6 +150,7 @@ public class ClientRequestProcessor extends Thread {
                 onlyAlleMassengutArtikel.put(entry.getKey(), (MassengutArtikel) entry.getValue());
             }
         }
+        out.println("Erfolgreich: gibAlleMassengutartikel()");
         out.println(onlyAlleMassengutArtikel.size());
         for(Map.Entry<Integer, MassengutArtikel> entry : onlyAlleMassengutArtikel.entrySet()){
             out.println(entry.getValue().getArtikelnummer());
@@ -158,7 +159,6 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelPreis());
             out.println(((MassengutArtikel) entry.getValue()).getAnzahlMassengut());
         }
-       out.println("Erfolgreich: gibAlleMassengutartikel()");
     }
 
     /**
@@ -175,6 +175,7 @@ public class ClientRequestProcessor extends Thread {
      * */
     private void gibAlleMitarbeiter(){
         Map<Integer, Mitarbeiter> alleMitarbeiter = eShop.gibAlleMitarbeiter();
+        out.println("Erfolgreich: gibAlleMitarbeiter()");
         out.println(alleMitarbeiter.size());
         for (Map.Entry<Integer, Mitarbeiter> entry : alleMitarbeiter.entrySet()) {
             out.println(entry.getValue().getId());
@@ -184,7 +185,6 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getUsername());
             out.println(entry.getValue().getPassword());
         }
-        out.println("Erfolgreich: gibAlleMitarbeiter()");
     }
 
     /**
@@ -358,13 +358,13 @@ public class ClientRequestProcessor extends Thread {
             String password = in.readLine();
 
             Mitarbeiter mitarbeiter = eShop.loginMitarbeiter(usernameOrEmail, password);
+            out.println("Erfolgreich loginMitarbeiter()");
             out.println(mitarbeiter.getId());
             out.println(mitarbeiter.getVorname());
             out.println(mitarbeiter.getNachname());
             out.println(mitarbeiter.getEmail());
             out.println(mitarbeiter.getUsername());
             out.println(mitarbeiter.getPassword());
-            out.println("Erfolgreich loginMitarbeiter()");
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = loginMitarbeiter()" + e);
             out.println("ERROR 101");
@@ -380,6 +380,7 @@ public class ClientRequestProcessor extends Thread {
             String password = in.readLine();
 
             Kunde kunde = eShop.loginKunde(usernameOrEmail, password);
+            out.println("Erfolgreich loginKunde()");
             out.println(kunde.getId());
             out.println(kunde.getVorname());
             out.println(kunde.getNachname());
@@ -390,7 +391,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(kunde.getPlz());
             out.println(kunde.getStrasse());
             out.println(kunde.getStrassenNummer());
-            out.println("Erfolgreich loginKunde()"); //TODO: BEIM AUSKOMMENTIEREN HÄNGT SICH DAS PROGRAMM AUF
+            //TODO: BEIM AUSKOMMENTIEREN HÄNGT SICH DAS PROGRAMM AUF
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
             out.println("ERROR 101");
@@ -428,11 +429,11 @@ public class ClientRequestProcessor extends Thread {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
             Artikel artikel = eShop.sucheArtikelMitNummer(artikenummer);
+            out.println("Erfolgreich sucheArtikelMitNummer()");
             out.println(artikel.getArtikelnummer());
             out.println(artikel.getArtikelbestand());
             out.println(artikel.getArtikelbestand());
             out.println(artikel.getArtikelPreis());
-            out.println("Erfolgreich sucheArtikelMitNummer()"); //TODO: WENN WEG HÄNGT AUF
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 101");
@@ -444,6 +445,7 @@ public class ClientRequestProcessor extends Thread {
 
     private void getEreignisListe() {
         List<Ereignis> ereignisListe = eShop.getEreignisListe();
+        out.println("Erfolgreich getEreignisListe()");
         out.println(ereignisListe.size());
         for(Ereignis ereignis :ereignisListe) {
             out.println(ereignis.getDatum());
@@ -482,7 +484,6 @@ public class ClientRequestProcessor extends Thread {
             }
             out.println(ereignis.getTyp());
         }
-        out.println("Erfolgreich getEreignisListe()");
     }
 
     private void artikelInWarenkorbHinzufügen(){
@@ -517,8 +518,8 @@ public class ClientRequestProcessor extends Thread {
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
 
             double gesamtpreis = eShop.gesamtPreis(kunde);
-            out.println(gesamtpreis);
             out.println("Erfolgreich: gesamtPreis()");
+            out.println(gesamtpreis);
         } catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
             out.println("ERROR 101");
@@ -535,7 +536,6 @@ public class ClientRequestProcessor extends Thread {
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
-
             eShop.warenkorbLeeren(kunde);
             out.println("Erfolgreich: warenkorbLeeren()");
         } catch (IOException e){
@@ -551,11 +551,9 @@ public class ClientRequestProcessor extends Thread {
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
-
             int artikelnummer = Integer.parseInt(in.readLine());
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
             int menge = Integer.parseInt(in.readLine());
-
             eShop.bestandImWarenkorbAendern(kunde, artikel, menge);
             out.println("Erfolgreich: bestandImWarenkorbAendern()");
         } catch (IOException e) {
@@ -579,19 +577,13 @@ public class ClientRequestProcessor extends Thread {
         }
     }
 
-//    public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException {
-//    if (kunde instanceof Kunde k) {
-//        Warenkorb wk = warenkorbManagement.getWarenkorb(k);
-//        return wk.getWarenkorbMap();
-//    } else {
-//        throw new IstLeerException();
-//    }
     private void gibWarenkorbArtikel(){
         //Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
             Map<Artikel, Integer> warenKorbInhalt = eShop.gibWarenkorbArtikel(kunde);
+            out.println("Erfolgreich: gibWarenkorbArtikel()");
             out.println(warenKorbInhalt.size());
             for(Map.Entry<Artikel, Integer> entry: warenKorbInhalt.entrySet()) {
                 out.println(entry.getValue());
@@ -600,7 +592,6 @@ public class ClientRequestProcessor extends Thread {
                 out.println(entry.getKey().getArtikelbestand());
                 out.println(entry.getKey().getArtikelPreis());
             }
-            out.println("Erfolgreich: gibWarenkorbArtikel()"); //TODO: WENN NICHT DA, DANN KEINE KUNDENSEITE
         } catch (IOException  e) {
             System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
             out.println("ERROR 101");
@@ -614,13 +605,13 @@ public class ClientRequestProcessor extends Thread {
 
     }
     //public Kunde(String vorname, String nachname, String email, String username, String password, int id, String ort, int plz, String strasse, int strassenNummer) {
-    private void warenkorbKaufen(){ //TODO: HÄNGT SICH AUF
+    private void warenkorbKaufen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
-
             Rechnung rechnung = eShop.warenkorbKaufen(kunde);
             Warenkorb warenkorb = rechnung.getWarenkorb();
+            out.println("Erfolgreich: warenkorbKaufen()");
             out.println(warenkorb.getWarenkorbMap().size());
             for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
                 out.println(entry.getValue());
@@ -629,7 +620,6 @@ public class ClientRequestProcessor extends Thread {
                 out.println(entry.getKey().getArtikelbestand());
                 out.println(entry.getKey().getArtikelPreis());
             }
-            //out.println("Erfolgreich: warenkorbKaufen()");
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
             out.println("ERROR 101");
@@ -646,6 +636,8 @@ public class ClientRequestProcessor extends Thread {
     }
 
     /*
+        Erfolgreich => Erfolgreich ...;
+
         IOException => "ERROR 101"
 
         MinusZahlException => "ERROR 202"
