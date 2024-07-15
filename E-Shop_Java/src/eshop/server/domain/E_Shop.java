@@ -5,6 +5,7 @@ import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.List;
@@ -45,11 +46,11 @@ public class E_Shop {
         return kundenManagement.gibAlleKunden();
     }
 
-    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
-        if (mitarbeiter instanceof Mitarbeiter m) {
+    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException,ArtikelnameDoppeltException  {
+        if (mitarbeiter instanceof Mitarbeiter) {
             artikelManagement.addArtikel(artikel);
             //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
-            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), m, Ereignis.EreignisTyp.NEU);
+            Ereignis neuesEreignis = new Ereignis(LocalDate.now(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.NEU);
             ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
         }
     }
@@ -119,7 +120,7 @@ public class E_Shop {
                 }
 
                 // Erstellen eines neuen Ereignisses und Hinzufügen zum Ereignis-Management
-                Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
+                Ereignis neuesEreignis = new Ereignis(LocalDate.now(), artikel.getArtikelbezeichnung(), differenz, mitarbeiter, ereignisTyp);
                 ereignisManagement.addEreignis(neuesEreignis);
             }
         }
@@ -180,7 +181,7 @@ public class E_Shop {
         for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();
             int menge = entry.getValue();
-            Ereignis neuesEreignis = new Ereignis(new Date(), artikel.getArtikelbezeichnung(), menge, kunde, Ereignis.EreignisTyp.KAUF);
+            Ereignis neuesEreignis = new Ereignis(LocalDate.now(), artikel.getArtikelbezeichnung(), menge, kunde, Ereignis.EreignisTyp.KAUF);
             ereignisManagement.addEreignis(neuesEreignis);
         }
 

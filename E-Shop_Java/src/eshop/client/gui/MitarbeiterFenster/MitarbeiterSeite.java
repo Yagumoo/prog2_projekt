@@ -2,9 +2,7 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.common.exceptions.DoppelteIdException;
-import eshop.common.exceptions.KeinMassengutException;
-import eshop.common.exceptions.MinusZahlException;
+import eshop.common.exceptions.*;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.MassengutArtikel;
 import eshop.common.enitities.Mitarbeiter;
@@ -191,7 +189,7 @@ public class MitarbeiterSeite extends JPanel {
                 double preis = Double.parseDouble(Preis);
                 int paketgröße = Integer.parseInt(Paketgröße);
                 //TODO: gucken ob geht => (paketgröße != 1)
-                if (!Paketgröße.isEmpty() || paketgröße != 1) {
+                if (!Paketgröße.isEmpty() /*|| paketgröße != 1*/) {
                     //int paketgröße = Integer.parseInt(Paketgröße);
                     MassengutArtikel massengutArtikel = new MassengutArtikel(id, Bezeichnung, menge, preis, paketgröße);
                     eShopclientsite.addMassengutartikel(eingeloggterMitarbeiter, massengutArtikel);
@@ -204,7 +202,7 @@ public class MitarbeiterSeite extends JPanel {
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer, Menge oder Preis ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
-            } catch (DoppelteIdException | MinusZahlException | KeinMassengutException ex) {
+            } catch (DoppelteIdException | MinusZahlException | KeinMassengutException | ArtikelnameDoppeltException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });

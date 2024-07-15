@@ -149,7 +149,7 @@ public class WarenkorbGUI extends JPanel {
                 double gesamtRechnungspreis = eShopclientsite.gesamtPreis(eingelogterKunde);
                 Rechnung rechnung = eShopclientsite.warenkorbKaufen((Kunde) eingelogterKunde);
                 zeigeRechnungPopup(rechnung.getKunde(), rechnung, gesamtRechnungspreis);
-            } catch (BestandNichtAusreichendException | IstLeerException ex) {
+            } catch (BestandNichtAusreichendException | IstLeerException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
             updateTabelle();
@@ -192,7 +192,7 @@ public class WarenkorbGUI extends JPanel {
             };
             tableModel.addRow(gesamtPreisDaten);
 
-        } catch (IstLeerException ex) {
+        } catch (IstLeerException | IdNichtVorhandenException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }

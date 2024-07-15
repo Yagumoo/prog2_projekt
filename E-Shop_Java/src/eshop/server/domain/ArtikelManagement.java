@@ -14,8 +14,6 @@ public class ArtikelManagement {
     private filePersistenceManager fpm; // = new filePersistenceManager();
     private final Warenkorb warenkorb = new Warenkorb();
     private Map<Integer, Artikel> artikelListe = new HashMap<>();
-    private final Map<String, Artikel> artikelListe2 = new HashMap<>();
-    private final List<Artikel> artikelListeAsList = new ArrayList<>();
     private EreignisManagement ereignisManagement;
 
     public ArtikelManagement(filePersistenceManager fpm) {
@@ -36,7 +34,7 @@ public class ArtikelManagement {
 
     }
 
-    public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException {
+    public void addArtikel(Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException,ArtikelnameDoppeltException {
         if(artikel.getArtikelnummer() <=0 || artikel.getArtikelbestand() <=0 || artikel.getArtikelPreis() <0){
             throw new MinusZahlException();
 
@@ -45,6 +43,14 @@ public class ArtikelManagement {
         if (sucheArtikel(artikel.getArtikelnummer())) {
             throw new DoppelteIdException(artikel.getArtikelnummer());
         }
+
+        for (Artikel bestimmterArtikel : artikelListe.values()){
+            if (bestimmterArtikel.getArtikelbezeichnung().equals(artikel.getArtikelbezeichnung())) {
+                throw new ArtikelnameDoppeltException(artikel.getArtikelbezeichnung());
+            }
+        }
+
+
         // Überprüfen, ob es sich um ein Massengut handelt und ob die Anzahl korrekt ist
         if (artikel instanceof MassengutArtikel) {
             MassengutArtikel massengutArtikel = (MassengutArtikel) artikel;
@@ -107,13 +113,6 @@ public class ArtikelManagement {
             throw new IdNichtVorhandenException(artikelnummer);
         }
         artikelListe.remove(artikelnummer);
-    }
-
-    public Artikel gibArtikelPerName(String artikelbezeichnung)throws ArtikelExisitiertNichtException {
-        if (!artikelListe.containsKey(artikelbezeichnung)) {
-            throw new ArtikelExisitiertNichtException(artikelbezeichnung);
-        }
-        return artikelListe.get(artikelbezeichnung);
     }
 
     public Artikel gibArtikelPerId(int artikelnummer) throws IdNichtVorhandenException{

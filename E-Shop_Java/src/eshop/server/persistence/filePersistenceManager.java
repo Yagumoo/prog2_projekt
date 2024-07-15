@@ -3,11 +3,9 @@ package eshop.server.persistence;
 import eshop.common.enitities.*;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -216,8 +214,8 @@ public class filePersistenceManager {
             Person person;
             while ((line = liesZeile()) != null) {
                 String[] parts = line.split(",");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                Date datum = sdf.parse(parts[0]);
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
+                LocalDate datum = (LocalDate) dateFormat.parse(parts[0]);
                 String artikelbezeichnung = parts[1];
                 int anzahl = Integer.parseInt(parts[2]);
                 Ereignis.EreignisTyp typ = Ereignis.EreignisTyp.valueOf(parts[3]);
@@ -244,9 +242,9 @@ public class filePersistenceManager {
         try {
             for (Ereignis ereignis : ereignisList) {
                 boolean istKunde = ereignis.getKundeOderMitarbeiter() instanceof Kunde;
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.GERMANY);
                 String daten = String.join(",",
-                        sdf.format(ereignis.getDatum()),
+                        dateFormat.format(ereignis.getDatum()),
                         ereignis.getArtikel(),
                         String.valueOf(ereignis.getAnzahl()),
                         ereignis.getTyp().toString(),

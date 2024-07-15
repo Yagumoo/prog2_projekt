@@ -22,27 +22,22 @@ public class Artikel{
     //TODO: Artikel name 1 mal benutzt bar
 
     public int getArtikelnummer() {
-
         return artikelnummer;
     }
 
     public void setArtikelnummer(int artikelNummer) {
-
         this.artikelnummer = artikelNummer;
     }
 
     public String getArtikelbezeichnung() {
-
         return artikelbezeichnung;
     }
 
     public void setArtikelbezeichnung(String artikelbezeichnung) {
-
         this.artikelbezeichnung = artikelbezeichnung;
     }
 
     public double getArtikelPreis() {
-
         return artikelPreis;
     }
 
@@ -51,12 +46,10 @@ public class Artikel{
     }
 
     public int getArtikelbestand() {
-
         return artikelbestand;
     }
 
     public void setArtikelbestand(int artikelBestand) {
-
         this.artikelbestand = artikelBestand;
     }
 

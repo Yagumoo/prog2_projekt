@@ -9,7 +9,11 @@ import java.util.Map;
 import java.time.LocalDate;
 import java.text.SimpleDateFormat;
 
-
+/**
+ * Repräsentiert eine Rechnung für eine Bestellung oder einen Kauf.
+ *
+ * <p>Diese Klasse enthält Informationen über die Rechnung, einschließlich der Rechnungsnummer, des Datums, des Kunden, der Artikel und des Gesamtbetrags.</p>
+ */
 public class Rechnung {
     private Artikel artikel;
     private Warenkorb warenkorb;

@@ -147,7 +147,7 @@ public class KundenSeite extends JPanel {
         });
 
         entfernenButton.addActionListener(e -> {
-            eShopclientsite.warenkorbLeeren(eingelogterKunde);
+            //eShopclientsite.warenkorbLeeren(eingelogterKunde);
             updateTabelle();  // Tabelle aktualisieren
         });
 

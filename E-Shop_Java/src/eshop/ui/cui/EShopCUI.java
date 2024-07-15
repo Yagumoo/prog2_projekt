@@ -250,7 +250,7 @@ public class EShopCUI {
             }
             eShop.addArtikel(eingeloggtePerson, artikel);
 
-        } catch (FalscheEingabeException | MinusZahlException | KeinMassengutException e){
+        } catch (FalscheEingabeException | MinusZahlException | KeinMassengutException | ArtikelnameDoppeltException e){
             System.err.println(e.getMessage());
         } catch (Exception e){
             System.out.println(e.getMessage());

@@ -134,7 +134,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelbestand());
             out.println(entry.getValue().getArtikelPreis());
         }
-        //out.println("Erfolgreich: gibAlleArtikel()");
+       out.println("Erfolgreich: gibAlleArtikel()");
     }
 
     /**
@@ -158,7 +158,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getArtikelPreis());
             out.println(((MassengutArtikel) entry.getValue()).getAnzahlMassengut());
         }
-        //out.println("Erfolgreich: gibAlleMassengutartikel()");
+       out.println("Erfolgreich: gibAlleMassengutartikel()");
     }
 
     /**
@@ -175,6 +175,7 @@ public class ClientRequestProcessor extends Thread {
      * */
     private void gibAlleMitarbeiter(){
         Map<Integer, Mitarbeiter> alleMitarbeiter = eShop.gibAlleMitarbeiter();
+        out.println(alleMitarbeiter.size());
         for (Map.Entry<Integer, Mitarbeiter> entry : alleMitarbeiter.entrySet()) {
             out.println(entry.getValue().getId());
             out.println(entry.getValue().getVorname());
@@ -204,11 +205,11 @@ public class ClientRequestProcessor extends Thread {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
             String artikelbezeichnung = in.readLine();
-            int artikelpreis = Integer.parseInt(in.readLine());
             int artikelbestand = Integer.parseInt(in.readLine());
+            double artikelpreis = Double.parseDouble(in.readLine());
 
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
-            Artikel artikel = new Artikel(artikelNummer, artikelbezeichnung, artikelpreis, artikelbestand);
+            Artikel artikel = new Artikel(artikelNummer, artikelbezeichnung, artikelbestand, artikelpreis);
             eShop.addArtikel(mitarbeiter, artikel);
             out.println("Erfolgreich: addArtikel()");
         } catch (IOException e) {
@@ -216,16 +217,19 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
             System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         } catch (DoppelteIdException e){
             System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 304");
         } catch (MinusZahlException e){
             System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 202");
         } catch (KeinMassengutException e){
             System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
-            out.println("ERROR 707");
+            out.println("ERROR 405");
+        } catch (ArtikelnameDoppeltException e){
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
+            out.println("ERROR 407");
         }
     }
 
@@ -234,12 +238,12 @@ public class ClientRequestProcessor extends Thread {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
             String artikelbezeichnung = in.readLine();
-            int artikelpreis = Integer.parseInt(in.readLine());
             int artikelbestand = Integer.parseInt(in.readLine());
+            double artikelpreis = Double.parseDouble(in.readLine());
             int artikelMassengut = Integer.parseInt(in.readLine());
 
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
-            Artikel massengutArtikel = new MassengutArtikel(artikelNummer, artikelbezeichnung, artikelpreis, artikelbestand, artikelMassengut);
+            Artikel massengutArtikel = new MassengutArtikel(artikelNummer, artikelbezeichnung, artikelbestand, artikelpreis, artikelMassengut);
             eShop.addArtikel(mitarbeiter, massengutArtikel);
             out.println("Erfolgreich: addMassengutartikel()");
         } catch (IOException e) {
@@ -247,16 +251,19 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
             System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 303");
         } catch (DoppelteIdException e){
             System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 304");
         } catch (MinusZahlException e){
             System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
-            out.println("ERROR 707");
-        } catch (KeinMassengutException e){
+            out.println("ERROR 202");
+        } catch (ArtikelnameDoppeltException e){
             System.err.println("Error beim lesen vom Client bei = addMassengutartikel()" + e);
-            out.println("ERROR 808");
+            out.println("ERROR 404");
+        } catch (KeinMassengutException e){
+            System.err.println("Error beim lesen vom Client bei = addArtikel()" + e);
+            out.println("ERROR 405");
         }
     }
 
@@ -274,13 +281,13 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch(IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 303");
         } catch(MinusZahlException e) {
             System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 202");
         } catch(KeinMassengutException e) {
             System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
-            out.println("ERROR 707");
+            out.println("ERROR 405");
         }
         //TODO: Fehler zurük zum client senden wie oben ^
 
@@ -305,13 +312,13 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (DoppelteIdException e) {
             System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 304");
         } catch (UsernameExistiertException e) {
             System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 808");
         } catch (EmailExistiertException e) {
             System.err.println("Error beim lesen vom Client bei = addKunde()" + e);
-            out.println("ERROR 707");
+            out.println("ERROR 809");
         }
     }
 
@@ -332,16 +339,16 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (DoppelteIdException e) {
             System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 304");
         } catch (UsernameExistiertException e) {
             System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 808");
         } catch (EmailExistiertException e) {
             System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
-            out.println("ERROR 707");
+            out.println("ERROR 809");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = addMitarbeiter()" + e);
-            out.println("ERROR 808");
+            out.println("ERROR 303");
         }
     }
 
@@ -363,7 +370,7 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (LoginException e) {
             System.err.println("Error beim lesen vom Client bei = loginMitarbeiter()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 807");
         }
     }
 
@@ -389,7 +396,7 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (LoginException e) {
             System.err.println("Error beim lesen vom Client bei = loginKunde()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 807");
         }
     }
 
@@ -412,7 +419,7 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = loescheArtikel()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         }
 
     }
@@ -420,14 +427,18 @@ public class ClientRequestProcessor extends Thread {
     private void sucheArtikelMitNummer() {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
-            eShop.sucheArtikelMitNummer(artikenummer);
-            //out.println("Erfolgreich sucheArtikelMitNummer()"); //TODO: WENN WEG HÄNGT AUF
+            Artikel artikel = eShop.sucheArtikelMitNummer(artikenummer);
+            out.println(artikel.getArtikelnummer());
+            out.println(artikel.getArtikelbestand());
+            out.println(artikel.getArtikelbestand());
+            out.println(artikel.getArtikelPreis());
+            out.println("Erfolgreich sucheArtikelMitNummer()"); //TODO: WENN WEG HÄNGT AUF
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         }
     }
 
@@ -438,7 +449,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(ereignis.getDatum());
             out.println(ereignis.getArtikel());
             out.println(ereignis.getAnzahl());
-            out.println(ereignis.getKundeOderMitarbeiter());
+            //out.println(ereignis.getKundeOderMitarbeiter());
             try {
                 if(ereignis.getKundeOderMitarbeiter() instanceof Mitarbeiter){
                     Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(ereignis.getKundeOderMitarbeiter().getId());
@@ -464,8 +475,10 @@ public class ClientRequestProcessor extends Thread {
                     out.println(kunde.getStrasse());
                     out.println(kunde.getStrassenNummer());
                 }
-            }catch (IdNichtVorhandenException e){
-                //System.out.println("Fehler bei getEreignisListe ID konnte nicht gefunden werden");
+            }
+            catch (IdNichtVorhandenException e){
+                System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
+                out.println("ERROR 303");
             }
             out.println(ereignis.getTyp());
         }
@@ -488,13 +501,13 @@ public class ClientRequestProcessor extends Thread {
             throw new RuntimeException(e);
         } catch (MinusZahlException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 202");
         } catch (KeinMassengutException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 405");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = artikelInWarenkorbHinzufügen()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 303");
         }
     }
 
@@ -511,10 +524,10 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         } catch (IstLeerException e) {
             System.err.println("Error beim lesen vom Client bei = gesamtPreis()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 406");
         }
     }
 
@@ -524,13 +537,13 @@ public class ClientRequestProcessor extends Thread {
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
 
             eShop.warenkorbLeeren(kunde);
-            //out.println("Erfolgreich: warenkorbLeeren()");
+            out.println("Erfolgreich: warenkorbLeeren()");
         } catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         }
     }
 
@@ -544,25 +557,25 @@ public class ClientRequestProcessor extends Thread {
             int menge = Integer.parseInt(in.readLine());
 
             eShop.bestandImWarenkorbAendern(kunde, artikel, menge);
-            //out.println("Erfolgreich: bestandImWarenkorbAendern()");
+            out.println("Erfolgreich: bestandImWarenkorbAendern()");
         } catch (IOException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         } catch (BestandNichtAusreichendException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 408");
         } catch (IstLeerException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 406");
         } catch (KeinMassengutException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
-            out.println("ERROR 707");
+            out.println("ERROR 405");
         } catch (MinusZahlException e) {
             System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
-            out.println("ERROR 808");
+            out.println("ERROR 202");
         }
     }
 
@@ -593,10 +606,10 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         } catch (IstLeerException e) {
             System.err.println("Error beim lesen vom Client bei = gibWarenkorbArtikel()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 406");
         }
 
     }
@@ -622,14 +635,47 @@ public class ClientRequestProcessor extends Thread {
             out.println("ERROR 101");
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
-            out.println("ERROR 404");
+            out.println("ERROR 303");
         } catch (BestandNichtAusreichendException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
-            out.println("ERROR 505");
+            out.println("ERROR 408");
         } catch (IstLeerException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbKaufen()" + e);
-            out.println("ERROR 606");
+            out.println("ERROR 406");
         }
     }
+
+    /*
+        IOException => "ERROR 101"
+
+        MinusZahlException => "ERROR 202"
+
+        IdNichtVorhandenException => "ERROR 303"
+
+        DoppelteIdException => "ERROR 304"
+
+        ArtikelnameDoppeltException => "ERROR 404"
+
+        KeinMassengutException => "ERROR 405"
+
+        IstLeerException => "ERROR 406"
+
+        ArtikelnameDoppeltException =>"ERROR 407"
+
+        BestandNichtAusreichendException =>"ERROR 408"
+
+        LoginException => "ERROR 807"
+
+        UsernameExistiertException => "ERROR 808"
+
+        EmailExistiertException => "ERROR 809"
+
+
+        UngueltigeArtikelBezeichnung => /
+        FalscheEingabeException => only CUI
+        FilterException => only Clientseite
+        WertNichtGefundenException => only Clientseite
+        ArtikelExisitiertNichtException => only Warenkorbleeren CUI
+     */
 
 }
