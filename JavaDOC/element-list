@@ -1,0 +1,11 @@
+eshop.client.clientServerVerbindung
+eshop.client.gui.KundenFenster
+eshop.client.gui.MitarbeiterFenster
+eshop.client.starten
+eshop.common.enitities
+eshop.common.exceptions
+eshop.server.domain
+eshop.server.persistence
+eshop.server.serverClientVerbindung
+eshop.ui
+eshop.ui.cui
