@@ -57,6 +57,10 @@ public class ArtikelManagement {
             int massengutAnzahl = massengutArtikel.getAnzahlMassengut();
             int artikelbestand = artikel.getArtikelbestand();
 
+//            if(((MassengutArtikel) artikel).getAnzahlMassengut() <= 0) {
+//                throw new MinusZahlException();
+//            }
+
             if (artikelbestand % massengutAnzahl != 0) {
                 throw new KeinMassengutException(massengutAnzahl);
             }

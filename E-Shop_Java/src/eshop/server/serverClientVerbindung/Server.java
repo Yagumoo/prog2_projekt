@@ -26,6 +26,7 @@ public class Server {
                 // akzeptiert immer wieder die Verbindung eines neuen Clients
                 Socket newClientSocket = serverSocket.accept();
 
+
                 // erstellt neuen Thread für den Client
                 ClientRequestProcessor clientHandler = new ClientRequestProcessor(newClientSocket, eShop);
                 // startet den Thread
@@ -35,6 +36,7 @@ public class Server {
             }
         } catch (IOException e) {
             System.err.println("Connection failed");
+
         }
 
     }

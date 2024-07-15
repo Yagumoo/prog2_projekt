@@ -47,6 +47,7 @@ public class ClientRequestProcessor extends Thread {
             } catch (IOException e) {
                 System.err.println("Error beim lesen vom Client " + e);
                 break;
+
             }
             //TODO: SIMONS KACK AUSGABEN Prüfen
             switch (input) {
@@ -182,6 +183,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(entry.getValue().getEmail());
             out.println(entry.getValue().getUsername());
             out.println(entry.getValue().getPassword());
+
         }
     }
 
@@ -409,13 +411,15 @@ public class ClientRequestProcessor extends Thread {
     private void loescheArtikel(){
         try{
             int mitarbeiterID = Integer.parseInt(in.readLine());
-            Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             int artikelnummer = Integer.parseInt(in.readLine());
+            Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
             eShop.loescheArtikel(mitarbeiter, artikelnummer);
             out.println("Erfolgreich loescheArtikel()");
+
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = loescheArtikel()" + e);
             out.println("ERROR 101");
+
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = loescheArtikel()" + e);
             out.println("ERROR 303");
@@ -432,6 +436,7 @@ public class ClientRequestProcessor extends Thread {
             out.println(artikel.getArtikelbestand());
             out.println(artikel.getArtikelbestand());
             out.println(artikel.getArtikelPreis());
+
         }catch (IOException e){
             System.err.println("Error beim lesen vom Client bei = sucheArtikelMitNummer()" + e);
             out.println("ERROR 101");
