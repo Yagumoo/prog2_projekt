@@ -1089,15 +1089,15 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-                case"ERROR 303":
+                case "ERROR 303":
                     throw new IdNichtVorhandenException(artikel.getArtikelnummer());
-                case "408":
+                case "ERROR 408":
                     throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
-                case "405":
+                case "ERROR 405":
                     throw new KeinMassengutException(artikel.getArtikelbestand());
-                case "202":
+                case "ERROR 202":
                     throw new MinusZahlException();
-                case "406":
+                case "ERROR 406":
                     throw new IstLeerException();
                 //TODO: machen
                 default:
