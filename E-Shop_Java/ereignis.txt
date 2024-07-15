@@ -241,3 +241,7 @@
 2024-07-15,Hecht,1,KAUF,k,9
 2024-07-15,Hecht,2,KAUF,k,9
 2024-07-15,Hecht,1,KAUF,k,9
+2024-07-15,Polllack,90,KAUF,k,9
+2024-07-15,Polllack,90,ERHOEHUNG,m,1
+2024-07-15,Polllack,4,KAUF,k,9
+2024-07-15,Polllack,4,KAUF,k,12
