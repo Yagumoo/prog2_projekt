@@ -3,5 +3,5 @@ Marvin,Brockhoff,sinan@gmail.com,Brock,12345,2
 Pascal,Wagner,Wagner@gmail.com,Wage,12345,3
 Simon,Brock,Brock@gmail.com,Brocken,12345,4
 Klaus,Tischler,Tischler@gmail.com,Tischi,12345,5
-Marvin,Klattenhoff,MkN_@gg.de,MkN,ziege,6
+Marvin,Klattenhoff,MkN_@gg.de,mk,mk,6
 Maximilian,Stenzel,stenz@gmail.com,Yakumo,12345,7
