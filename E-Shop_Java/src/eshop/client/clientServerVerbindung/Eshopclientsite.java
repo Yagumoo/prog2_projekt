@@ -66,6 +66,12 @@ public class Eshopclientsite {
                 int massengutAnzahl = Integer.parseInt(in.readLine());
                 MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massengutAnzahl);
                 alleArtikel.put(nummer, massengutArtikel);
+
+                String rückfrage = in.readLine();
+                switch (rückfrage) {
+
+                }
+                //TODO: Fehler abfangen
             }
 
             String rückfrage = in.readLine();
@@ -95,6 +101,12 @@ public class Eshopclientsite {
                 //TODO: Richtige übergabe der ID
                 Mitarbeiter mitarbeiter = new Mitarbeiter(vorname, nachname, email, username, passwort, id);
                 alleMitarbeiter.put(mitarbeiter.getId(), mitarbeiter);
+
+                String rückfrage = in.readLine();
+                switch (rückfrage) {
+
+                }
+                //TODO: Fehler abfangen
             }
             String rückfrage = in.readLine();
             switch (rückfrage) {
@@ -411,8 +423,6 @@ public class Eshopclientsite {
         out.println(menge);
 
         try{
-
-
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 303":
