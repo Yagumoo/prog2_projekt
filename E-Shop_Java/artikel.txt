@@ -1,5 +1,5 @@
-1,Wasser/Saskia,2742,4.99,6
-2,Bier/Desperados,1896,11.99,4
+1,Wasser/Saskia,2736,4.99,6
+2,Bier/Desperados,1888,11.99,4
 3,Elgato/Streamdeck,97,149.99,1
 4,Elgato/Facecam,97,149.99,1
 5,Handy/Samsung S21 Ultra,98,1199.99,1
