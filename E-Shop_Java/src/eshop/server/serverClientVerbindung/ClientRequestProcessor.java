@@ -136,7 +136,7 @@ public class ClientRequestProcessor extends Thread {
      * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
      * @Param Artikel Holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
      * */
-    private void gibAlleArtikel(){
+    private synchronized void gibAlleArtikel(){
         Map<Integer, Artikel> alleArtikel = eShop.gibAlleArtikel();
         Map<Integer, Artikel> onlyAlleArtikel = new HashMap<Integer, Artikel>();
         for(Map.Entry<Integer, Artikel> entry : alleArtikel.entrySet()) {
@@ -159,7 +159,7 @@ public class ClientRequestProcessor extends Thread {
      * @Param Integer ist der Key-Wert in der Map und steht für die eindeutige Artikelnummer
      * @Param Artikel holt sich das Artikel-Objekt aus der Map zum zugehörigen Key
      * */
-    private void gibAlleMassengutartikel(){
+    private synchronized void gibAlleMassengutartikel(){
         Map<Integer, Artikel> alleMassengutartikel = eShop.gibAlleArtikel();
         Map<Integer, MassengutArtikel> onlyAlleMassengutArtikel = new HashMap<Integer, MassengutArtikel>();
         for(Map.Entry<Integer, Artikel> entry : alleMassengutartikel.entrySet()) {
@@ -190,7 +190,7 @@ public class ClientRequestProcessor extends Thread {
      * @Param out.println(entry.getValue().getUsername()); holt sich den Username aus der Map
      * @Param out.println(entry.getValue().getPassword()); holt sich das Passwort aus der Map
      * */
-    private void gibAlleMitarbeiter(){
+    private synchronized void gibAlleMitarbeiter(){
         Map<Integer, Mitarbeiter> alleMitarbeiter = eShop.gibAlleMitarbeiter();
         out.println("Erfolgreich: gibAlleMitarbeiter()");
         out.println(alleMitarbeiter.size());
@@ -217,7 +217,7 @@ public class ClientRequestProcessor extends Thread {
      * @Param MinusZahlException wird geworfen, wenn eine Negative Zahl gegeben wurde
      * @Param KeinMassengutException wird geworfen, wenn der Artikel kein Massengut ist
      * */
-    private void addArtikel(){
+    private synchronized void addArtikel(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
@@ -275,7 +275,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws ArtikelnameDoppeltException Wenn bereits ein Artikel mit der gleichen Bezeichnung existiert.
      * @throws KeinMassengutException Wenn die übergebene Anzahl für Massengutartikel nicht den Vorgaben entspricht.
      */
-    private void addMassengutartikel(){
+    private synchronized void addMassengutartikel(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             int artikelNummer = Integer.parseInt(in.readLine());
@@ -317,7 +317,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws MinusZahlException                wenn der eingegebene Bestandswert negativ ist
      * @throws KeinMassengutException            wenn der Artikel kein Massengut ist und der Bestandswert größer als 1 ist
      */
-    private void aendereArtikelBestand()  {
+    private synchronized void aendereArtikelBestand()  {
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
@@ -351,7 +351,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws UsernameExistiertException    wenn der eingegebene Benutzername bereits existiert
      * @throws EmailExistiertException       wenn die eingegebene E-Mail-Adresse bereits existiert
      */
-    private void addKunde(){
+    private synchronized void addKunde(){
         try {
             String vorname = in.readLine();
             String nachname = in.readLine();
@@ -389,7 +389,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws EmailExistiertException       Wenn die E-Mail-Adresse bereits existiert.
      * @throws IdNichtVorhandenException     Wenn die Mitarbeiter-ID nicht gefunden wird.
      */
-    private void addMitarbeiter(){
+    private synchronized void addMitarbeiter(){
         try {
             int mitarbeiterID = Integer.parseInt(in.readLine());
             String vorname = in.readLine();
@@ -425,7 +425,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IOException falls ein Fehler beim Lesen vom Client auftritt
      * @throws LoginException falls der Login fehlschlägt
      */
-    private void loginMitarbeiter()  {
+    private synchronized void loginMitarbeiter()  {
         try {
             String usernameOrEmail = in.readLine();
             String password = in.readLine();
@@ -457,7 +457,7 @@ public class ClientRequestProcessor extends Thread {
      *
      * */
 
-    private void loginKunde(){
+    private synchronized void loginKunde(){
         try {
             String usernameOrEmail = in.readLine();
             String password = in.readLine();
@@ -491,7 +491,7 @@ public class ClientRequestProcessor extends Thread {
      * @Param artikelnummer erwartet einen Integer
      *
      * */
-    private void loescheArtikel(){
+    private synchronized void loescheArtikel(){
         try{
             int mitarbeiterID = Integer.parseInt(in.readLine());
             Mitarbeiter mitarbeiter = eShop.sucheMirarbeiterMitNummer(mitarbeiterID);
@@ -514,7 +514,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IOException Wenn ein Fehler beim Lesen vom Client auftritt.
      * @throws IdNichtVorhandenException Wenn die Artikelnummer nicht vorhanden ist.
      */
-    private void sucheArtikelMitNummer() {
+    private synchronized void sucheArtikelMitNummer() {
         try{
             int artikenummer = Integer.parseInt(in.readLine());
             Artikel artikel = eShop.sucheArtikelMitNummer(artikenummer);
@@ -555,7 +555,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IdNichtVorhandenException Wenn ein `KundeOderMitarbeiter` mit der angegebenen ID nicht gefunden werden kann,
      *                                   wird eine entsprechende Fehlermeldung ausgegeben und der Fehlercode 303 angezeigt.
      */
-    private void getEreignisListe() {
+    private synchronized void getEreignisListe() {
         List<Ereignis> ereignisListe = eShop.getEreignisListe();
         out.println("Erfolgreich getEreignisListe()");
         out.println(ereignisListe.size());
@@ -613,7 +613,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IdNichtVorhandenException Wenn die Kunden-ID oder Artikelnummer nicht in der Datenbank gefunden werden kann.
      * @throws IstLeerException Wenn der Warenkorb leer ist und daher keine weiteren Artikel hinzugefügt werden können.
      */
-    private void artikelInWarenkorbHinzufügen(){
+    private synchronized void artikelInWarenkorbHinzufügen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Person kunde = eShop.sucheKundeMitNummer(kundenID);
@@ -655,7 +655,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
      * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist und daher kein Gesamtpreis berechnet werden kann.
      */
-    private void gesamtPreis(){
+    private synchronized void gesamtPreis(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
@@ -685,7 +685,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IOException Falls ein Fehler beim Lesen der Eingabedaten vom Client auftritt.
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
      */
-    private void warenkorbLeeren(){
+    private synchronized void warenkorbLeeren(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
@@ -716,7 +716,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws KeinMassengutException Wenn der Artikel kein Massengut ist, jedoch eine Massengut-Bedingung erwartet wird.
      * @throws MinusZahlException Wenn die angegebene Menge eine negative Zahl ist.
      */
-    private void bestandImWarenkorbAendern() {
+    private synchronized void bestandImWarenkorbAendern() {
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);
@@ -759,7 +759,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht in der Datenbank gefunden werden kann.
      * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist.
      */
-    private void gibWarenkorbArtikel(){
+    private synchronized void gibWarenkorbArtikel(){
         //Map<Artikel, Integer> gibWarenkorbAusArtikel = eShop.gibWarenkorbArtikel(kunde);
         try {
             int kundenID = Integer.parseInt(in.readLine());
@@ -801,7 +801,7 @@ public class ClientRequestProcessor extends Thread {
      * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist und daher keine Bestellung durchgeführt werden kann.
      * @throws BestandNichtAusreichendException Wenn ein oder mehrere Artikel im Warenkorb nicht genug Bestand haben, um die Bestellung auszuführen.
      */
-    private void warenkorbKaufen(){
+    private synchronized void warenkorbKaufen(){
         try {
             int kundenID = Integer.parseInt(in.readLine());
             Kunde kunde = eShop.sucheKundeMitNummer(kundenID);

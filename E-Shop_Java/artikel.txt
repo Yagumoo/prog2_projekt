@@ -30,5 +30,4 @@
 103,Flunder,10,13.99,1
 104,Scholle,5,20.0,1
 105,Hornhecht,150,5.99,1
-106,Polllack,91,15.0,1
 107,Karpfen,690,9.99,1

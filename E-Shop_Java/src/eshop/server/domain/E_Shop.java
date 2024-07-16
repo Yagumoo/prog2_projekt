@@ -316,6 +316,8 @@ public class E_Shop {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
+                Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
+                artikelManagement.bestandAbbuchen(wk);
             }
         }
     }
@@ -404,7 +406,7 @@ public class E_Shop {
      */
     public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
         Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
-        artikelManagement.bestandAbbuchen(wk);
+//        artikelManagement.bestandAbbuchen(wk);
 
         for (Map.Entry<Artikel, Integer> entry : wk.getWarenkorbMap().entrySet()) {
             Artikel artikel = entry.getKey();

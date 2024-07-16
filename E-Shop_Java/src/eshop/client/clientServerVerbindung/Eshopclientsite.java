@@ -86,7 +86,7 @@ public class Eshopclientsite {
      * @return Eine {@link Map} von {@link Integer} (Artikelnummer) auf {@link Artikel} (Artikelobjekt), die alle normalen und Massengutartikel enthält.
      * @throws IOException Falls ein Fehler beim Lesen der Daten vom Server auftritt.
      */
-    public Map<Integer, Artikel> gibAlleArtikel() {
+    public synchronized Map<Integer, Artikel> gibAlleArtikel() {
         Map<Integer, Artikel> alleArtikel = new HashMap<Integer, Artikel>();
         out.println("gibAlleArtikel");
         try {
@@ -160,7 +160,7 @@ public class Eshopclientsite {
      * @return Eine {@link Map} von {@link Integer} (Mitarbeiter-ID) auf {@link Mitarbeiter} (Mitarbeiterobjekt), die alle Mitarbeiter enthält.
      * @throws IOException Falls ein Fehler beim Lesen der Daten vom Server auftritt.
      */
-    public Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
+    public synchronized Map<Integer, Mitarbeiter> gibAlleMitarbeiter() {
         Map<Integer, Mitarbeiter> alleMitarbeiter = new HashMap<Integer, Mitarbeiter>();
         out.println("gibAlleMitarbeiter");
         try {
@@ -236,7 +236,7 @@ public class Eshopclientsite {
      *  * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      *  */
 
-    public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException, ArtikelnameDoppeltException, IdNichtVorhandenException {
+    public synchronized void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException, ArtikelnameDoppeltException, IdNichtVorhandenException {
         out.println("addArtikel");
         out.println(mitarbeiter.getId());
         out.println(artikel.getArtikelnummer());
@@ -314,7 +314,7 @@ public class Eshopclientsite {
      * @throws IdNichtVorhandenException Wenn die Mitarbeiter-ID nicht vorhanden ist.
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public void addMassengutartikel(Person mitarbeiter, MassengutArtikel massengutArtikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException, ArtikelnameDoppeltException, IdNichtVorhandenException {
+    public synchronized void addMassengutartikel(Person mitarbeiter, MassengutArtikel massengutArtikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException, ArtikelnameDoppeltException, IdNichtVorhandenException {
         out.println("addMassengutartikel");
         out.println(mitarbeiter.getId());
         out.println(massengutArtikel.getArtikelnummer());
@@ -371,7 +371,7 @@ public class Eshopclientsite {
      * @return Eine {@link List} von {@link Ereignis}-Objekten, die alle Ereignisse enthält.
      * @throws IOException Falls ein Fehler beim Lesen der Daten vom Server auftritt.
      */
-    public List<Ereignis> getEreignisListe() {
+    public synchronized List<Ereignis> getEreignisListe() {
         List<Ereignis> ereignisListe = new ArrayList<>();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
         Person kundeOderMitarbeiter;
@@ -461,7 +461,7 @@ public class Eshopclientsite {
      * @throws IdNichtVorhandenException Wenn die Mitarbeiter-ID nicht gefunden wurde.
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException, IdNichtVorhandenException {
+    public synchronized void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException, IdNichtVorhandenException {
         out.println("addMitarbeiter");
         out.println(mitarbeiter.getId());
         out.println(vorname);
@@ -532,7 +532,7 @@ public class Eshopclientsite {
      * @throws EmailExistiertException Wenn die Email-Adresse bereits vergeben ist (Fehlercode "ERROR 809").
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
+    public synchronized void addKunde(String vorname, String nachname, String email, String username, String password, String ort, int plz, String strasse, int strassenNummer) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
         out.println("addKunde");
         out.println(vorname);
         out.println(nachname);
@@ -583,7 +583,7 @@ public class Eshopclientsite {
      * @throws LoginException Wenn die Anmeldedaten falsch sind (Fehlercode "ERROR 807").
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
+    public synchronized Mitarbeiter loginMitarbeiter(String usernameOrEmail, String password) throws LoginException {
         out.println("loginMitarbeiter");
         out.println(usernameOrEmail);
         out.println(password);
@@ -633,7 +633,7 @@ public class Eshopclientsite {
      * @throws LoginException Wenn die Anmeldedaten falsch sind (Fehlercode "ERROR 807").
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public Kunde loginKunde(String usernameOrEmail, String password) throws LoginException {
+    public synchronized Kunde loginKunde(String usernameOrEmail, String password) throws LoginException {
         out.println("loginKunde");
 
         out.println(usernameOrEmail);
@@ -689,7 +689,7 @@ public class Eshopclientsite {
      * @throws IdNichtVorhandenException Wenn die Artikelnummer nicht existiert (Fehlercode "ERROR 303").
      * @throws IOException Wenn ein Fehler beim Lesen der Antwort vom Server auftritt.
      */
-    public Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
+    public synchronized Artikel sucheArtikelMitNummer(int artikelnummer) throws IdNichtVorhandenException {
        out.println("sucheArtikelMitNummer");
        out.println(artikelnummer);
 
@@ -711,6 +711,7 @@ public class Eshopclientsite {
                 double preis = Double.parseDouble(in.readLine());
                 int massgut = Integer.parseInt(in.readLine());
                 MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massgut);
+                return massengutArtikel;
             } else {
                 int nummer = Integer.parseInt(in.readLine());
                 String bezeichnung = in.readLine();
@@ -745,7 +746,7 @@ public class Eshopclientsite {
      * @param artikelnummer Die Artikelnummer des zu löschenden Artikels.
      * @throws IdNichtVorhandenException Wenn die Artikelnummer nicht existiert (Fehlercode "ERROR 303").
      */
-    public void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
+    public synchronized void loescheArtikel(Person mitarbeiter, int artikelnummer) throws IdNichtVorhandenException {
         out.println("loescheArtikel");
 
         out.println(mitarbeiter.getId());
@@ -789,7 +790,7 @@ public class Eshopclientsite {
      * @throws KeinMassengutException Wenn der Artikel kein Massengut ist, aber die Menge geändert werden soll (Fehlercode "ERROR 405").
      * @throws MinusZahlException Wenn die neue Menge negativ ist (Fehlercode "ERROR 202").
      */
-    public void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
+    public synchronized void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
         out.println("aendereArtikelBestand");
         out.println(mitarbeiter.getId());
         out.println(artikelnummer);
@@ -840,7 +841,7 @@ public class Eshopclientsite {
      * @throws BestandNichtAusreichendException Wenn der Bestand des Artikels nicht ausreicht (Fehlercode "ERROR 408").
      * @throws IstLeerException Wenn der Artikel nicht in den Warenkorb gelegt werden kann (Fehlercode "ERROR 406").
      */
-    public void artikelInWarenkorbHinzufügen(Person kunde, Artikel artikel, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException, IstLeerException {
+    public synchronized void artikelInWarenkorbHinzufügen(Person kunde, Artikel artikel, int menge) throws IdNichtVorhandenException, MinusZahlException, KeinMassengutException, BestandNichtAusreichendException, IstLeerException {
         out.println("artikelInWarenkorbHinzufügen");
         out.println(kunde.getId());
         out.println(artikel.getArtikelnummer());
@@ -889,7 +890,7 @@ public class Eshopclientsite {
      * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist (Fehlercode "ERROR 406").
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht existiert (Fehlercode "ERROR 303").
      */
-    public Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException, IdNichtVorhandenException {
+    public synchronized Map<Artikel, Integer> gibWarenkorbArtikel(Person kunde) throws IstLeerException, IdNichtVorhandenException {
         Map<Artikel, Integer> artikelInWarenkorb = new HashMap<Artikel, Integer >();
         out.println("gibWarenkorbArtikel");
         out.println(kunde.getId());
@@ -944,7 +945,7 @@ public class Eshopclientsite {
      * @throws IstLeerException Wenn der Warenkorb des Kunden leer ist (Fehlercode "ERROR 202").
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht existiert (Fehlercode "ERROR 406").
      */
-    public double gesamtPreis(Person kunde) throws IstLeerException, IdNichtVorhandenException {
+    public synchronized double gesamtPreis(Person kunde) throws IstLeerException, IdNichtVorhandenException {
         out.println("gesamtPreis");
         out.println(kunde.getId());
 
@@ -987,7 +988,7 @@ public class Eshopclientsite {
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht existiert (Fehlercode "ERROR 303").
      * @throws IstLeerException Wenn der Warenkorb bereits leer ist (Fehlercode "ERROR 202").
      */
-    public void warenkorbLeeren(Person kunde) {
+    public synchronized void warenkorbLeeren(Person kunde) {
         out.println("warenkorbLeeren");
         out.println(kunde.getId());
         try{
@@ -1025,7 +1026,7 @@ public class Eshopclientsite {
      * @throws IstLeerException Wenn der Warenkorb leer ist (Fehlercode "ERROR 406").
      * @throws BestandNichtAusreichendException Wenn der Bestand eines oder mehrerer Artikel nicht ausreicht (Fehlercode "ERROR 408").
      */
-    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException, IdNichtVorhandenException {
+    public synchronized Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException, IdNichtVorhandenException {
         out.println("warenkorbKaufen");
         out.println(kunde.getId());
 
@@ -1090,7 +1091,7 @@ public class Eshopclientsite {
      * @throws MinusZahlException Wenn die Menge negativ ist (Fehlercode "ERROR 202").
      * @throws IstLeerException Wenn der Warenkorb leer ist (Fehlercode "ERROR 406").
      */
-    public void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {
+    public synchronized void bestandImWarenkorbAendern(Person kunde, Artikel artikel, int menge) throws BestandNichtAusreichendException, IdNichtVorhandenException, KeinMassengutException, MinusZahlException, IstLeerException {
         out.println("bestandImWarenkorbAendern");
         out.println(kunde.getId());
         out.println(artikel.getArtikelnummer());
