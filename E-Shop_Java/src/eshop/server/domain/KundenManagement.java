@@ -1,7 +1,5 @@
 package eshop.server.domain;
 
-
-import eshop.common.enitities.Mitarbeiter;
 import eshop.common.exceptions.*;
 import eshop.common.enitities.Kunde;
 
@@ -20,7 +18,7 @@ public class KundenManagement {
     //Warenkorb öffnen
     private Map<Integer, Kunde> kundenListe = new HashMap<>();
     private Kunde eingeloggterKunde;
-    private filePersistenceManager fpm;// = new filePersistenceManager();
+    private filePersistenceManager fpm;
 
     /**
      * Konstruktor für die Klasse {@link KundenManagement}.

@@ -23,7 +23,6 @@ public class FalscheEingabeException extends Exception {
         this.gegbeneEingabe = gegbeneEingabe;
     }
 
-    //TODO: JavaDox!
     public FalscheEingabeException() {
         super("Fehler freigelassende eingabefelder");
     }

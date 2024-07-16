@@ -67,7 +67,7 @@ public class ClientRequestProcessor extends Thread {
                 System.err.println("Error beim lesen vom Client " + e);
                 break;
             }
-            //TODO: SIMONS KACK AUSGABEN Prüfen
+
             switch (input) {
                 case "gibAlleArtikel":
                     gibAlleArtikel();
@@ -339,7 +339,6 @@ public class ClientRequestProcessor extends Thread {
             System.err.println("Error beim lesen vom Client bei = aendereArtikelBestand()" + e);
             out.println("ERROR 405");
         }
-        //TODO: Fehler zurük zum client senden wie oben ^
 
     }
 
@@ -619,7 +618,6 @@ public class ClientRequestProcessor extends Thread {
             Person kunde = eShop.sucheKundeMitNummer(kundenID);
             int artikelnummer = Integer.parseInt(in.readLine());
             int menge = Integer.parseInt(in.readLine());
-            //TODO: ist Peron richtig gucken
             eShop.artikelInWarenkorbHinzufügen(kunde, artikelnummer, menge);
             out.println("Erfolgreich: artikelInWarenkorbHinzufügen()");
         } catch(IOException e) {

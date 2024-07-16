@@ -43,10 +43,9 @@ public class ArtikelEntfernen extends JPanel {
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
 
-        // Load image icon (if needed)
         ImageIcon image = loadImageIcon();
         if (image != null) {
-            // Note: You cannot set an icon for a JPanel, only for a JFrame
+
         }
         //Mitarbeiter Textfelder erstellen
         mitarbeiterSeite();

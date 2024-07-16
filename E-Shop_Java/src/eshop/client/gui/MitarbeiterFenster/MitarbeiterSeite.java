@@ -43,10 +43,8 @@ public class MitarbeiterSeite extends JPanel {
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
 
-        // Load image icon (if needed)
         ImageIcon image = loadImageIcon();
         if (image != null) {
-            // Note: You cannot set an icon for a JPanel, only for a JFrame
         }
         //Mitarbeiter Textfelder erstellen
         mitarbeiterSeite();
@@ -217,8 +215,6 @@ public class MitarbeiterSeite extends JPanel {
                 int id = Integer.parseInt(ID);
                 int menge = Integer.parseInt(Menge);
                 double preis = Double.parseDouble(Preis);
-                //int paketgröße = Integer.parseInt(Paketgröße);
-                //TODO: gucken ob geht => (paketgröße != 1)
                 if (!Paketgröße.isEmpty() /*|| paketgröße != 1*/) {
                     int paketgröße = Integer.parseInt(Paketgröße);
                     MassengutArtikel massengutArtikel = new MassengutArtikel(id, Bezeichnung, menge, preis, paketgröße);

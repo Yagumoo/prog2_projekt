@@ -251,4 +251,15 @@
 2024-07-15,Bier/Desperados,4,KAUF,k,9
 2024-07-16,Bier/Desperados,8,KAUF,k,9
 2024-07-16,Wasser/Saskia,6,KAUF,k,9
-2024-07-16,Energy/Monster Ultra Purple,9,KAUF,k,9
+2024-07-16,Hecht,1,KAUF,k,9
+2024-07-16,Karpfen,2,KAUF,k,9
+2024-07-16,Wels,1,NEU,m,1
+2024-07-16,Hecht,1,KAUF,k,9
+2024-07-16,Hecht,1,KAUF,k,9
+2024-07-16,Wels,1,KAUF,k,9
+2024-07-16,Wels,1,ERHOEHUNG,m,1
+2024-07-16,Wasser/Saskia,12,KAUF,k,9
+2024-07-16,Rotauge,1000,NEU,m,1
+2024-07-16,Rotauge,-500,REDUZIERUNG,m,1
+2024-07-16,Hecht,5,KAUF,k,9
+2024-07-16,Rotauge,100,KAUF,k,9

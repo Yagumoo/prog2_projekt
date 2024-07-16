@@ -14,7 +14,6 @@ import java.util.HashMap;
  * den Warenkorb eines Kunden zu verwalten und eine Rechnung zu erstellen.
  */
 public class WarenkorbManagement {
-    //TODO: Gucken
     private Map<Artikel, Integer> warenkorbMap;
     private Map<Kunde, Warenkorb> warenkorbVonKunde;
     private Rechnung rechnung;

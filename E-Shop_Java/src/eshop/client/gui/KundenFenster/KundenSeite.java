@@ -190,11 +190,6 @@ public class KundenSeite extends JPanel {
             }
         });
 
-//        entfernenButton.addActionListener(e -> {
-//            //eShopclientsite.warenkorbLeeren(eingelogterKunde);
-//            updateTabelle();  // Tabelle aktualisieren
-//        });
-
         sortByNumberButton.addActionListener(e -> {
             // Sortiere die Tabelle nach Artikelnummer
             updateTabelleSortedByNumber();
