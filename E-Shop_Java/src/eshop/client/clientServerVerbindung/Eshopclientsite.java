@@ -437,7 +437,7 @@ public class Eshopclientsite {
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 case "ERROR 303":
-                    throw new IdNichtVorhandenException(kunde.getId());
+                    throw new IdNichtVorhandenException(artikel.getArtikelnummer());
                 case "ERROR 202":
                     throw new MinusZahlException();
                 case "ERROR 405":
