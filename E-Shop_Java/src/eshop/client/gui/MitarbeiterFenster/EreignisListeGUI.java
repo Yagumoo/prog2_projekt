@@ -3,6 +3,7 @@ package eshop.client.gui.MitarbeiterFenster;
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
 import eshop.common.exceptions.FilterException;
+import eshop.common.exceptions.IdNichtVorhandenException;
 import eshop.common.exceptions.WertNichtGefundenException;
 import eshop.common.enitities.Ereignis;
 import eshop.common.enitities.Mitarbeiter;
@@ -42,17 +43,13 @@ public class EreignisListeGUI extends JPanel {
         this.setBackground(new Color(123, 50, 250));
         this.setLayout(new BorderLayout());
 
-        // Load image icon (if needed)
         ImageIcon image = loadImageIcon();
         if (image != null) {
-            // Note: You cannot set an icon for a JPanel, only for a JFrame
         }
         //Mitarbeiter Textfelder erstellen
         mitarbeiterSeite();
         //Tabelle erstellen
         initializeTable();
-
-
     }
     /**
      * Initialisiert die Tabelle zur Anzeige der Artikelinformationen.
@@ -144,7 +141,7 @@ public class EreignisListeGUI extends JPanel {
                     throw new FilterException("Artikelbezeichnung darf nicht leer sein.");
                 }
                 updateTabelle(artikelFilter, null, null);  // Filter by article
-            } catch (FilterException | WertNichtGefundenException ex) {
+            } catch (FilterException | WertNichtGefundenException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -156,7 +153,7 @@ public class EreignisListeGUI extends JPanel {
                     throw new FilterException("Bitte einen gültigen Username eingeben.");
                 }
                 updateTabelle(null, usernameFilter, null);  // Filter by username
-            } catch (FilterException | WertNichtGefundenException ex) {
+            } catch (FilterException | WertNichtGefundenException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -169,7 +166,7 @@ public class EreignisListeGUI extends JPanel {
                     throw new FilterException("Ereignistyp darf nicht leer sein.");
                 }
                 updateTabelle(null, null, typFilter);  // Filter by event type
-            } catch (FilterException | WertNichtGefundenException ex) {
+            } catch (FilterException | WertNichtGefundenException | IdNichtVorhandenException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Filter Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -189,7 +186,7 @@ public class EreignisListeGUI extends JPanel {
     public void updateTabelle() {
         try {
             updateTabelle(null, null, null);  // Keine Filter anwenden
-        } catch (WertNichtGefundenException ex){
+        } catch (WertNichtGefundenException | IdNichtVorhandenException ex){
             //kann leer bleieben, eil hier kein Filter angewendet wird
         }
 
@@ -224,7 +221,7 @@ public class EreignisListeGUI extends JPanel {
      *
      * @throws WertNichtGefundenException Wenn keine Ereignisse den Filterkriterien entsprechen. Dies tritt auf, wenn keine Ereignisse die angegebenen Filterbedingungen erfüllen.
      */
-    public void updateTabelle(String artikelFilter, String usernameFilter, String typFilter) throws WertNichtGefundenException {
+    public void updateTabelle(String artikelFilter, String usernameFilter, String typFilter) throws WertNichtGefundenException, IdNichtVorhandenException {
 
         tableModel.setRowCount(0); // Bestehende Daten löschen
 

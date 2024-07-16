@@ -9,9 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class EShopCUI {
-    /**
-     *
-     */
+
 
     private final E_Shop eShop;
     private Person eingeloggtePerson = null;
@@ -441,7 +439,6 @@ public class EShopCUI {
     private void warenkorbKaufen(){
         try {
             // Artikel im Warenkorb kaufen
-            //eShop.ListeVonWarenkorb();
             Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingeloggtePerson);
 
             System.out.println(rechnung);
@@ -462,11 +459,8 @@ public class EShopCUI {
             System.out.println("Bitte geben Sie die Artikelnummer ein:");
             printArrow();
             int artikelnummer = getIntInput();
-
             Artikel artikel = eShop.sucheArtikelMitNummer(artikelnummer);
-
             eShop.artikelImWarenkorbEntfernen(eingeloggtePerson, artikel);
-
         }catch (FalscheEingabeException | IdNichtVorhandenException | ArtikelExisitiertNichtException e){
             System.err.println(e.getMessage());
         }

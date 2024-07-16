@@ -32,7 +32,6 @@ public class Server {
 
     private ServerSocket serverSocket;
     private E_Shop eShop = new E_Shop();
-
     /**
      * Erzeugt einen neuen Server, der auf dem angegebenen Port Verbindungen akzeptiert.
      *

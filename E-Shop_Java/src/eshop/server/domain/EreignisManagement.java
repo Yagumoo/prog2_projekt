@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class EreignisManagement {
 
-    private filePersistenceManager fpm;// = new filePersistenceManager();
+    private filePersistenceManager fpm;
     private List<Ereignis> ereignisListe = new ArrayList<>();
     Date aktuellesDatum = new Date();
 
@@ -35,7 +35,6 @@ public class EreignisManagement {
      * @param alleMitarbeiter Eine Map aller Mitarbeiter, die im System existieren, die für das Zuordnen von Mitarbeitern in der Ereignisliste verwendet wird.
      */
     public  EreignisManagement(filePersistenceManager fpm, Map<Integer, Kunde> alleKunden, Map<Integer, Mitarbeiter> alleMitarbeiter){
-        //ereignisListe.add(new Ereignis(aktuellesDatum, "Initialisierung", 0, new Person("System", 0)));
         try {
             this.fpm = fpm;
             ereignisListe = fpm.ladeEreignisListe("ereignis.txt", alleKunden, alleMitarbeiter);

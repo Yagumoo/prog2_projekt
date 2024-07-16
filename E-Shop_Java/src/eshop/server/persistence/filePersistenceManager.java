@@ -6,7 +6,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 
@@ -319,8 +318,6 @@ public class filePersistenceManager {
             while ((line = liesZeile()) != null) {
                 String[] parts = line.split(",");
                 DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
-                //String datumÜbergabe = parts[0];
-                //LocalDate datum = (LocalDate) dateFormat.parse(datumÜbergabe);
                 LocalDate datum = LocalDate.parse(parts[0], dateFormat);
                 String artikelbezeichnung = parts[1];
                 int anzahl = Integer.parseInt(parts[2]);
@@ -328,11 +325,9 @@ public class filePersistenceManager {
                 boolean istKunde = parts[4].equals("k");
                 if (istKunde) {
                     person = alleKunden.get(Integer.parseInt(parts[5]));
-                    //System.out.println(("TEST: Kunde mit ID " + parts[5]));
                 } else {
                     // Mitarbeiter aus Mitarbeiterliste raussuchen
                     person = alleMitarbeiter.get(Integer.parseInt(parts[5]));
-                    //System.out.println(("TEST: Mitarbeiter mit ID " + parts[5]));
                 }
                 Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, person, typ);
                 ereignisList.add(ereignis);

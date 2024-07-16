@@ -19,6 +19,10 @@ public class KeinMassengutException extends Exception {
     public KeinMassengutException(int anzahlMassengut) {
         super("Die Artikelanzahl muss ein Vielfaches von der Massengutanzahl " + anzahlMassengut + " sein!");
     }
+
+    public KeinMassengutException() {
+        super("Die Artikelanzahl muss ein Vielfaches von der Packetgröße sein!");
+    }
     /**
      * Überprüft, ob die angegebene Zahl ein Vielfaches der angegebenen Vielfachzahl ist.
      *

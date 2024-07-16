@@ -17,4 +17,8 @@ public class DoppelteIdException extends Exception {
     public DoppelteIdException(int id) {
         super("Die ID " + id + " ist bereits vergeben");
     }
+
+    public DoppelteIdException() {
+        super("Die ID ist bereits vergeben");
+    }
 }

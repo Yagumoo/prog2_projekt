@@ -5,7 +5,6 @@ import eshop.common.enitities.Artikel;
 import eshop.common.enitities.Warenkorb;
 import eshop.common.enitities.MassengutArtikel;
 
-
 import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 /**
@@ -66,7 +65,7 @@ public class ArtikelManagement {
             throw new MinusZahlException();
 
         }
-        //TODO: angucken
+
         if (sucheArtikel(artikel.getArtikelnummer())) {
             throw new DoppelteIdException(artikel.getArtikelnummer());
         }

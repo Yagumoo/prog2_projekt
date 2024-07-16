@@ -298,8 +298,6 @@ public class WarenkorbGUI extends JPanel {
 
             rechnungsDetails.append("==============================\n");
             rechnungsDetails.append("Datum: "+ rechnung.getDatum() +"\n");
-            //Date datumJetzt = new Date();
-            //rechnungsDetails.append(datumJetzt.getDay()+ "-"+datumJetzt.getMonth()+"-"+datumJetzt.getYear()+"\n");
             rechnungsDetails.append("Vielen Dank für Ihren Einkauf!");
             // Zeigen Sie die Rechnung in einem Popup an
             JOptionPane.showMessageDialog(this, rechnungsDetails.toString(), "Rechnung", JOptionPane.INFORMATION_MESSAGE);

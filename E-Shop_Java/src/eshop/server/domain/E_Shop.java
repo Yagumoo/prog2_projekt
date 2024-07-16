@@ -1,12 +1,10 @@
 package eshop.server.domain;
 
-
 import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 import java.util.List;
 import java.io.IOException;
@@ -20,14 +18,12 @@ import java.io.IOException;
  */
 public class E_Shop {
 
-    private final ArtikelManagement artikelManagement; // = new ArtikelManagement();
-    private final MitarbeiterManagement mitarbeiterManagement; //= new MitarbeiterManagement();
-    private final KundenManagement kundenManagement; //= new KundenManagement();
-    private final WarenkorbManagement warenkorbManagement; //= new WarenkorbManagement();
-    private final EreignisManagement ereignisManagement;//= new EreignisManagement();
-    private final filePersistenceManager fpm; //  = new filePersistenceManager();
-    // => WarenkorbManagement
-    //private MitarbeiterManagement mitarbeiterManagement = new MitarbeiterManagement(artikelManagement);
+    private final ArtikelManagement artikelManagement;
+    private final MitarbeiterManagement mitarbeiterManagement;
+    private final KundenManagement kundenManagement;
+    private final WarenkorbManagement warenkorbManagement;;
+    private final EreignisManagement ereignisManagement;
+    private final filePersistenceManager fpm;
     /**
      * Konstruktor für die {@link E_Shop} Klasse.
      *
@@ -95,9 +91,8 @@ public class E_Shop {
     public void addArtikel(Person mitarbeiter, Artikel artikel) throws DoppelteIdException, MinusZahlException, KeinMassengutException,ArtikelnameDoppeltException  {
         if (mitarbeiter instanceof Mitarbeiter) {
             artikelManagement.addArtikel(artikel);
-            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
             Ereignis neuesEreignis = new Ereignis(LocalDate.now(), artikel.getArtikelbezeichnung(), artikel.getArtikelbestand(), mitarbeiter, Ereignis.EreignisTyp.NEU);
-            ereignisManagement.addEreignis(/*mitarbeiter,*/ neuesEreignis);
+            ereignisManagement.addEreignis(neuesEreignis);
         }
     }
 
@@ -132,7 +127,6 @@ public class E_Shop {
     public void addMitarbeiter(Person mitarbeiter, String vorname, String nachname, String email, String username, String password) throws DoppelteIdException, UsernameExistiertException, EmailExistiertException {
         if (mitarbeiter instanceof Mitarbeiter) {
             mitarbeiterManagement.addMitarbeiter(vorname, nachname, email, username, password);
-            //Person mitarbeiter = mitarbeiterManagement.getEingeloggterMitarbeiter();
         }
 
     }
@@ -442,7 +436,6 @@ public class E_Shop {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
 
             // Überprüfen, ob der Artikel ein Massengutartikel ist
-
             wk.bestandImWarenkorbAendern(artikel, menge);
             int neuerBestand = artikel.getArtikelbestand();
 

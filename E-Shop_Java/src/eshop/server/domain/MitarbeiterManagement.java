@@ -22,7 +22,6 @@ public class MitarbeiterManagement {
     //KundenListeaufrufen
     private Map<Integer, Mitarbeiter> mitarbeiterListe = new HashMap<>();
     private Person eingeloggterMitarbeiter;
-    //private filePersistenceManager fpm = new filePersistenceManager();
 
     /**
      * Konstruktor für die Klasse {@link MitarbeiterManagement}.
@@ -46,8 +45,6 @@ public class MitarbeiterManagement {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-
-
     }
 
     /**
