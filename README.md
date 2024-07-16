@@ -1,4 +1,4 @@
-Link zum Git Repository:
+Link zum Git Repository: https://github.com/Yagumoo/prog2_projekt.git
 
 Mitarbeiter/Admin daten:
 
