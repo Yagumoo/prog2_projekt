@@ -10,7 +10,7 @@ Kunden daten:
 - Username: D1m
 - Passwort: 1234
 
-- Vorhanden:
+Vorhanden:
 - Entities
 - Management Klassen
 - Eshop Klasse, um die Management Klassen zu verwalten
