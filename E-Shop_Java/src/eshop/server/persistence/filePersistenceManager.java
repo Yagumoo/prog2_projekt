@@ -319,8 +319,7 @@ public class filePersistenceManager {
             while ((line = liesZeile()) != null) {
                 String[] parts = line.split(",");
                 DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
-                //String datumÜbergabe = parts[0];
-                //LocalDate datum = (LocalDate) dateFormat.parse(datumÜbergabe);
+
                 LocalDate datum = LocalDate.parse(parts[0], dateFormat);
                 String artikelbezeichnung = parts[1];
                 int anzahl = Integer.parseInt(parts[2]);
@@ -332,7 +331,6 @@ public class filePersistenceManager {
                 } else {
                     // Mitarbeiter aus Mitarbeiterliste raussuchen
                     person = alleMitarbeiter.get(Integer.parseInt(parts[5]));
-                    //System.out.println(("TEST: Mitarbeiter mit ID " + parts[5]));
                 }
                 Ereignis ereignis = new Ereignis(datum, artikelbezeichnung, anzahl, person, typ);
                 ereignisList.add(ereignis);

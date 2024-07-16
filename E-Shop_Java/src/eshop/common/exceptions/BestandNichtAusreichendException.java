@@ -21,10 +21,14 @@ public class BestandNichtAusreichendException extends Exception {
      *
      * @see java.lang.Exception
      */
-    public BestandNichtAusreichendException(Artikel artike, int aktuellerBestand) {
-        super("Der Artikel: " + artike.getArtikelbezeichnung() + " hat nicht genug auf Lager. Es sind nur noch " + aktuellerBestand + " Einheiten vorhanden.");
+    public BestandNichtAusreichendException(Artikel artikel, int aktuellerBestand) {
+        super("Der Artikel: " + artikel.getArtikelbezeichnung() + " hat nicht genug auf Lager. Es sind nur noch " + aktuellerBestand + " Einheiten vorhanden.");
     }
-    //TODO: JavaDox
+
+    public BestandNichtAusreichendException() {
+        super("Der Artikel hat nicht genug auf Lager.");
+    }
+
 }
 
 

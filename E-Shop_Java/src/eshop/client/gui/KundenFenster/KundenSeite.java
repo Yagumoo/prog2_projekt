@@ -181,14 +181,12 @@ public class KundenSeite extends JPanel {
                 eShopclientsite.artikelInWarenkorbHinzufügen(eingelogterKunde, artikel, bestand);
                 updateTabelle();  // Tabelle aktualisieren
 
-            } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException ex) {
+            } catch (IdNichtVorhandenException | BestandNichtAusreichendException | KeinMassengutException | MinusZahlException | IstLeerException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte geben Sie gültige Zahlen für die Artikelnummer und Menge ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (FalscheEingabeException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
-            } catch (IstLeerException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 

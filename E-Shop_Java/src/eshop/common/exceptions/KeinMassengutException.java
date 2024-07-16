@@ -1,4 +1,8 @@
 package eshop.common.exceptions;
+
+import eshop.common.enitities.Artikel;
+import eshop.common.enitities.MassengutArtikel;
+
 /**
  * Diese Ausnahme wird ausgelöst, wenn eine Artikelanzahl, die für Massengüter vorgesehen ist,
  * nicht ein Vielfaches der Massengutanzahl ist.
@@ -19,6 +23,10 @@ public class KeinMassengutException extends Exception {
     public KeinMassengutException(int anzahlMassengut) {
         super("Die Artikelanzahl muss ein Vielfaches von der Massengutanzahl " + anzahlMassengut + " sein!");
     }
+
+    public KeinMassengutException(MassengutArtikel anzahlMassengut) {
+        super("Die Artikelanzahl muss ein Vielfaches von der Massengutanzahl " + anzahlMassengut + " sein!");
+    }
     /**
      * Überprüft, ob die angegebene Zahl ein Vielfaches der angegebenen Vielfachzahl ist.
      *
@@ -29,6 +37,7 @@ public class KeinMassengutException extends Exception {
      * @param vielfaches die Vielfachzahl, die überprüft werden soll
      * @return {@code true}, wenn {@code zahl} ein Vielfaches von {@code vielfaches} ist, andernfalls {@code false}
      */
+
 
     // Methode zur Überprüfung, ob die Zahl ein Vielfaches einer anderen Zahl ist
     public static boolean istVielfaches(int zahl, int vielfaches) {

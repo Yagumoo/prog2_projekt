@@ -857,7 +857,7 @@ public class Eshopclientsite {
                 case "ERROR 405":
                     throw new KeinMassengutException(menge);
                 case "ERROR 408":
-                    throw new BestandNichtAusreichendException(artikel, artikel.getArtikelbestand());
+                    throw new BestandNichtAusreichendException();
                 case "ERROR 406":
                     throw new IstLeerException();
                 default:
@@ -1033,12 +1033,12 @@ public class Eshopclientsite {
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
-//                case "ERROR 303":
-//                    throw new IdNichtVorhandenException();
+                case "ERROR 303":
+                    throw new IdNichtVorhandenException();
                 case "ERROR 406":
                     throw new IstLeerException();
-//                case "ERROR 408":
-//                    throw new BestandNichtAusreichendException();
+                case "ERROR 408":
+                    throw new BestandNichtAusreichendException();
                 default:
                     System.out.println("Erfolgreich warenkorbKaufen()");
             }

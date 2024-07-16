@@ -27,4 +27,8 @@ public class IdNichtVorhandenException extends Exception {
     public int getId() {
         return id;
     }
+
+    public IdNichtVorhandenException(){
+        super("Die ID existiert nicht");
+    }
 }
