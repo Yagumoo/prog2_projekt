@@ -1,4 +1,5 @@
 package eshop.server.domain;
+
 import eshop.common.enitities.Ereignis;
 import eshop.common.enitities.Kunde;
 import eshop.common.enitities.Mitarbeiter;

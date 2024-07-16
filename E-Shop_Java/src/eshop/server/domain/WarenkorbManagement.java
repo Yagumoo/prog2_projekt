@@ -41,6 +41,7 @@ public class WarenkorbManagement {
      */
     public void warenkorbLeeren(Kunde kunde){
         Warenkorb warenkorb = warenkorbVonKunde.get(kunde);
+        //TODO:gucken
         warenkorb.warenkorbLeeren();
     }
 

@@ -790,7 +790,7 @@ public class Eshopclientsite {
      * @throws KeinMassengutException Wenn der Artikel kein Massengut ist, aber die Menge geändert werden soll (Fehlercode "ERROR 405").
      * @throws MinusZahlException Wenn die neue Menge negativ ist (Fehlercode "ERROR 202").
      */
-    public synchronized void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException {
+    public synchronized void aendereArtikelBestand(Person mitarbeiter, int artikelnummer, int neuerBestand) throws IdNichtVorhandenException, KeinMassengutException, MinusZahlException, ArtikelExisitiertNichtException  {
         out.println("aendereArtikelBestand");
         out.println(mitarbeiter.getId());
         out.println(artikelnummer);
@@ -988,13 +988,15 @@ public class Eshopclientsite {
      * @throws IdNichtVorhandenException Wenn die Kunden-ID nicht existiert (Fehlercode "ERROR 303").
      * @throws IstLeerException Wenn der Warenkorb bereits leer ist (Fehlercode "ERROR 202").
      */
-    public synchronized void warenkorbLeeren(Person kunde) {
+    public synchronized void warenkorbLeeren(Person kunde) throws IstLeerException{
         out.println("warenkorbLeeren");
         out.println(kunde.getId());
         try{
             String rückfrage = in.readLine();
             switch (rückfrage) {
                 //TODO: machen
+                case "ERROR 406":
+                    throw new IstLeerException();
                 default:
                     System.out.println("Erfolgreich warenkorbLeeren()");
             }
@@ -1119,7 +1121,7 @@ public class Eshopclientsite {
         }
     }
 
-        /*
+    /*
         Erfolgreich => Erfolgreich ...;
 
         IOException => "ERROR 101"
@@ -1138,6 +1140,8 @@ public class Eshopclientsite {
 
         ArtikelnameDoppeltException =>"ERROR 407"
 
+        ArtikelExisitiertNichtException =>"ERROR 408"
+
         BestandNichtAusreichendException =>"ERROR 408"
 
         LoginException => "ERROR 807"
@@ -1151,7 +1155,6 @@ public class Eshopclientsite {
         FalscheEingabeException => only CUI
         FilterException => only Clientseite
         WertNichtGefundenException => only Clientseite
-        ArtikelExisitiertNichtException => only Warenkorbleeren CUI
      */
 
 }

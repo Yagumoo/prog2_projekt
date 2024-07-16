@@ -5,7 +5,6 @@ import eshop.common.enitities.Artikel;
 import eshop.common.enitities.Warenkorb;
 import eshop.common.enitities.MassengutArtikel;
 
-
 import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 /**
@@ -155,6 +154,19 @@ public class ArtikelManagement {
             artikel.setArtikelbestand(artikel.getArtikelbestand() - menge);
         }
     }
+
+    public void bestandZurückAbbuchen(Warenkorb warenkorb) {
+        for (Map.Entry<Artikel, Integer> entry : warenkorb.getWarenkorbMap().entrySet()) {
+            Artikel artikel = entry.getKey();
+            int menge = entry.getValue();
+            artikel.setArtikelbestand(artikel.getArtikelbestand() + menge);
+        }
+    }
+
+    public void bestandÄndern(Warenkorb warenkorb,  Artikel artikel, int menge ) throws IdNichtVorhandenException {
+        artikel.setArtikelbestand(menge);
+    }
+
     /**
      * Gibt eine Map aller Artikel im System zurück.
      *

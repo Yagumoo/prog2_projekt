@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Verarbeitet Anfragen von Clients in einem separaten Thread.
  *
@@ -697,6 +698,9 @@ public class ClientRequestProcessor extends Thread {
         } catch (IdNichtVorhandenException e) {
             System.err.println("Error beim lesen vom Client bei = warenkorbLeeren()" + e);
             out.println("ERROR 303");
+        } catch (IstLeerException e) {
+            System.err.println("Error beim lesen vom Client bei = bestandImWarenkorbAendern()" + e);
+            out.println("ERROR 406");
         }
     }
 
@@ -850,6 +854,8 @@ public class ClientRequestProcessor extends Thread {
 
         ArtikelnameDoppeltException =>"ERROR 407"
 
+        ArtikelExisitiertNichtException =>"ERROR 408"
+
         BestandNichtAusreichendException =>"ERROR 408"
 
         LoginException => "ERROR 807"
@@ -863,7 +869,7 @@ public class ClientRequestProcessor extends Thread {
         FalscheEingabeException => only CUI
         FilterException => only Clientseite
         WertNichtGefundenException => only Clientseite
-        ArtikelExisitiertNichtException => only Warenkorbleeren CUI
      */
+
 
 }

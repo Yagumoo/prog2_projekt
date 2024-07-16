@@ -167,7 +167,11 @@ public class WarenkorbGUI extends JPanel {
 
         //Warenkorb leeren
         entfernenButton.addActionListener(e -> {
-            eShopclientsite.warenkorbLeeren(eingelogterKunde);
+            try {
+                eShopclientsite.warenkorbLeeren(eingelogterKunde);
+            } catch (IstLeerException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
             updateTabelle();
         });
 

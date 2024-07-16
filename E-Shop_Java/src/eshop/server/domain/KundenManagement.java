@@ -1,7 +1,5 @@
 package eshop.server.domain;
 
-
-import eshop.common.enitities.Mitarbeiter;
 import eshop.common.exceptions.*;
 import eshop.common.enitities.Kunde;
 
@@ -9,6 +7,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import eshop.server.persistence.filePersistenceManager;
+
 /**
  * Verwaltet die Kunden im System und bietet Methoden zum Laden, Hinzufügen und Verwalten von Kunden.
  *

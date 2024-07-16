@@ -1,12 +1,10 @@
 package eshop.server.domain;
 
-
 import eshop.common.enitities.*;
 import eshop.common.exceptions.*;
 import eshop.server.persistence.filePersistenceManager;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 import java.util.List;
 import java.io.IOException;
@@ -316,7 +314,7 @@ public class E_Shop {
             Artikel artikel = artikelManagement.gibArtikelPerId(artikelnummer);
             if (artikel != null) {
                 warenkorbManagement.artikelInWarenkorbHinzufuegen(k, artikel, menge);
-                Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
+                Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(k);
                 artikelManagement.bestandAbbuchen(wk);
             }
         }
@@ -385,8 +383,10 @@ public class E_Shop {
      *
      * @param kunde Der Kunde, dessen Warenkorb geleert werden soll. Muss eine Instanz von {@link Kunde} sein.
      */
-    public void warenkorbLeeren(Person kunde) {
+    public void warenkorbLeeren(Person kunde) throws IstLeerException {
         if (kunde instanceof Kunde k) {
+            Warenkorb wk = warenkorbManagement.getWarenkorb(k);
+            artikelManagement.bestandZurückAbbuchen(wk);
             warenkorbManagement.warenkorbLeeren(k);
         }
     }
@@ -404,7 +404,7 @@ public class E_Shop {
      * @throws BestandNichtAusreichendException Wenn der Bestand eines oder mehrerer Artikel im Warenkorb nicht ausreicht, um die Menge zu verkaufen.
      * @throws IstLeerException Wenn der Kunde kein gültiger {@link Kunde} ist oder der Warenkorb leer ist.
      */
-    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException {
+    public Rechnung warenkorbKaufen(Kunde kunde) throws BestandNichtAusreichendException, IstLeerException, IdNichtVorhandenException {
         Warenkorb wk = warenkorbManagement.getWarenkorbKaufen(kunde);
 //        artikelManagement.bestandAbbuchen(wk);
 
@@ -444,8 +444,8 @@ public class E_Shop {
             Warenkorb wk = warenkorbManagement.getWarenkorb(k);
 
             // Überprüfen, ob der Artikel ein Massengutartikel ist
-
             wk.bestandImWarenkorbAendern(artikel, menge);
+            artikelManagement.bestandÄndern(wk, artikel,  menge);
             int neuerBestand = artikel.getArtikelbestand();
 
             if (menge > aktuellerBestand) {

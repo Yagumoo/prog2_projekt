@@ -118,7 +118,7 @@ public class EShopCUI {
         }
     }
 
-    private void KundenSeite(){
+    private void KundenSeite() {
         System.out.println("""
 
                 1: Artikel ausgeben lassen\s
@@ -151,8 +151,13 @@ public class EShopCUI {
                 bestandImWarenkorbAendern();
                 break;
             case 5:
-                eShop.warenkorbLeeren(eingeloggtePerson);
-                System.out.println("Der Warenkorb wurde geleert!");
+                try{
+                    eShop.warenkorbLeeren(eingeloggtePerson);
+                    System.out.println("Der Warenkorb wurde geleert!");
+                }catch (IstLeerException e) {
+                    System.err.println(e.getMessage());
+                }
+
                 System.out.println();
                 break;
             case 6:
@@ -443,17 +448,13 @@ public class EShopCUI {
             // Artikel im Warenkorb kaufen
             //eShop.ListeVonWarenkorb();
             Rechnung rechnung = eShop.warenkorbKaufen((Kunde) eingeloggtePerson);
-
             System.out.println(rechnung);
-
             System.out.println("Der Kauf wurde erfolgreich abgeschlossen.");
             // Warenkorb leeren
             // eShop.warenkorbLeeren();
-
-        } catch (BestandNichtAusreichendException | IstLeerException e){
+        } catch (BestandNichtAusreichendException | IstLeerException | IdNichtVorhandenException e){
             System.err.println(e.getMessage());
         }
-
     }
 
     //Funktioniert semi

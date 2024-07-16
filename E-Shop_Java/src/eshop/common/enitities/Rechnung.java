@@ -2,7 +2,6 @@ package eshop.common.enitities;
 
 import eshop.server.domain.WarenkorbManagement;
 
-
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;

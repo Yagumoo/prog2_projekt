@@ -2,10 +2,7 @@ package eshop.client.gui.MitarbeiterFenster;
 
 import eshop.client.clientServerVerbindung.Eshopclientsite;
 import eshop.client.starten.LoginOptionenGUI;
-import eshop.common.exceptions.FalscheEingabeException;
-import eshop.common.exceptions.IdNichtVorhandenException;
-import eshop.common.exceptions.KeinMassengutException;
-import eshop.common.exceptions.MinusZahlException;
+import eshop.common.exceptions.*;
 import eshop.common.enitities.Artikel;
 import eshop.common.enitities.MassengutArtikel;
 import eshop.common.enitities.Mitarbeiter;
@@ -151,6 +148,8 @@ public class ArtikelBestandÄndern extends JPanel {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             } catch (FalscheEingabeException ex) {
                 JOptionPane.showMessageDialog(this, "Bitte füllen Sie alle Felder aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            } catch (ArtikelExisitiertNichtException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         });
 

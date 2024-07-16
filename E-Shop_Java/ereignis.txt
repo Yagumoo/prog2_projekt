@@ -251,3 +251,13 @@
 2024-07-15,Bier/Desperados,4,KAUF,k,9
 2024-07-16,Bier/Desperados,8,KAUF,k,9
 2024-07-16,Wasser/Saskia,6,KAUF,k,9
+2024-07-16,Karpfen,3,KAUF,k,9
+2024-07-16,Hecht,1,KAUF,k,9
+2024-07-16,Hornhecht,12,KAUF,k,9
+2024-07-16,Wels,1,NEU,m,1
+2024-07-16,Wels,1,KAUF,k,9
+2024-07-16,Zander,1,NEU,m,1
+2024-07-16,Hecht,1,KAUF,k,9
+2024-07-16,Wels,1,ERHOEHUNG,m,1
+2024-07-16,Zander,1,ERHOEHUNG,m,1
+2024-07-16,Zander,0,ERHOEHUNG,m,1
