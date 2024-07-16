@@ -1,5 +1,5 @@
 Link zum Git Repository: https://github.com/Yagumoo/prog2_projekt.git
-
+Das fertige Projekt befindet sich im Main Branch
 Mitarbeiter/Admin daten:
 
 - Username: Sins
@@ -12,6 +12,7 @@ Kunden daten:
 
 Vorhanden:
 - Entities
+- Exceptions
 - Management Klassen
 - Eshop Klasse, um die Management Klassen zu verwalten
 - Server
