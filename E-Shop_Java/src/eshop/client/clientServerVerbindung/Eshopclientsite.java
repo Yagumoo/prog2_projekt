@@ -711,6 +711,7 @@ public class Eshopclientsite {
                 double preis = Double.parseDouble(in.readLine());
                 int massgut = Integer.parseInt(in.readLine());
                 MassengutArtikel massengutArtikel = new MassengutArtikel(nummer, bezeichnung, bestand, preis, massgut);
+                return massengutArtikel;
             } else {
                 int nummer = Integer.parseInt(in.readLine());
                 String bezeichnung = in.readLine();
