@@ -2,6 +2,8 @@ Link zum Git Repository: https://github.com/Yagumoo/prog2_projekt.git
 
 Das fertige Projekt befindet sich im Main Branch
 
+Die Java DOC ist im JavaDOC Ordner
+
 Mitarbeiter/Admin daten:
 
 - Username: Sins
