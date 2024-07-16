@@ -29,7 +29,3 @@ public class BestandNichtAusreichendException extends Exception {
         super("Der Artikel hat nicht genug auf Lager. Es sind nur noch  Einheiten vorhanden.");
     }
 }
-
-
-
-
