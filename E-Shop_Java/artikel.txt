@@ -22,7 +22,7 @@
 22,Figur,100,20000.0
 23,Vitamin D Tabletten,8,48.0
 666,Energy/Monster,60000,2.99,1
-668,Energy/Monster Ultra Purple,60000,2.99
+668,Energy/Monster Ultra Purple,59991,2.99
 99,Hecht,99,15.0,1
 100,Barsch,50,20.0,1
 101,Regenbogenforelle,25,45.99,1

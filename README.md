@@ -6,5 +6,15 @@ Mitarbeiter/Admin daten:
 - Passwort: 12345
 
 
-Server Starten
-GUI Starten/Client
+Kunden daten:
+- Username: D1m
+- Passwort: 1234
+
+Vorhanden:
+Entities
+Management Klassen
+Eshop Klasse, um die Management Klassen zu verwalten
+Server
+Eshop Fassade, Kommunikation mit GUI Fassade und Eshp
+GUI Fassade, Kommunikation mit Eshop Fassade und GUI
+GUI, Schnittstelle für Menschen für Ein und Ausgaben
