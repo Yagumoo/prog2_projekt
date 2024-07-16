@@ -20,9 +20,6 @@ public class IdNichtVorhandenException extends Exception {
         this.id = id;
     }
 
-    public IdNichtVorhandenException(){
-        super("Die ID existiert nicht");
-    }
     /**
      * Gibt die ID zurück, die die Ausnahme ausgelöst hat.
      *

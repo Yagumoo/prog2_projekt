@@ -26,7 +26,7 @@ public class BestandNichtAusreichendException extends Exception {
     }
 
     public BestandNichtAusreichendException() {
-        super("Der Artikel hat nicht genug auf Lager. Es sind nur noch  Einheiten vorhanden.");
+        super("Der Artikel hat nicht genug auf Lager.");
     }
 }
 
