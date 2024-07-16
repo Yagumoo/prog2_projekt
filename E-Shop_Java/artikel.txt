@@ -1,5 +1,34 @@
-999,Mensch,600,1.88
-888,Honig,5000,0.9
-666,Brot,666,6.66
-123,Rindfleisch,500,5.99
-444,Spielkarten,30,0.99
+1,Wasser/Saskia,2736,4.99,6
+2,Bier/Desperados,1888,11.99,4
+3,Elgato/Streamdeck,97,149.99,1
+4,Elgato/Facecam,97,149.99,1
+5,Handy/Samsung S21 Ultra,98,1199.99,1
+6,Schweinenacken,494,11.79,2
+7,MioMio/ Mate,3000,8.69,6
+8,MioMio/ Mate Ginger,3000,8.69,6
+9,MioMio/ Cola,3000,8.69,6
+10,MioMio/ Orange+,3000,8.69,6
+11,Coca Cola,3000,4.68,6
+12,Coca Cola Zero,3000,6.68,6
+13,Coca Cola Light,3000,5.68,6
+14,Pepsi Lime,2988,3.68,6
+15,Pepsi ,2994,3.68,6
+16,Pepsi Zero,2994,3.68,6
+17,Englisch Duden,367,22.38,1
+18,Deutsch Duden,470,12.38,1
+19,Papier,480,15.38,24
+20,Manga/ One Piece,49997,4.87,1
+21,Energy/RedBull Lila,8,4.99,4
+22,Figur,100,20000.0
+23,Vitamin D Tabletten,8,48.0
+666,Energy/Monster,60000,2.99,1
+668,Energy/Monster Ultra Purple,60000,2.99
+99,Hecht,99,15.0,1
+100,Barsch,50,20.0,1
+101,Regenbogenforelle,25,45.99,1
+102,Dorsch,25,68.74,1
+103,Flunder,10,13.99,1
+104,Scholle,5,20.0,1
+105,Hornhecht,150,5.99,1
+106,Polllack,91,15.0,1
+107,Karpfen,690,9.99,1
